@@ -1,8 +1,6 @@
 // toolbar.component
 
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { MatDialog } from '../../../node_modules/@angular/material';
-import { PublicFunctions } from '../shared/shared';
 
 @Component({
   selector: 'app-toolbar',
@@ -12,20 +10,19 @@ import { PublicFunctions } from '../shared/shared';
 export class ToolbarComponent implements OnInit {
   @Output() sidenavOpened = new EventEmitter();
   @Input() sidenav;
+  @Input() user;
   isLogged = false;
   isOpened = true;
 
   /**
-   * Initializes the needed services.
-   * @param dialog - The Dialog service.
+   * Constructor.
    */
-  constructor(public dialog: MatDialog) { }
+  constructor() { }
 
   /**
    * When the component initializes, check if the team account logged in.
    */
   ngOnInit() {
-    this.isLogged = PublicFunctions.checkLogin();
   }
 
   /**

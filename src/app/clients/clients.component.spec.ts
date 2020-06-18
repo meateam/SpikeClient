@@ -1,6 +1,5 @@
-// tokens.component.spec
-
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+
 import { ClientsComponent } from './clients.component';
 
 describe('ClientsComponent', () => {

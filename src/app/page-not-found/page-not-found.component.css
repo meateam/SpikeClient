@@ -1,5 +1,4 @@
 @media (max-width: 468px) {
-
     .title {
         margin-bottom: 35px;
     }
@@ -244,4 +243,33 @@
     100% {
         left: 47px
     }
+}
+
+.div-icon {
+    text-align:center;
+    position:relative;
+}
+
+.div-txt {
+    text-align:center;
+    position:relative;
+    font-size:30px;
+    left:100px;
+    top:90px;
+    color:rgba(0,0,0,0.5);
+    font-weight:bold;
+    font-family:Arial;
+}
+
+.icon-warning {
+    font-size:80px;
+    position:relative;
+    left:76px;
+    top:150px
+}
+
+.div-empty {
+    text-align:center;
+    position:relative;
+    top:20px
 }

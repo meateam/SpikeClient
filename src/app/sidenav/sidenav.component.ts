@@ -1,21 +1,28 @@
 // sidenav.component
 
-import { Component, Input, OnChanges, OnInit } from '@angular/core';
-import {FormBuilder, FormGroup} from '@angular/forms';
+import { Component, Input, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { AuthService } from '../auth/auth.service';
 import { PublicFunctions } from '../shared/shared';
+import { SharedService } from '../shared.service';
 
 @Component({
   selector: 'app-sidenav',
   templateUrl: './sidenav.component.html',
   styleUrls: ['./sidenav.component.css']
 })
-export class SidenavComponent implements OnInit, OnChanges {
+export class SidenavComponent implements OnInit {
+  team;
+  public get getTeam() { return this.team; }
+  public set setTeam(newValue) {
+  // logic
+  this.team = newValue;
+  }
+
   @Input() sidenavToggle;
+  @Input() user;
   sidenav;
   isLogged = false;
-  team = '' as any;
-  title = 'app';
   options: FormGroup;
 
   /**
@@ -23,7 +30,7 @@ export class SidenavComponent implements OnInit, OnChanges {
    * @param fb - the form builder service
    * @param authService - The auth service.
    */
-  constructor(fb: FormBuilder, private authService: AuthService) {
+  constructor(fb: FormBuilder, private authService: AuthService, private sharedService: SharedService) {
     this.options = fb.group({
       bottom: 0,
       fixed: true,
@@ -39,34 +46,18 @@ export class SidenavComponent implements OnInit, OnChanges {
   }
 
   /**
-   * Gets the username of the current team account.
-   */
-  getTeamName() {
-    this.authService.getTeamName().subscribe((data) => {
-      this.team = data.team;
-      this.team.teamname = this.team.teamname[0].toUpperCase() + this.team.teamname.substr(1);
-    }, (error) => {
-      console.log(error);
-    });
-  }
-
-  /**
    * When the component initializes, check if the user logged in,
    * if the user is logged in, then get the username.
    */
   ngOnInit() {
-    this.isLogged = PublicFunctions.checkLogin();
-    if (this.isLogged) {
-      this.getTeamName();
-    }
-  }
+    this.sharedService.onDataChange((data) => {
+      this.team = data;
+    });
 
-  /**
-   * If there is component changes with the sidenav, then toggle the sidenav.
-   */
-  ngOnChanges() {
-    if (this.sidenav) {
-      console.log(this.sidenav.toggle(this.sidenavToggle));
+    if (PublicFunctions.getCookie('authorization') !== '') {
+      this.user = PublicFunctions.DecodeJwt();
+    } else {
+      PublicFunctions.logout();
     }
   }
 }

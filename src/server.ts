@@ -11,7 +11,10 @@ apm.start({
     active: config.ELASTIC_APM_ACTIVE === 'true' || false,
 });
 
-import { Request, Response } from 'express-serve-static-core';
+import { configurePassport } from './passport';
+const passport = require('passport');
+const cookieParser = require('cookie-parser');
+import * as jwt from 'jsonwebtoken';
 import * as path from 'path';
 import * as bodyParser from 'body-parser';
 import * as https from 'https';
@@ -33,7 +36,7 @@ const allowedExt = [
 
 class Server {
     private readonly options = {
-        key: readFileSync(config.PRIVATE_KEY_PATH),
+        key: readFileSync(config.PRIVATE_KEY_PATH).toString(),
         cert: readFileSync(config.CERT_PATH),
     };
 
@@ -46,26 +49,75 @@ class Server {
 
     constructor() {
         this.app = express();
+        configurePassport();
+        this.app.use(express.json());
+        this.app.use(express.urlencoded({
+            extended: false
+        }));
+        this.app.use(cookieParser());
+        const session = require('express-session');
+       /* const sessionize = session({
+            secret: 'this is a secret key here now',
+            resave: false,
+            saveUninitialized: true
+        });*/
+        this.app.use(session({
+            secret: 'secretcode',
+            resave: false,
+            saveUninitialized: true
+        }));
+
+        this.app.use(passport.initialize());
+        this.app.use(passport.session());
 
         // Health check for Load Balancer
         this.app.get('/health', (req, res) => res.status(200).send('alive'));
 
-	// Redirect to docs site
-	this.app.get('/help', (req, res) => {		
-	    res.redirect('http://' + req.headers.host + ':3001');
-	});
-	
-        this.app.get('*', (req: Request, res: Response) => {
-            if (allowedExt.filter(ext => req.url.indexOf(ext) > 0).length > 0) {
-                res.sendFile(path.resolve(`./dist/serverRegisterClient/${req.url}`));
+        /* GET home page. */
+        this.app.get('/auth/', passport.authenticate('shraga'), (req, res, next) => {
+            res.status(200); // .json(req.user);
+        });
+
+        /* GET home page. */
+        this.app.post('/auth/callback', passport.authenticate('shraga'), async (req, res, next) => {
+        // res.send(req.user);
+            const token = await jwt.sign({ ...req.user }, this.options.key, {
+                algorithm: 'RS256'
+            });
+
+            // tslint:disable-next-line:radix
+            res.cookie('authorization', token, { maxAge: (parseInt(req.user.exp) * 1000) - Date.now(), httpOnly: false });
+            res.redirect('/');
+        });
+
+        this.app.use((req, res, next) => {
+            if (!req.user) {
+                res.redirect('/auth');
             } else {
-                res.sendFile(path.resolve('./dist/serverRegisterClient/index.html'));
+                next();
+            }
+        });
+
+        this.app.get('/logout', (req, res) => {
+        });
+
+        // Redirect to docs site
+        this.app.get('/help', (req, res) => {
+	    
+            res.redirect('http://' + req.hostname + ':3001');
+        });
+
+        this.app.get('*', (req, res) => {
+            if (allowedExt.filter(ext => req.url.indexOf(ext) > 0).length > 0) {
+                res.sendFile(path.resolve(`./dist/SpikeClient/${req.url}`));
+            } else {
+                res.sendFile(path.resolve('./dist/SpikeClient/index.html'));
             }
         });
 
         https.createServer(this.options, this.app).listen(this.port, () => {
             console.log(`Spike client is running on port ${this.port} as https.`);
-        });        
+        });
     }
 }
 
