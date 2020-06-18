@@ -1,13 +1,11 @@
 // clients.service
 
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { Http, Headers } from '@angular/http';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/observable/throw';
+import { Observable } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { PublicFunctions } from '../shared/shared';
 import { config } from '../shared/config';
+import { catchError } from 'rxjs/operators';
 
 @Injectable()
 export class ClientsService {
@@ -17,96 +15,85 @@ export class ClientsService {
    * Injection of the http service.
    * @param http - The http service.
    */
-  constructor(private http: Http) { }
+  constructor(private http: HttpClient) { }
 
   /**
    * Gets clients by the token which is saved on the cookie.
    */
   getClients(): Observable<any> {
-    const headers = new Headers();
+    const httpOptions = {
+        headers: new HttpHeaders({
+            authorization: PublicFunctions.getCookie('authorization')
+        })
+    };
 
-    headers.append('authorization', PublicFunctions.getCookie('token'));
-
-    return this.http.get(this.clientUrl, { headers })
-      .map((data) => {
-        return data.json();
-      }).catch((error) => { // If there is any error.
-        if (error.status === 401) { // If the error's status is 401 (Unauthorized), then logout.
-          PublicFunctions.logout();
-        }
-
-        return Observable.throw(error.json());
-      });
+    return this.http.get(this.clientUrl, httpOptions).pipe(
+        catchError(PublicFunctions.handleError)
+    );
   }
 
   /**
    * Gets a specific client data by the token and the client ID.
+   * @param clientId - Client id
    */
   getClientData(clientId: string): Observable<any> {
-    const headers = new Headers();
+    const httpOptions = {
+        headers: new HttpHeaders({
+            authorization: PublicFunctions.getCookie('authorization')
+        })
+    };
 
-    headers.append('authorization', PublicFunctions.getCookie('token'));
-
-    return this.http.get(this.clientUrl + '/' + clientId, { headers })
-      .map((data) => {
-        return data.json();
-      }).catch((error) => { // If there is any error.
-        if (error.status === 401) { // If the error's status is 401 (Unauthorized), then logout.
-          PublicFunctions.logout();
-        }
-
-        return Observable.throw(error.json());
-      });
+    return this.http.get(this.clientUrl + '/' + clientId, httpOptions).pipe(
+        catchError(PublicFunctions.handleError)
+    );
   }
 
+  /**
+   * Updates a client
+   * @param clientId - Client id for the url
+   * @param client - Client to update
+   */
   updateClient(clientId: string, client): Observable<any> {
-    const headers = new Headers();
+    const httpOptions = {
+        headers: new HttpHeaders({
+            authorization: PublicFunctions.getCookie('authorization')
+        })
+    };
 
-    headers.append('authorization', PublicFunctions.getCookie('token'));
-
-    return this.http.put(this.clientUrl + '/' + clientId, { clientInformation: client }, { headers })
-      .map((data) => {
-        return data.json();
-      }).catch((error) => {
-        if (error.status === 401) {
-          PublicFunctions.logout();
-        }
-        // return error.json();
-        return Observable.throw(error.json());
-      });
+    return this.http.put(`${this.clientUrl}/${clientId}`, { clientInformation: client }, httpOptions).pipe(
+        catchError(PublicFunctions.handleError)
+    );
   }
 
+  /**
+   * Removes a client by client ID.
+   * @param clientId - Client id
+   */
   removeClient(clientId: string): Observable<any> {
-    const headers = new Headers();
+    const httpOptions = {
+        headers: new HttpHeaders({
+            authorization: PublicFunctions.getCookie('authorization')
+        })
+    };
 
-    headers.append('authorization', PublicFunctions.getCookie('token'));
-
-    return this.http.delete(this.clientUrl + '/' + clientId, { headers })
-      .map((data) => {
-        return data.json();
-      }).catch((error) => {
-        if (error.status === 401) {
-          PublicFunctions.logout();
-        }
-
-        return Observable.throw(error.json());
-      });
+    return this.http.delete(this.clientUrl + '/' + clientId, httpOptions).pipe(
+        catchError(PublicFunctions.handleError)
+    );
   }
 
+  /**
+   * Resets client-secret of a client.
+   * @param clientId - Client ID
+   */
   resetCredentials(clientId: string): Observable<any> {
-    const headers = new Headers();
+    const httpOptions = {
+        headers: new HttpHeaders({
+            authorization: PublicFunctions.getCookie('authorization')
+        })
+    };
 
-    headers.append('authorization', PublicFunctions.getCookie('token'));
-
-    return this.http.patch(this.clientUrl + '/' + clientId, {}, { headers })
-      .map((data) => {
-        return data.json();
-      }).catch((error) => {
-        if (error.status === 401) {
-          PublicFunctions.logout();
-        }
-
-        return Observable.throw(error.json());
-      });
+    return this.http.patch(this.clientUrl + '/' + clientId, {}, httpOptions).pipe(
+        catchError(PublicFunctions.handleError)
+    );
   }
 }

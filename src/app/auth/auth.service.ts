@@ -1,11 +1,9 @@
 // auth.service
 
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { Http, Headers } from '@angular/http';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/observable/throw';
+import { Observable } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { PublicFunctions } from '../shared/shared';
 import { config } from '../shared/config';
 
@@ -19,26 +17,37 @@ export class AuthService {
    * Injection of the http service.
    * @param http - The http service.
    */
-  constructor(private http: Http) {}
+  constructor(private http: HttpClient) {}
 
   /**
    * Gets a username by the token which is saved on the cookie.
    */
-  getTeamName(): Observable<any> {
-    const headers = new Headers();
+  getUser(): Observable<any> {
+    const httpOptions = {
+        headers: new HttpHeaders({
+            authorization: PublicFunctions.getCookie('authorization')
+        })
+    };
 
-    headers.append('authorization', PublicFunctions.getCookie('token'));
+    return this.http.get('https://localhost/whoami').pipe(
+        catchError(PublicFunctions.handleError)
+    );
+  }
 
-    return this.http.get(this.teamUrl, {headers})
-           .map((data) => {
-             return data.json();
-           }).catch((error) => { // If there is any error.
-             if (error.status === 401) { // If the error's status is 401 (Unauthorized), then logout.
-                PublicFunctions.logout();
-             }
+  /**
+   * Gets teams by specific email.
+   * @param email - The key that the team is searched with/
+   */
+  getTeams(personId): Observable<any> {
+    const httpOptions = {
+        headers: new HttpHeaders({
+            authorization: PublicFunctions.getCookie('authorization')
+        })
+    };
 
-             return Observable.throw(error.json());
-           });
+    return this.http.get(`${this.teamUrl}/${personId}`, httpOptions).pipe(
+        catchError(PublicFunctions.handleError)
+    );
   }
 
   /**
@@ -46,33 +55,31 @@ export class AuthService {
    * @param team - The team object to register.
    */
   registerTeam(team): Observable<any> {
-    return this.http.post(this.authUrl + '/register', {'team': team})
-            .map((data) => {
-                return data.json();
-            }).catch((error) => {
-                return Observable.throw(error.json());
-            });
+    const httpOptions = {
+        headers: new HttpHeaders({
+            authorization: PublicFunctions.getCookie('authorization')
+        })
+    };
+
+    return this.http.post(`${this.authUrl}/register`, { team }, httpOptions).pipe(
+        catchError(PublicFunctions.handleError)
+    );
   }
 
-   /**
+  /**
    * Register a new client to the team account.
    * @param client - The client object to register.
    */
   registerClient(client): Observable<any> {
-    const headers = new Headers();
+    const httpOptions = {
+        headers: new HttpHeaders({
+            authorization: PublicFunctions.getCookie('authorization')
+        })
+    };
 
-    headers.append('authorization', PublicFunctions.getCookie('token'));
-
-    return this.http.post(this.clientUrl, {'clientInformation': client}, {headers})
-            .map((data) => {
-                return data.json();
-            }).catch((error) => {
-              if (error.status === 401) { // If the error's status is 401 (Unauthorized), then logout.
-                PublicFunctions.logout();
-              }
-
-              return Observable.throw(error.json());
-            });
+    return this.http.post(this.clientUrl, {clientInformation: client}, httpOptions).pipe(
+        catchError(PublicFunctions.handleError)
+    );
   }
 
   /**
@@ -80,11 +87,14 @@ export class AuthService {
    * @param team - The team object with login details.
    */
   login(team): Observable<any> {
-    return this.http.post(this.authUrl + '/login', {'team': team})
-           .map((data) => {
-               return data.json();
-             }).catch((error) => {
-               return Observable.throw(error.json());
-             });
+    const httpOptions = {
+        headers: new HttpHeaders({
+            authorization: PublicFunctions.getCookie('authorization')
+        })
+    };
+
+    return this.http.post(this.authUrl + '/login', { team }, httpOptions).pipe(
+        catchError(PublicFunctions.handleError)
+    );
  }
 }
