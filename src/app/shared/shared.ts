@@ -31,7 +31,7 @@ export class PublicFunctions {
      */
     public static DecodeJwt() {
         const authorization = PublicFunctions.getCookie('authorization');
-        if (authorization !== '') {
+        if (authorization !== '' && (authorization.match(/\./g) && (authorization.match(/\./g).length === 2))) {
             return (
                 JSON.parse(
                     decodeURIComponent(
@@ -52,7 +52,11 @@ export class PublicFunctions {
      */
     public static logout() {
         // Redirect to shraga to authenticate
-        window.location.href = `https://51.144.178.121:3005/auth`;
+        if (window.location.pathname !== '/') {
+            window.location.href = `https://localhost:4200/auth?RelayState=${window.location.pathname}`;
+        } else {
+            window.location.href = `https://localhost:4200/auth`;
+        }
     }
 
     /**
@@ -62,7 +66,7 @@ export class PublicFunctions {
         if (PublicFunctions.getCookie('authorization').length > 0) {
             return true;
         } else {
-            this.logout();
+            PublicFunctions.logout();
             return false;
         }
     }
@@ -81,7 +85,7 @@ export class PublicFunctions {
             console.log(error.error.message);
 
             if (error.status && error.status === 401) {
-                PublicFunctions.checkLogin();
+                PublicFunctions.logout();
             }
 
             throw { ...error.error };

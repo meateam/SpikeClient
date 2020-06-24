@@ -44,7 +44,11 @@ export class SidenavComponent implements OnInit {
   logout() {
     PublicFunctions.logout();
   }
+<<<<<<< HEAD
 
+=======
+  
+>>>>>>> 9f57843b53170a6c82cf9f6f5278655cdf39d9bc
   /**
    * When the component initializes, check if the user logged in,
    * if the user is logged in, then get the username.

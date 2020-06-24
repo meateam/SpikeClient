@@ -1,6 +1,6 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
-  "version": 1,
+  "version": 1, 
   "newProjectRoot": "projects",
   "projects": {
     "SpikeClient": {
@@ -124,4 +124,8 @@
     }
   },
   "defaultProject": "SpikeClient"
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 9f57843b53170a6c82cf9f6f5278655cdf39d9bc
