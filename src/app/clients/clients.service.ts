@@ -33,8 +33,6 @@ export class ClientsService {
   }
 
   /**
-<<<<<<< HEAD
-=======
    * Find clients by Client Name or Team Name
    */
   findClients(filter): Observable<any> {
@@ -50,7 +48,6 @@ export class ClientsService {
   }
 
   /**
->>>>>>> 9f57843b53170a6c82cf9f6f5278655cdf39d9bc
    * Gets a specific client data by the token and the client ID.
    * @param clientId - Client id
    */

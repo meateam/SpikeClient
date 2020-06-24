@@ -27,14 +27,11 @@ import { TeamManagementModalComponent } from './teams/team-management-modal/team
 import { TeamsService } from './teams/teams.service';
 import { TeamAddPersonModalComponent } from './teams/team-management-modal/team-add-person-modal/team-add-person-modal.component';
 import { TeamJoinInfoModalComponent } from './teams/team-join-info-modal/team-join-info-modal.component';
-<<<<<<< HEAD
-=======
 import { ScopesComponent } from './scopes/scopes.component';
 import { NewScopeModalComponent } from './scopes/new-scope-modal/new-scope-modal.component';
 import { ScopeManagementModalComponent } from './scopes/scope-management-modal/scope-management-modal.component';
 import { ScopeVerifyDeleteModalComponent } from './scopes/scope-verify-delete-modal/scope-verify-delete-modal.component';
 import { ScopeNewPermittedClientComponent } from './scopes/scope-management-modal/scope-new-permitted-client/scope-new-permitted-client.component';
->>>>>>> 9f57843b53170a6c82cf9f6f5278655cdf39d9bc
 
 @NgModule({
   declarations: [
