@@ -124,6 +124,8 @@ export class ClientsComponent implements OnInit {
       } else {
           this.router.navigateByUrl('/register');
       }
+    } else {
+      PublicFunctions.logout();
     }
   }
 

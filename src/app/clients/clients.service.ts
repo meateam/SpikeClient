@@ -33,6 +33,21 @@ export class ClientsService {
   }
 
   /**
+   * Find clients by Client Name or Team Name
+   */
+  findClients(filter): Observable<any> {
+    const httpOptions = {
+        headers: new HttpHeaders({
+            authorization: PublicFunctions.getCookie('authorization')
+        })
+    }
+
+    return this.http.get(`${this.clientUrl}?filter=${filter}`, httpOptions).pipe(
+        catchError(PublicFunctions.handleError)
+    );
+  }
+
+  /**
    * Gets a specific client data by the token and the client ID.
    * @param clientId - Client id
    */

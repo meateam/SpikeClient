@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatInput } from '@angular/material/input';
 import { MatDialogRef } from '@angular/material/dialog';
+import { ClientsService } from 'src/app/clients/clients.service';
 
 @Component({
   selector: 'app-scope-new-permitted-client',
@@ -14,7 +15,8 @@ export class ScopeNewPermittedClientComponent implements OnInit {
   selectedClientId: string;
   selectedClient;
 
-  constructor(public dialogRef: MatDialogRef<ScopeNewPermittedClientComponent>) { }
+  constructor(private clientService: ClientsService,
+              public dialogRef: MatDialogRef<ScopeNewPermittedClientComponent>) { }
   
   loadingClients = true;
   clients = [{
@@ -35,7 +37,7 @@ export class ScopeNewPermittedClientComponent implements OnInit {
               teamName: 'KartoffelTeam',
               clientDesc: 'Its a karting game ofcourse'
             },
-            ];
+          ];
   filteredClients = [];
 
   ngOnInit(): void {
@@ -58,14 +60,15 @@ export class ScopeNewPermittedClientComponent implements OnInit {
       if (regex.test(e.key) || e.key === 'Backspace' || e.key === 'Delete') {
           // Make a new timeout set to go off in 1000ms (1 second)
           timeout = setTimeout(() => {
-            this.getFilteredClients();
+            this.getFilteredClients('XXXXXXXXXXXXXXXX');
         }, 300);
       }
     });
   }
 
-  getFilteredClients() {
-
+  async getFilteredClients(filter) {
+    const data = await this.clientService.findClients(filter).toPromise();
+    this.filteredClients = data;
   }
   
   close() {

@@ -87,7 +87,7 @@ class Server {
 
             // tslint:disable-next-line:radix
             res.cookie('authorization', token, { maxAge: (parseInt(req.user.exp) * 1000) - Date.now(), httpOnly: false });
-            res.redirect('/');
+            res.redirect(req.user.RelayState || '/');
         });
 
         this.app.use((req, res, next) => {

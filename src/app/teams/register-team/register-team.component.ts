@@ -94,6 +94,7 @@ export class RegisterTeamComponent implements OnInit {
         console.log(error);
       });
     } else {
+      PublicFunctions.logout();
     }
   }
 
