@@ -1,18 +1,17 @@
 // app.component
 
-import { Component } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { PublicFunctions } from './shared/shared';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
-  sidenav = true;
-  title = 'app';
+export class AppComponent implements OnInit {
+  title = 'SpikeClient';
 
-  openSideNav(event) {
-    this.sidenav = event;
+  ngOnInit() {
+    PublicFunctions.checkLogin();
   }
 }
