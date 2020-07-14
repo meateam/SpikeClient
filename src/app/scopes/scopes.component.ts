@@ -13,6 +13,7 @@ import { ScopeManagementModalComponent } from './scope-management-modal/scope-ma
 import { ScopeVerifyDeleteModalComponent } from './scope-verify-delete-modal/scope-verify-delete-modal.component';
 import { ScopesService } from './scopes.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ClientsService } from '../clients/clients.service';
 
 const ELEMENT_DATA: any = [
   { id: '0', scopeName: 'Test', accessType: 'Private',
@@ -42,17 +43,18 @@ const ELEMENT_DATA: any = [
 })
 
 export class ScopesComponent implements OnInit {
-  displayedColumns: string[] = ['scopeName', 'accessType', 'clientName', 'scopeOwner', 'scopeDesc', 'permittedClients', 'actions'];
-  dataSource = new MatTableDataSource(ELEMENT_DATA);
-
-  // @ViewChild(MatSort, {static: false}) sort: MatSort;
-  @ViewChild(MatSort, { static: false }) set content(sort: MatSort) {
-        this.dataSource.sort = sort;
-  }
+  displayedColumns: string[] = ['value', 'type', 'name', 'creator', 'description', 'permittedClients', 'actions'];
 
   user;
   teams;
+  clients;
+  dataSource = new MatTableDataSource();
+  scopes;
   isDone = false;
+
+  @ViewChild(MatSort, { static: false }) set content(sort: MatSort) {
+    this.dataSource.sort = sort;
+  }
 
   public get getTeam() { return this.teams; }
   public set setTeam(newValue) {
@@ -62,6 +64,7 @@ export class ScopesComponent implements OnInit {
   constructor(private sharedService: SharedService,
               private authService: AuthService,
               private scopeService: ScopesService,
+              private clientsService: ClientsService,
               private router: Router,
               private newScopeDialog: MatDialog,
               private scopeManagementDialog: MatDialog,
@@ -101,7 +104,21 @@ export class ScopesComponent implements OnInit {
           }
         }
 
-        this.isDone = true;
+        const clients = await this.clientsService.getClients().toPromise();
+        if (clients) {
+          for (const [clientIndex, client] of clients.entries()) {
+            for (const team of this.teams) {
+              if (client.teamId === team._id) {
+                clients[clientIndex].teamName = team.teamname;
+              }
+            }
+          }
+
+          this.clients = clients;
+          await this.getScopes();
+
+          this.isDone = true;
+        }
         
       } else {
         this.router.navigateByUrl('/register');
@@ -122,8 +139,6 @@ export class ScopesComponent implements OnInit {
 
     const result = await dialogRef.afterClosed().toPromise();
     if (result) {
-      const removedScope = this.scopeService.removeScope().toPromise();
-      if (removedScope) {
         for (const [scopeIndex, currScope] of (this.dataSource.data as any).entries()) {
           if (currScope.id === scope.id) {
             this.dataSource.data.splice(scopeIndex, 1);
@@ -134,7 +149,7 @@ export class ScopesComponent implements OnInit {
         }
 
         const timer = setTimeout(async () => {
-          await this.scopeService.removeScope().toPromise();
+          await this.scopeService.removeScope(scope.id).toPromise();
         }, 5000);
         this.snackBar.open('Scope was removed successfuly', 'Undo', {
           duration: 5000
@@ -143,14 +158,25 @@ export class ScopesComponent implements OnInit {
           this.dataSource._updateChangeSubscription();
           clearTimeout(timer);
         });
-      }
     }
   }
 
   /**
    * Gets all the scopes related to the teams according to the ADFS.
    */
-  getScopes(): void {
+  async getScopes() {
+    const scopes = await this.scopeService.getScopes().toPromise();
+    
+    console.log(scopes);
+
+    if (scopes) {
+      this.dataSource = new MatTableDataSource(scopes);
+
+      this.scopes = scopes;
+      // this.dataSource.data = scopes;
+      this.dataSource._updateChangeSubscription();
+    
+    }
   }
 
   /**
@@ -162,17 +188,25 @@ export class ScopesComponent implements OnInit {
       height: '480px',
       data: {
         user: this.user,
+        clients: this.clients
       }
     });
 
     const data = await dialogRef.afterClosed().toPromise();
     
     if (data) {
-      this.dataSource.data.push(data);
-      this.dataSource._updateChangeSubscription();
+      const createdScope = await this.scopeService.addScope(data).toPromise();
+      if (createdScope) {
+        this.dataSource.data.push(createdScope);
+        this.dataSource._updateChangeSubscription();
+      }
     }
   }
 
+  /**
+   * Opens the scope management mondal.
+   * @param scope 
+   */
   async openManageScope(scope) {
     const dialogRef = this.scopeManagementDialog.open(ScopeManagementModalComponent, {
       width: '700px',

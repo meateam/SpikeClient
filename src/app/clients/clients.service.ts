@@ -42,7 +42,7 @@ export class ClientsService {
         })
     }
 
-    return this.http.get(`${this.clientUrl}?filter=${filter}`, httpOptions).pipe(
+    return this.http.get(`${this.clientUrl}/search?name=${filter}`, httpOptions).pipe(
         catchError(PublicFunctions.handleError)
     );
   }
