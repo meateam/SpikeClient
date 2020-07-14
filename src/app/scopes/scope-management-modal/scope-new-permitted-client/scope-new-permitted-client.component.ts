@@ -77,10 +77,10 @@ export class ScopeNewPermittedClientComponent implements OnInit {
     if (this.myControl && this.myControl.value && this.myControl.value.length >= 1) {
       const data = await this.clientService.findClients(this.myControl.value).toPromise();
       // Replace This:
-      this.filteredClients = this.clients.filter((client) =>
-          { return client.clientName.toLowerCase().includes(this.myControl.value.toLowerCase())});
+      // this.filteredClients = this.clients.filter((client) =>
+      //     { return client.clientName.toLowerCase().includes(this.myControl.value.toLowerCase())});
       // With This:
-      // this.filteredClients = data;
+      this.filteredClients = data;
     } else {
       this.filteredClients = [];
     }

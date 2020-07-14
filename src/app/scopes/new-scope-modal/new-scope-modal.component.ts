@@ -15,6 +15,7 @@ export class NewScopeModalComponent implements OnInit {
               public dialogRef: MatDialogRef<NewScopeModalComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any) {
                 this.user = data.user;
+                this.clients = data.clients;
               }
 
   scopeNameFormControl = new FormControl('', [
@@ -30,7 +31,9 @@ export class NewScopeModalComponent implements OnInit {
   ]);
 
   user;
+  clients;
   team;
+  selectedClientId;
   scopeFormGroup: FormGroup;
   teamName: string;
   desc: string;
@@ -38,8 +41,8 @@ export class NewScopeModalComponent implements OnInit {
   privateActive: string = 'active-class';
   publicActive: string = 'inactive-class'; 
 
-  selectedClient;
-  clients = [{id: '1', name: 'SpikeDev'}, {id: '2', name: 'SpikeProd'}, {id: '3', name: 'SpikeInteg'}];
+  selectedClient = {name: {}};
+  // clients = [{id: '1', name: 'SpikeDev'}, {id: '2', name: 'SpikeProd'}, {id: '3', name: 'SpikeInteg'}];
 
   ngOnInit(): void {
     setTimeout(() => { this.input.focus(); }, 250);
@@ -64,6 +67,17 @@ export class NewScopeModalComponent implements OnInit {
     }
   }
 
+  selectClient(clientId) {
+    this.selectedClientId = clientId;
+
+    for (const currClient of this.clients) {
+      if (currClient.clientId === clientId) {
+        this.selectedClient = currClient;
+        // console.log(this.clientFormControl.value);
+      }
+    }
+  }
+
   /**
    * Checks whether there is any error in any input
    */
@@ -73,12 +87,12 @@ export class NewScopeModalComponent implements OnInit {
 
   addScope() {
     this.dialogRef.close({
-      id: Math.random().toString(36).substring(7),
-      scopeName: this.scopeFormGroup.value.scopeName,
-      accessType: this.privateActive === 'active-class' ? 'Private' : 'Public',
-      clientName: this.selectedClient,
-      scopeOwner: this.user.fullName || `${this.user.name.firstName} ${this.user.name.lastName}`,
-      scopeDesc: this.scopeFormGroup.value.desc,
+      value: this.scopeFormGroup.value.scopeName,
+      type: this.privateActive === 'active-class' ? 'PRIVATE' : 'PUBLIC',
+      client: {name: this.scopeFormGroup.value.client.name, clientId: this.scopeFormGroup.value.client.clientId},
+      audienceId: this.scopeFormGroup.value.client.audienceId,
+      creator: this.user.fullName || `${this.user.name.firstName} ${this.user.name.lastName}`,
+      description: this.scopeFormGroup.value.desc,
       permittedClients: []
     })
   }
