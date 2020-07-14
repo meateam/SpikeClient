@@ -58,17 +58,32 @@ export class ScopeNewPermittedClientComponent implements OnInit {
       // if it has been less than <MILLISECONDS>
       clearTimeout(timeout);
       if (regex.test(e.key) || e.key === 'Backspace' || e.key === 'Delete') {
-          // Make a new timeout set to go off in 1000ms (1 second)
-          timeout = setTimeout(() => {
-            this.getFilteredClients('XXXXXXXXXXXXXXXX');
-        }, 300);
+          if (this.myControl.value.length === 0) {
+            this.getFilteredClients();
+          } else {
+            timeout = setTimeout(() => {
+              this.getFilteredClients();
+            }, 300);
+          }
       }
     });
   }
 
-  async getFilteredClients(filter) {
-    const data = await this.clientService.findClients(filter).toPromise();
-    this.filteredClients = data;
+  /**
+   * Gets the filtered clients from the server
+   * using filter function (Fuzzy Search)
+   */
+  async getFilteredClients() {
+    if (this.myControl && this.myControl.value && this.myControl.value.length >= 1) {
+      const data = await this.clientService.findClients(this.myControl.value).toPromise();
+      // Replace This:
+      this.filteredClients = this.clients.filter((client) =>
+          { return client.clientName.toLowerCase().includes(this.myControl.value.toLowerCase())});
+      // With This:
+      // this.filteredClients = data;
+    } else {
+      this.filteredClients = [];
+    }
   }
   
   close() {
