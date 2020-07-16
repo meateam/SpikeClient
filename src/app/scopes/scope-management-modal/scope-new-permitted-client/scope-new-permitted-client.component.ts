@@ -114,7 +114,6 @@ export class ScopeNewPermittedClientComponent implements OnInit {
 
   isFormValid() {
 
-    // TODO: Check if the client is already in the scope permitted clients
     return (!!this.selectedClient && this.selectedClient.name === this.input.value);
   }
 }
