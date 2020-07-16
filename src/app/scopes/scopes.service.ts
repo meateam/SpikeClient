@@ -30,7 +30,15 @@ export class ScopesService {
   }
 
   updateScope(scope): Observable<any> {
-    return this.http.get('/');
+    const httpOptions = {
+      headers: new HttpHeaders({
+          authorization: PublicFunctions.getCookie('authorization')
+      })
+    };
+
+    return this.http.put(this.scopesUrl, { scopeInformation: { scopeId: scope.id, permittedClients: scope.permittedClients.map(((client: { clientId: any; }) => client.clientId)) } }, httpOptions).pipe(
+        catchError(PublicFunctions.handleError)
+    );
   }
 
   addScope(scope): Observable<any> {

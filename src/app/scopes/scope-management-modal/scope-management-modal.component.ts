@@ -27,16 +27,16 @@ export class ScopeManagementModalComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  removeClient(permittedClient) {
+  async removeClient(permittedClient) {
     for (const [index, currClient] of this.scope.permittedClients.entries()) {
-      if (permittedClient.id === currClient.id) {
+      if (permittedClient.clientId === currClient.clientId) {
         this.scope.permittedClients.splice(index, 1);
-
-        this.scopeService.updateScope(this.scope);
-
+        
         this.snackBar.open('Permitted Client Was Removed Successfully', '', {
           duration: 2000
         });
+
+        await this.scopeService.updateScope(this.scope).toPromise();
       }
     }
   }
@@ -44,18 +44,23 @@ export class ScopeManagementModalComponent implements OnInit {
   async openAddClient() {
     const dialogRef = this.scopeAddClientDialog.open(ScopeNewPermittedClientComponent, {
         width: '380px',
-        height: '260px'
+        height: '260px',
+        data: {
+          permittedClients: this.scope.permittedClients
+        }
     });
 
     const returnedClient = await dialogRef.afterClosed().toPromise();
+
+    // TODO: Nedd to check duplicate clients on addition
     if (returnedClient) {
       this.scope.permittedClients.push(returnedClient);
-
-      this.scopeService.updateScope(this.scope);
-
+      
       this.snackBar.open('Permitted Client Was Added Successfully', '', {
         duration: 2000
       });
+
+      const result = await this.scopeService.updateScope(this.scope).toPromise();
     }
   }
 
