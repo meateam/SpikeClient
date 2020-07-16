@@ -17,10 +17,10 @@
          [matAutocomplete]="auto"
          id="client-input">
   <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selectClient($event.option.value)">
-    <mat-option *ngFor="let client of filteredClients" [value]="client.id" style="height:unset !important; line-height: 16px !important; white-space:normal !important; padding: 12px 16px !important; text-align:left; direction:ltr;">
-      <span style="font-weight:bold;">{{ client.clientName }}</span> - 
-      <span style="color: #999; font-weight:bold;"> {{ client.teamName }}</span> <br>
-      <span style="font-size: 13px;font-weight: bold;color: #AAAAAA; position: relative; top:1px; line-height:0;">{{ client.clientDesc }}</span>
+    <mat-option *ngFor="let client of filteredClients" [value]="client.clientId" style="height:unset !important; line-height: 16px !important; white-space:normal !important; padding: 12px 16px !important; text-align:left; direction:ltr;">
+      <span style="font-weight:bold;">{{ client.name }}</span> - 
+      <span style="color: #999; font-weight:bold;"> {{ client.teamId.teamname }}</span> <br>
+      <span style="font-size: 13px;font-weight: bold;color: #AAAAAA; position: relative; top:1px; line-height:0;">{{ client.description }}</span>
     </mat-option>
   </mat-autocomplete>
 </mat-form-field>

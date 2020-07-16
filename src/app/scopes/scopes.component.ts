@@ -199,6 +199,11 @@ export class ScopesComponent implements OnInit {
       if (createdScope) {
         this.dataSource.data.push(createdScope);
         this.dataSource._updateChangeSubscription();
+
+        
+        this.snackBar.open('Scope Added Successfully', '',{
+          duration: 3000
+        });
       }
     }
   }
