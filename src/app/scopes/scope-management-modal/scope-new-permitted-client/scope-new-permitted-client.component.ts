@@ -1,7 +1,7 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatInput } from '@angular/material/input';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ClientsService } from 'src/app/clients/clients.service';
 
 @Component({
@@ -13,13 +13,18 @@ export class ScopeNewPermittedClientComponent implements OnInit {
   myControl = new FormControl();
   @ViewChild('inputSelected') input: MatInput;
   selectedClientId: string;
+  usedPermittedClients;
   selectedClient;
 
   constructor(private clientService: ClientsService,
-              public dialogRef: MatDialogRef<ScopeNewPermittedClientComponent>) { }
-  
+              public dialogRef: MatDialogRef<ScopeNewPermittedClientComponent>,
+              @Inject(MAT_DIALOG_DATA) public data: any) {
+                this.usedPermittedClients = data.permittedClients;
+              }
+
   loadingClients = true;
-  clients = [{
+
+ /* clients = [{
               id: '1',
               clientName: 'Drive',
               teamName: 'KrakenTeam',
@@ -37,14 +42,14 @@ export class ScopeNewPermittedClientComponent implements OnInit {
               teamName: 'KartoffelTeam',
               clientDesc: 'Its a karting game ofcourse'
             },
-          ];
+          ];*/
+  
   filteredClients = [];
 
   ngOnInit(): void {
     this.loadingClients = false;
     setTimeout(() => { this.input.focus() }, 200);
 
-    
     const input: any = document.getElementById('client-input');
 
     // Init a timeout variable to be used below
@@ -76,10 +81,16 @@ export class ScopeNewPermittedClientComponent implements OnInit {
   async getFilteredClients() {
     if (this.myControl && this.myControl.value && this.myControl.value.length >= 1) {
       const data = await this.clientService.findClients(this.myControl.value).toPromise();
-      // Replace This:
-      // this.filteredClients = this.clients.filter((client) =>
-      //     { return client.clientName.toLowerCase().includes(this.myControl.value.toLowerCase())});
-      // With This:
+
+      // Do not show clients that are already exist.
+      for (const [currIndex, currFoundPermittedClient] of data.entries()) {
+        for (const currPermittedClient of this.usedPermittedClients) {
+          if (currFoundPermittedClient.clientId === currPermittedClient.clientId) {
+            data.splice(currIndex, 1);
+          }
+        }
+      }
+
       this.filteredClients = data;
     } else {
       this.filteredClients = [];
@@ -91,15 +102,8 @@ export class ScopeNewPermittedClientComponent implements OnInit {
   }
 
   selectClient(clientId) {
-    this.selectedClientId = clientId;
-
-    for (const currClient of this.clients) {
-      if (currClient.id === clientId) {
-        this.selectedClient = currClient;
-        this.myControl.setValue(currClient.clientName);
-      }
-    }
-
+    this.selectedClient = clientId;
+    this.input.value = this.myControl.value.name;
   }
 
   addClient() {
@@ -107,6 +111,7 @@ export class ScopeNewPermittedClientComponent implements OnInit {
   }
 
   isFormValid() {
-    return true;
+    // TODO: Check if the client is already in the scope permitted clients
+    return (!!this.selectedClient);
   }
 }
