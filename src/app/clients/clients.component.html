@@ -153,6 +153,6 @@
         </mat-action-row>
         </mat-expansion-panel>
       </mat-accordion>
-      <button mat-fab color="primary" class="register-btn" matTooltip="Add Client" matTooltipPosition="above" (click)="openRegister()"><mat-icon>add</mat-icon></button>
+      <button mat-fab color="primary" class="register-btn" matTooltip="Add Client" matTooltipPosition="above" (click)="openRegister()" *ngIf="clients"><mat-icon>add</mat-icon></button>
   
   </div>
