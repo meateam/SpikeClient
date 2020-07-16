@@ -86,12 +86,14 @@ export class ScopeNewPermittedClientComponent implements OnInit {
       for (const [currIndex, currFoundPermittedClient] of data.entries()) {
         for (const currPermittedClient of this.usedPermittedClients) {
           if (currFoundPermittedClient.clientId === currPermittedClient.clientId) {
-            data.splice(currIndex, 1);
+            data[currIndex] = null;
           }
         }
       }
 
-      this.filteredClients = data;
+      this.filteredClients = data.filter((element) => {
+        return element != null;
+      });
     } else {
       this.filteredClients = [];
     }
@@ -111,7 +113,7 @@ export class ScopeNewPermittedClientComponent implements OnInit {
   }
 
   isFormValid() {
-    // TODO: Check if the client is already in the scope permitted clients
-    return (!!this.selectedClient);
+
+    return (!!this.selectedClient && this.selectedClient.name === this.input.value);
   }
 }

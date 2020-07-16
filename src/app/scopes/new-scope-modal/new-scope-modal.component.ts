@@ -1,3 +1,5 @@
+// new-scope-modal.component
+
 import { Component, OnInit, Inject, ViewChild } from '@angular/core';
 import { Validators, FormControl, FormGroup, FormBuilder } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
@@ -11,6 +13,12 @@ import { MatInput } from '@angular/material/input';
 export class NewScopeModalComponent implements OnInit {
   @ViewChild('inputSelected') input: MatInput;
   
+  /**
+   * Constructor of the component.
+   * @param formBuilder - The builder of the form
+   * @param dialogRef - The reference for the dialog
+   * @param data - The data given to the modal
+   */
   constructor(private formBuilder: FormBuilder,
               public dialogRef: MatDialogRef<NewScopeModalComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any) {
@@ -40,9 +48,7 @@ export class NewScopeModalComponent implements OnInit {
   errorMsg: string;
   privateActive: string = 'active-class';
   publicActive: string = 'inactive-class'; 
-
   selectedClient = {name: {}};
-  // clients = [{id: '1', name: 'SpikeDev'}, {id: '2', name: 'SpikeProd'}, {id: '3', name: 'SpikeInteg'}];
 
   ngOnInit(): void {
     setTimeout(() => { this.input.focus(); }, 250);
@@ -67,13 +73,16 @@ export class NewScopeModalComponent implements OnInit {
     }
   }
 
+  /**
+   * Selects the client.
+   * @param clientId - The clientId of the selected Client.
+   */
   selectClient(clientId) {
     this.selectedClientId = clientId;
 
     for (const currClient of this.clients) {
       if (currClient.clientId === clientId) {
         this.selectedClient = currClient;
-        // console.log(this.clientFormControl.value);
       }
     }
   }
@@ -85,6 +94,9 @@ export class NewScopeModalComponent implements OnInit {
     return this.scopeFormGroup.status !== 'INVALID';
   }
 
+  /**
+   * Add scope with dialog.
+   */
   addScope() {
     this.dialogRef.close({
       value: this.scopeFormGroup.value.scopeName,
