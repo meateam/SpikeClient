@@ -139,7 +139,9 @@
             <span class="span-err-msg" *ngIf="saveErrMsg">{{saveErrMsg}}</span>
         </div>
         <mat-action-row class="flexable">
-            <button mat-button color="warn" class="btn-act" *ngIf="!client.isEditable" (click)="removeClient(client);">Remove</button>
+          <span [matTooltipDisabled]="client.isDeletable" matTooltip="First delete scopes belong to this client" matTooltipPosition="above">
+            <button mat-button color="warn" class="btn-act" *ngIf="!client.isEditable" [disabled]="!client.isDeletable" (click)="removeClient(client);">Remove</button>
+          </span>
             <button mat-button color="warn" class="btn-act" *ngIf="client.isEditable" (click)="cancelChanges(client);">Cancel</button>
             <div style="width:100%; text-align: center;">
               <button mat-button color="warn" class="btn-act" matTooltipPosition="above"
