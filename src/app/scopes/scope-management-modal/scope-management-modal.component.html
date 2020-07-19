@@ -1,6 +1,6 @@
 <mat-toolbar>
     <mat-toolbar-row>
-      <span>{{scope.clientName}} "{{scope.scopeName}}" Permitted Clients</span>
+      <span>{{scope.client.name}} "{{scope.value}}" Permitted Clients</span>
       <span class="example-spacer"></span>
       <button mat-icon-button (click)="close()"><mat-icon>close</mat-icon></button>
     </mat-toolbar-row>
@@ -22,13 +22,13 @@
 <mat-list class="scrollbar scrollbar-primary" style="padding-top:0; max-height:688px; overflow-y:auto; overflow-x:hidden">
   <mat-list-item *ngFor="let permittedClient of scope.permittedClients">
     <div style="flex:50%">
-      <span style="position: absolute;top: 6px;">{{ permittedClient.clientName }}</span>
+      <span style="position: absolute;top: 6px;">{{ permittedClient.name }}</span>
       <span style="position: absolute;bottom: 4px;color: #AAAAAA;font-size: 13px;">
-        {{ permittedClient.teamName }}
+        {{ permittedClient.teamId.teamname }}
       </span>
     </div>
     <div style="flex:45%">
-      <span>{{ permittedClient.clientDesc }}</span>
+      <span>{{ permittedClient.description }}</span>
     </div>
     <div style="flex:20%" style="text-align:right;">
       <button (click)="removeClient(permittedClient)" mat-icon-button color="warn" matTooltip="Remove Client From Scope"><mat-icon>delete</mat-icon></button>

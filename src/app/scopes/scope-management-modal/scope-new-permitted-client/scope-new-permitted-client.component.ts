@@ -1,7 +1,7 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatInput } from '@angular/material/input';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ClientsService } from 'src/app/clients/clients.service';
 
 @Component({
@@ -13,13 +13,18 @@ export class ScopeNewPermittedClientComponent implements OnInit {
   myControl = new FormControl();
   @ViewChild('inputSelected') input: MatInput;
   selectedClientId: string;
+  usedPermittedClients;
   selectedClient;
 
   constructor(private clientService: ClientsService,
-              public dialogRef: MatDialogRef<ScopeNewPermittedClientComponent>) { }
-  
+              public dialogRef: MatDialogRef<ScopeNewPermittedClientComponent>,
+              @Inject(MAT_DIALOG_DATA) public data: any) {
+                this.usedPermittedClients = data.permittedClients;
+              }
+
   loadingClients = true;
-  clients = [{
+
+ /* clients = [{
               id: '1',
               clientName: 'Drive',
               teamName: 'KrakenTeam',
@@ -37,14 +42,14 @@ export class ScopeNewPermittedClientComponent implements OnInit {
               teamName: 'KartoffelTeam',
               clientDesc: 'Its a karting game ofcourse'
             },
-          ];
+          ];*/
+  
   filteredClients = [];
 
   ngOnInit(): void {
     this.loadingClients = false;
     setTimeout(() => { this.input.focus() }, 200);
 
-    
     const input: any = document.getElementById('client-input');
 
     // Init a timeout variable to be used below
@@ -58,17 +63,40 @@ export class ScopeNewPermittedClientComponent implements OnInit {
       // if it has been less than <MILLISECONDS>
       clearTimeout(timeout);
       if (regex.test(e.key) || e.key === 'Backspace' || e.key === 'Delete') {
-          // Make a new timeout set to go off in 1000ms (1 second)
-          timeout = setTimeout(() => {
-            this.getFilteredClients('XXXXXXXXXXXXXXXX');
-        }, 300);
+          if (this.myControl.value.length === 0) {
+            this.getFilteredClients();
+          } else {
+            timeout = setTimeout(() => {
+              this.getFilteredClients();
+            }, 300);
+          }
       }
     });
   }
 
-  async getFilteredClients(filter) {
-    const data = await this.clientService.findClients(filter).toPromise();
-    this.filteredClients = data;
+  /**
+   * Gets the filtered clients from the server
+   * using filter function (Fuzzy Search)
+   */
+  async getFilteredClients() {
+    if (this.myControl && this.myControl.value && this.myControl.value.length >= 1) {
+      const data = await this.clientService.findClients(this.myControl.value).toPromise();
+
+      // Do not show clients that are already exist.
+      for (const [currIndex, currFoundPermittedClient] of data.entries()) {
+        for (const currPermittedClient of this.usedPermittedClients) {
+          if (currFoundPermittedClient.clientId === currPermittedClient.clientId) {
+            data[currIndex] = null;
+          }
+        }
+      }
+
+      this.filteredClients = data.filter((element) => {
+        return element != null;
+      });
+    } else {
+      this.filteredClients = [];
+    }
   }
   
   close() {
@@ -76,15 +104,8 @@ export class ScopeNewPermittedClientComponent implements OnInit {
   }
 
   selectClient(clientId) {
-    this.selectedClientId = clientId;
-
-    for (const currClient of this.clients) {
-      if (currClient.id === clientId) {
-        this.selectedClient = currClient;
-        this.myControl.setValue(currClient.clientName);
-      }
-    }
-
+    this.selectedClient = clientId;
+    this.input.value = this.myControl.value.name;
   }
 
   addClient() {
@@ -92,6 +113,7 @@ export class ScopeNewPermittedClientComponent implements OnInit {
   }
 
   isFormValid() {
-    return true;
+
+    return (!!this.selectedClient && this.selectedClient.name === this.input.value);
   }
 }

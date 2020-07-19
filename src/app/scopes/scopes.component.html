@@ -1,40 +1,48 @@
 <mat-spinner class="spinner-opts" *ngIf="!isDone"></mat-spinner>
-<div *ngIf="isDone">
+<div *ngIf="(isDone) && (!scopes || scopes.length === 0)">
+    <div class="div-empty">
+        <mat-icon *ngIf="clients && clients.length > 0" class="icon-empty">lock</mat-icon>
+        <div *ngIf="clients && clients.length > 0" class="span-empty">No Scopes To Display</div><br>
+        <mat-icon *ngIf="!clients || clients.length === 0" class="icon-empty" style="/*color:#f44336*/">block</mat-icon>
+        <div *ngIf="!clients || clients.length === 0" class="span-empty" style="/*color:black; font-weight: bold;*/">Please Create a Client Before Creating A Scope</div>
+    </div>
+</div>
+<div *ngIf="isDone && scopes && scopes.length > 0">
     <div style="display:flex; flex-wrap: wrap; justify-content: center; position:relative; top:60px;">
         <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8" style="width: 80%">
 
             <!-- Scope Name Column -->
-            <ng-container matColumnDef="scopeName">
+            <ng-container matColumnDef="value">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header class="tb-header"> Scope Name </th>
-                <td mat-cell *matCellDef="let element"> {{ element.scopeName }} </td>
+                <td mat-cell *matCellDef="let element"> {{ element.value }} </td>
             </ng-container>
             
             <!-- Access Type Column -->
-            <ng-container matColumnDef="accessType">
+            <ng-container matColumnDef="type">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header class="tb-header"> Access Type </th>
                 <td mat-cell *matCellDef="let element">
-                    <mat-icon *ngIf="element.accessType === 'Private'" class="lock-icon">lock</mat-icon>
-                    <mat-icon *ngIf="element.accessType === 'Public'" class="lock-icon">lock_open</mat-icon>
-                    <span class="access-span">{{ element.accessType }}</span>
+                    <mat-icon *ngIf="element.type === 'PRIVATE'" class="lock-icon">lock</mat-icon>
+                    <mat-icon *ngIf="element.type === 'PUBLIC'" class="lock-icon">lock_open</mat-icon>
+                    <span class="access-span">{{ element.type[0] + element.type.substr(1).toLowerCase() }}</span>
                 </td>
             </ng-container>
             
             <!-- Client Name Column -->
-            <ng-container matColumnDef="clientName">
+            <ng-container matColumnDef="name">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header class="tb-header"> Client Name </th>
-                <td mat-cell *matCellDef="let element"> {{ element.clientName }} </td>
+                <td mat-cell *matCellDef="let element"> {{ element.client.name }} </td>
             </ng-container>
             
             <!-- Created By Column -->
-            <ng-container matColumnDef="scopeOwner">
+            <ng-container matColumnDef="creator">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header class="tb-header"> Created By </th>
-                <td mat-cell *matCellDef="let element"> {{ element.scopeOwner }} </td>
+                <td mat-cell *matCellDef="let element"> {{ element.creator }} </td>
             </ng-container>
             
             <!-- Description Column -->
-            <ng-container matColumnDef="scopeDesc">
+            <ng-container matColumnDef="description">
                 <th mat-header-cell *matHeaderCellDef class="tb-header"> Description </th>
-                <td mat-cell *matCellDef="let element"> {{ element.scopeDesc }} </td>
+                <td mat-cell *matCellDef="let element"> {{ element.description }} </td>
             </ng-container>
 
             <!-- Permitted Clients Column -->
@@ -42,12 +50,12 @@
                 <th mat-header-cell *matHeaderCellDef class="tb-header"> Permitted Clients </th>
                 <td mat-cell *matCellDef="let element">
                     <mat-chip-list aria-label="Permitted Clients">
-                        <mat-chip color="primary" *ngFor="let permittedClient of element.permittedClients | slice:0:2;">{{ permittedClient.clientName }}</mat-chip>
+                        <mat-chip color="primary" *ngFor="let permittedClient of element.permittedClients | slice:0:2;">{{ permittedClient.name }}</mat-chip>
                         <button color="primary" (click)="openManageScope(element)" mat-icon-button *ngIf="element.permittedClients.length > 0" matTooltip="Manage Permitted Clients" matTooltipPosition="above">
                             <mat-icon *ngIf="element.permittedClients.length > 0 && element.permittedClients.length <= 2">more_horiz</mat-icon>
                             <mat-icon *ngIf="element.permittedClients.length > 2" [matBadge]="element.permittedClients.length - 2" matBadgeColor="warn">more_horiz</mat-icon>
                         </button>
-                        <button style="width:100%;" color="primary" (click)="openManageScope(element)" mat-button *ngIf="element.permittedClients.length === 0 && element.accessType === 'Private'">
+                        <button style="width:100%;" color="primary" (click)="openManageScope(element)" mat-button *ngIf="element.permittedClients.length === 0 && element.type === 'PRIVATE'">
                             <mat-icon style="position:relative; right:2px; bottom:1px;">add_to_queue</mat-icon> Add Permitted Clients
                         </button>
                     </mat-chip-list>
@@ -71,6 +79,6 @@
     </div>
 </div>
 
-<button *ngIf="isDone" mat-fab color="primary" matTooltip="Create New Scope" matTooltipPosition="above" style="position:fixed; right: 50px; bottom: 50px;" (click)="openNewScope()">
+<button *ngIf="isDone" mat-fab color="primary" matTooltip="Create New Scope" matTooltipPosition="above" style="position:fixed; right: 50px; bottom: 50px;" (click)="openNewScope()" [disabled]="!clients || clients.length === 0">
     <mat-icon>add</mat-icon>
 </button>
