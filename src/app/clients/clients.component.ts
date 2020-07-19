@@ -173,6 +173,7 @@ export class ClientsComponent implements OnInit {
       }
 
       result.newRedirectUris = [];
+      result.isDeletable = true;
       this.clients.push(result);
     }
   }
@@ -192,24 +193,25 @@ export class ClientsComponent implements OnInit {
             this.clients[clientIndex].secret = clientData.secret;
             this.clients[clientIndex].redirectUris = clientData.redirectUris;
             this.clients[clientIndex].audienceId = clientData.audienceId;
+            this.clients[clientIndex].isDeletable = clientData.isDeletable;
             currClient.open();
             this.clients[clientIndex].start = false;
             break;
           }
         }
 
-        // tslint:disable-next-line:prefer-for-of
-        for (let currIndex = 0; currIndex < this.clients.length; currIndex++) {
-          if (this.clients[currIndex].clientId === clientData.clientId) {
-            this.clients[currIndex].teamId = clientData.teamId;
-            this.clients[currIndex].secret = clientData.secret;
-            this.clients[currIndex].redirectUris = clientData.redirectUris;
-            this.clients[currIndex].audienceId = clientData.audienceId;
-            currClient.open();
-            this.clients[currIndex].start = false;
-            break;
-          }
-        }
+        // // tslint:disable-next-line:prefer-for-of
+        // for (let currIndex = 0; currIndex < this.clients.length; currIndex++) {
+        //   if (this.clients[currIndex].clientId === clientData.clientId) {
+        //     this.clients[currIndex].teamId = clientData.teamId;
+        //     this.clients[currIndex].secret = clientData.secret;
+        //     this.clients[currIndex].redirectUris = clientData.redirectUris;
+        //     this.clients[currIndex].audienceId = clientData.audienceId;
+        //     currClient.open();
+        //     this.clients[currIndex].start = false;
+        //     break;
+        //   }
+        // }
       }
     }
   }
