@@ -1,6 +1,6 @@
 // config
 
-import { environment } from '../../../src/environments/environment.prod';
+import { environment } from '../../environments/environment.prod';
 
 export const config = {
         SERVER_HOST: environment.SERVER_HOST,
