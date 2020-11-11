@@ -3,7 +3,19 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  environmentName: '',
+  SERVER_HOST: '',
+  // SERVER_HOST: 'https://51.144.178.121',
+  SERVER_PORT: '',
+  CLIENT_PORT: '',
+  PRIVATE_KEY_PATH: '',
+  CERT_PATH: '',
+  ELASTIC_APM_SERVICE_NAME: '',
+  ELASTIC_APM_SERVER_URL: '',
+  ELASTIC_APM_SECRET_TOKEN: '',
+  ELASTIC_APM_ACTIVE: '',
+  SHRAGA_URL: ''
 };
 
 /*

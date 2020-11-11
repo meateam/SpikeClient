@@ -1,16 +1,16 @@
 // config
 
-export const config = {
+import { environment } from '../../../src/environments/environment.prod';
 
-        SERVER_HOST: 'https://localhost',
-    //  SERVER_HOST: 'https://51.144.178.121',
-        SERVER_PORT: '3005',
-        CLIENT_PORT: '4200',
-        PRIVATE_KEY_PATH: 'src/certs/files/privatekey.pem',
-        CERT_PATH: 'src/certs/files/certificate.pem',
-        ELASTIC_APM_SERVICE_NAME: 'apm_service',
-        ELASTIC_APM_SERVER_URL: 'apm_server',
-        ELASTIC_APM_SECRET_TOKEN: 'apm_secret',
-        ELASTIC_APM_ACTIVE: 'false',
-        SHRAGA_URL: 'http://13.79.7.3'
+export const config = {
+        SERVER_HOST: environment.SERVER_HOST,
+        SERVER_PORT: environment.SERVER_PORT,
+        CLIENT_PORT: environment.CLIENT_PORT,
+        PRIVATE_KEY_PATH: environment.PRIVATE_KEY_PATH,
+        CERT_PATH: environment.CERT_PATH,
+        ELASTIC_APM_SERVICE_NAME: environment.ELASTIC_APM_SERVICE_NAME,
+        ELASTIC_APM_SERVER_URL: environment.ELASTIC_APM_SERVER_URL,
+        ELASTIC_APM_SECRET_TOKEN: environment.ELASTIC_APM_SECRET_TOKEN,
+        ELASTIC_APM_ACTIVE: environment.ELASTIC_APM_ACTIVE,
+        SHRAGA_URL: environment.SHRAGA_URL,
 };
