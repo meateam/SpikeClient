@@ -2,7 +2,6 @@ export const environment = {
   production: true,
   environmentName: 'PROD',
   SERVER_HOST: 'https://localhost',
-  // SERVER_HOST: 'https://51.144.178.121',
   SERVER_PORT: '3005',
   CLIENT_PORT: '4200',
   PRIVATE_KEY_PATH: 'src/certs/files/privatekey.pem',

@@ -60,8 +60,7 @@ dist/*
 
 # dotenv environment variables file
 .env
-environment.prod.ts
-environment.ts
+src/environments/*
 
 # next.js build output
 .next
