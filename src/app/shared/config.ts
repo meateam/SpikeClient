@@ -6,6 +6,8 @@ export const config = {
         SERVER_HOST: environment.SERVER_HOST,
         SERVER_PORT: environment.SERVER_PORT,
         CLIENT_PORT: environment.CLIENT_PORT,
+        EXTERNAL_SERVER_HOST: environment.EXTERNAL_SERVER_HOST,
+        EXTERNAL_SERVER_PORT: environment.EXTERNAL_SERVER_PORT,
         PRIVATE_KEY_PATH: environment.PRIVATE_KEY_PATH,
         CERT_PATH: environment.CERT_PATH,
         ELASTIC_APM_SERVICE_NAME: environment.ELASTIC_APM_SERVICE_NAME,

@@ -21,6 +21,7 @@ import * as https from 'https';
 import { readFileSync } from 'fs';
 
 const express = require('express');
+const { createProxyMiddleware } = require('http-proxy-middleware');
 
 const allowedExt = [
     '.js',
@@ -50,6 +51,11 @@ class Server {
     constructor() {
         this.app = express();
         configurePassport();
+
+        this.app.use('/api', createProxyMiddleware({ target: `https://${config.EXTERNAL_SERVER_HOST}:${config.EXTERNAL_SERVER_PORT}`,
+                                                     changeOrigin: false,
+                                                     secure: false}));
+
         this.app.use(express.json());
         this.app.use(express.urlencoded({
             extended: false
@@ -92,7 +98,7 @@ class Server {
 
         this.app.use((req, res, next) => {
             if (!req.user) {
-                res.redirect('/auth');
+                next();
             } else {
                 next();
             }
@@ -103,7 +109,7 @@ class Server {
 
         // Redirect to docs site
         this.app.get('/help', (req, res) => {
-	    
+
             res.redirect('http://' + req.hostname + ':3001');
         });
 
