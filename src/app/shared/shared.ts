@@ -2,7 +2,6 @@
 
 import { HttpErrorResponse } from '@angular/common/http';
 import { throwError } from 'rxjs';
-import { config } from './config';
 
 export class PublicFunctions {
     /**
@@ -53,9 +52,9 @@ export class PublicFunctions {
     public static logout() {
         // Redirect to shraga to authenticate
         if (window.location.pathname !== '/') {
-            window.location.href = `https://localhost:4200/auth?RelayState=${window.location.pathname}`;
+            window.location.href = `${window.location.origin}/auth?RelayState=${window.location.pathname}`;
         } else {
-            window.location.href = `https://localhost:4200/auth`;
+            window.location.href = `${window.location.origin}/auth`;
         }
     }
 

@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { config } from '../shared/config';
 import { Observable } from 'rxjs';
 import { PublicFunctions } from '../shared/shared';
 import { catchError } from 'rxjs/operators';
@@ -9,7 +8,7 @@ import { catchError } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class ScopesService {
-  private scopesUrl = `${config.SERVER_HOST}:${config.SERVER_PORT}/api/scope`;
+  private scopesUrl = `${window.location.origin}/api/scope`;
 
   /**
    * Injection of the http service.
@@ -36,6 +35,7 @@ export class ScopesService {
       })
     };
 
+    // tslint:disable-next-line: max-line-length
     return this.http.put(this.scopesUrl, { scopeInformation: { scopeId: scope.id, permittedClients: scope.permittedClients.map(((client: { clientId: any; }) => client.clientId)) } }, httpOptions).pipe(
         catchError(PublicFunctions.handleError)
     );

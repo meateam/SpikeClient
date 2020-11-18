@@ -4,12 +4,11 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { PublicFunctions } from '../shared/shared';
-import { config } from '../shared/config';
 import { catchError } from 'rxjs/operators';
 
 @Injectable()
 export class ClientsService {
-  private clientUrl = `${config.SERVER_HOST}:${config.SERVER_PORT}/api/client`;
+  private clientUrl = `${window.location.origin}/api/client`;
 
   /**
    * Injection of the http service.
@@ -40,7 +39,7 @@ export class ClientsService {
         headers: new HttpHeaders({
             authorization: PublicFunctions.getCookie('authorization')
         })
-    }
+    };
 
     return this.http.get(`${this.clientUrl}/search?name=${filter}`, httpOptions).pipe(
         catchError(PublicFunctions.handleError)

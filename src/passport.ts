@@ -2,7 +2,6 @@ const passport = require('passport');
 const {
     Strategy
 } = require('passport-shraga');
-import { config } from './app/shared/config';
 
 const users = [];
 
@@ -19,7 +18,7 @@ passport.deserializeUser((id, cb) => {
 export const configurePassport = () => {
     passport.use(new Strategy({
         // callbackURL: '',
-        shragaURL: config.SHRAGA_URL
+        shragaURL: process.env.SHRAGA_URL
     }, (profile, done) => {
   //      let length = users.filter(user => user.id === id).length;
   //      if (length === 0)
