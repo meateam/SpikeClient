@@ -5,13 +5,12 @@ import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { PublicFunctions } from '../shared/shared';
-import { config } from '../shared/config';
 
 @Injectable()
 export class AuthService {
-  private authUrl = `${config.SERVER_HOST}:${config.SERVER_PORT}/api/auth`;
-  private teamUrl = `${config.SERVER_HOST}:${config.SERVER_PORT}/api/team`;
-  private clientUrl = `${config.SERVER_HOST}:${config.SERVER_PORT}/api/client`;
+  private authUrl = `${window.location.origin}/api/auth`;
+  private teamUrl = `${window.location.origin}/api/team`;
+  private clientUrl = `${window.location.origin}/api/client`;
 
   /**
    * Injection of the http service.

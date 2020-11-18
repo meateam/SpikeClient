@@ -4,12 +4,11 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { PublicFunctions } from '../shared/shared';
-import { config } from '../shared/config';
 import { catchError } from 'rxjs/operators';
 
 @Injectable()
 export class TeamsService {
-  private teamUrl = `${config.SERVER_HOST}:${config.SERVER_PORT}/api/team`;
+  private teamUrl = `${window.location.origin}/api/team`;
 
   /**
    * Injection of the http service.

@@ -1,14 +1,12 @@
 // server
 
-import { config } from './app/shared/config';
-
 // Must run that at first for configuration
 import * as apm from 'elastic-apm-node';
 apm.start({
-    serviceName: config.ELASTIC_APM_SERVICE_NAME,
-    serverUrl: config.ELASTIC_APM_SERVER_URL,
-    secretToken: config.ELASTIC_APM_SECRET_TOKEN || '',
-    active: config.ELASTIC_APM_ACTIVE === 'true' || false,
+    serviceName: process.env.ELASTIC_APM_SERVICE_NAME,
+    serverUrl: process.env.ELASTIC_APM_SERVER_URL,
+    secretToken: process.env.ELASTIC_APM_SECRET_TOKEN || '',
+    active: process.env.ELASTIC_APM_ACTIVE === 'true' || false,
 });
 
 import { configurePassport } from './passport';
@@ -37,12 +35,12 @@ const allowedExt = [
 
 class Server {
     private readonly options = {
-        key: readFileSync(config.PRIVATE_KEY_PATH).toString(),
-        cert: readFileSync(config.CERT_PATH),
+        key: readFileSync(process.env.PRIVATE_KEY_PATH).toString(),
+        cert: readFileSync(process.env.CERT_PATH),
     };
 
     public app: any;
-    private port = config.CLIENT_PORT;
+    private port = process.env.CLIENT_PORT;
 
     public static bootstrap(): Server {
         return new Server();
@@ -52,7 +50,8 @@ class Server {
         this.app = express();
         configurePassport();
 
-        this.app.use('/api', createProxyMiddleware({ target: `https://${config.EXTERNAL_SERVER_HOST}:${config.EXTERNAL_SERVER_PORT}`,
+        // tslint:disable-next-line: max-line-length
+        this.app.use('/api', createProxyMiddleware({ target: `https://${process.env.EXTERNAL_SERVER_HOST}:${process.env.EXTERNAL_SERVER_PORT}`,
                                                      changeOrigin: false,
                                                      secure: false}));
 
@@ -110,7 +109,7 @@ class Server {
         // Redirect to docs site
         this.app.get('/help', (req, res) => {
 
-            res.redirect('http://' + req.hostname + ':3001');
+            res.redirect(`http://${req.hostname}:${process.env.DOCS_PORT}`);
         });
 
         this.app.get('*', (req, res) => {

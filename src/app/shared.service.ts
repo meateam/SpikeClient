@@ -5,13 +5,12 @@ import { Observable } from 'rxjs';
 import { PublicFunctions } from './shared/shared';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { catchError, delay } from 'rxjs/operators';
-import { config } from './shared/config';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SharedService {
-  private personUrl = `${config.SERVER_HOST}:${config.SERVER_PORT}/api/person`;
+  private personUrl = `${window.location.origin}/api/person`;
   private value: string;
   listeners = [];
 
