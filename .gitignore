@@ -64,3 +64,5 @@ src/environments/*
 
 # next.js build output
 .next
+
+/certs
