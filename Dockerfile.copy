@@ -1,0 +1,10 @@
+# Stage 1
+FROM node:10-alpine
+RUN mkdir -p /app
+WORKDIR /app
+COPY . .
+RUN npm install
+RUN npm install -g typescript@3.7.5
+#RUN npm run build --prod
+ENTRYPOINT npm run serve
+# ENTRYPOINT ["node", "./dist/src/server.js"]

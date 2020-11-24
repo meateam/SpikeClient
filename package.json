@@ -4,8 +4,10 @@
   "scripts": {
     "ng": "ng",
     "start": "npx tsc && npx ng build --prod && node scripts/copy_files.js && node -r dotenv/config ./dist/src/server.js",
+    "serve": "node -r dotenv/config ./dist/src/server.js",
     "generate-certs": "node scripts/generate_certs.js",
     "build": "ng build",
+    "build:prod": "npx ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
@@ -28,9 +30,9 @@
     "express-http-proxy": "^1.6.2",
     "express-serve-static-core": "^0.1.1",
     "express-session": "^1.17.0",
+    "material-design-icons": "^3.0.1",
     "http-proxy-middleware": "^1.0.6",
     "jsonwebtoken": "^8.5.1",
-    "material-design-icons": "^3.0.1",
     "ng2-avatar": "^2.3.1",
     "ngx-avatar": "^3.7.0",
     "passport": "^0.4.1",

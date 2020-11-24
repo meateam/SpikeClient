@@ -35,7 +35,7 @@ export class PublicFunctions {
                 JSON.parse(
                     decodeURIComponent(
                         Array.prototype.map.call(
-                            atob(authorization.split('.')[1].replace('-', '+').replace('_', '/')),
+                            atob(authorization.split('.')[1].replace(/-/g, '+').replace(/_/g, '/')),
                             c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
                         ).join('')
                     )

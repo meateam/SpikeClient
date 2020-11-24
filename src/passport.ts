@@ -17,7 +17,7 @@ passport.deserializeUser((id, cb) => {
 
 export const configurePassport = () => {
     passport.use(new Strategy({
-        // callbackURL: '',
+        callbackURL: `${process.env.SPIKE_CLIENT_LTM}/auth/callback`,
         shragaURL: process.env.SHRAGA_URL
     }, (profile, done) => {
   //      let length = users.filter(user => user.id === id).length;
