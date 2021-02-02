@@ -166,7 +166,11 @@ export class RegisterClientModalComponent implements OnInit {
    */
   add(event: MatChipInputEvent): void {
     const input = event.input;
-    const value = event.value;
+    let value = event.value;
+    if (value.length > 0 && value.indexOf('/') === -1) {
+      value = '/' + value;
+    }
+
 
     // Add the chip to the chips list.
     if ((value || '').trim() &&

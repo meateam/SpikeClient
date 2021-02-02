@@ -11,6 +11,7 @@ import { RegisterClientModalComponent } from './register-client-modal/register-c
 import { VerifyClientDeleteModalComponent } from './verify-client-delete-modal/verify-client-delete-modal.component';
 import { VerifyClientResetModalComponent } from './verify-client-reset-modal/verify-client-reset-modal.component';
 import { ClientHostUrisModalComponent } from './client-host-uris-modal/client-host-uris-modal.component';
+import { ClientActiveTokensModalComponent } from './client-active-tokens-modal/client-active-tokens-modal.component';
 import { ENTER, COMMA } from '@angular/cdk/keycodes';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -64,6 +65,7 @@ export class ClientsComponent implements OnInit {
               private verifyDeleteDialog: MatDialog,
               private verifyClientResetDialog: MatDialog,
               private clientHostUrisDialog: MatDialog,
+              private clientActiveTokensDialog: MatDialog,
               private clientsService: ClientsService,
               private formBuilder: FormBuilder,
               private router: Router,
@@ -348,7 +350,7 @@ export class ClientsComponent implements OnInit {
     const result = await dialogRef.afterClosed().toPromise();
     if (result) {
       this.clients.forEach((currClient, index) => {
-        if (currClient.clientId === client.clientId) {                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
+        if (currClient.clientId === client.clientId) {
           this.clients.splice(index, 1);
           savedIndex = index;
           savedClient = currClient;
@@ -387,6 +389,28 @@ export class ClientsComponent implements OnInit {
       client.hostUris = result.slice(0);
       client.fileHostUris = result.slice(0);
     }
+  }
+
+  /**
+   * Opens active tokens dialog
+   * @param client - The client object
+   */
+  async openActiveTokensDialog(event, client) {
+    event.stopPropagation();
+
+    const tokenList = await this.clientsService.getActiveTokens(client.clientId).toPromise();
+    console.log(tokenList);
+
+    const dialogRef = this.clientActiveTokensDialog.open(ClientActiveTokensModalComponent, {
+      width: '620px',
+      height: '770px',
+      data: {
+        tokenList,
+        client,
+      }
+    });
+
+    const result = await dialogRef.afterClosed().toPromise();
   }
 
   /**

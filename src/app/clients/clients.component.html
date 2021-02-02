@@ -148,6 +148,9 @@
                       matTooltip="Reset Access Tokens & Get New Client Secret" (click)="resetCredentials(client)">
                       Renew Credentials
               </button>
+              <button mat-icon-button color="primary" (click)="openActiveTokensDialog($event, client)">
+                <mat-icon>schedule</mat-icon>
+              </button>
             </div>
             <span class="span-flexable"></span>
             <button mat-button color="primary" class="btn-bold" *ngIf="!client.isEditable" (click)="setEditable(client)">Edit</button>

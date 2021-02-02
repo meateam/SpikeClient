@@ -1,0 +1,30 @@
+<mat-toolbar>
+    <mat-toolbar-row>
+      <span>"{{client.name}}" Active Tokens</span>
+      <span class="example-spacer"></span>
+      <button mat-icon-button (click)="close()"><mat-icon>close</mat-icon></button>
+    </mat-toolbar-row>
+</mat-toolbar>
+
+<!--<mat-spinner style="position: absolute; left: 44%;top: 40%;" *ngIf="!doneLoading"></mat-spinner>-->
+<mat-list class="scrollbar scrollbar-primary" style="padding-top:0;">
+  <mat-list-item style="background-color: #EAEAEA;font-weight: bold;">
+    <div style="flex:70%">Audience ID</div>
+    <div style="flex:30%">
+      <span># Of Active Tokens</span>
+    </div>
+    <mat-divider></mat-divider>
+  </mat-list-item>
+</mat-list>
+<mat-list class="scrollbar scrollbar-primary" style="padding-top:0; max-height:688px; overflow-y:auto; overflow-x:hidden">
+  <mat-list-item *ngFor="let token of tokenList">
+    <div style="flex:80%">
+      <span>{{ token._id }}</span>
+    </div>
+    <div style="flex:20%">      
+      <span style="color: 'red';" *ngIf="token.count > 5">{{ token.count }} / <b>10</b></span>
+      <span *ngIf="token.count <= 5">{{ token.count }} / <b>10</b></span>
+    </div>
+    <mat-divider></mat-divider>
+  </mat-list-item>
+</mat-list>

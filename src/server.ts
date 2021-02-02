@@ -109,7 +109,7 @@ class Server {
         // Redirect to docs site
         this.app.get('/help', (req, res) => {
 
-            res.redirect(`http://${req.hostname}:${process.env.DOCS_PORT}`);
+            res.redirect(`http://${process.env.DOCS_LTM}:${process.env.DOCS_PORT}`);
         });
 
         this.app.get('*', (req, res) => {
