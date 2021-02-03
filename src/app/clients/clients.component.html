@@ -148,7 +148,8 @@
                       matTooltip="Reset Access Tokens & Get New Client Secret" (click)="resetCredentials(client)">
                       Renew Credentials
               </button>
-              <button mat-icon-button color="primary" (click)="openActiveTokensDialog($event, client)">
+              <button mat-icon-button matTooltip="View active tokens" color="primary" (click)="openActiveTokensDialog($event, client)">
+                <mat-icon>vpn_key</mat-icon>
                 <mat-icon>schedule</mat-icon>
               </button>
             </div>
