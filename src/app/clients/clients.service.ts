@@ -63,6 +63,22 @@ export class ClientsService {
   }
 
   /**
+   * Gets active tokens list for a given client.
+   * @param clientId - Client id of the client
+   */
+  getActiveTokens(clientId: string): Observable<any> {
+    const httpOptions = {
+        headers: new HttpHeaders({
+            authorization: PublicFunctions.getCookie('authorization')
+        })
+    };
+
+    return this.http.get(this.clientUrl + '/' + clientId + '/tokens', httpOptions).pipe(
+        catchError(PublicFunctions.handleError)
+    );
+  }
+
+  /**
    * Updates a client
    * @param clientId - Client id for the url
    * @param client - Client to update

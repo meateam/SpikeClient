@@ -19,6 +19,7 @@ import { RegisterClientModalComponent } from './clients/register-client-modal/re
 import { VerifyClientResetModalComponent } from './clients/verify-client-reset-modal/verify-client-reset-modal.component';
 import { VerifyClientDeleteModalComponent } from './clients/verify-client-delete-modal/verify-client-delete-modal.component';
 import { ClientHostUrisModalComponent } from './clients/client-host-uris-modal/client-host-uris-modal.component';
+import { ClientActiveTokensModalComponent } from './clients/client-active-tokens-modal/client-active-tokens-modal.component';
 import { AuthService } from './auth/auth.service';
 import { ClientsService } from './clients/clients.service';
 import { TeamsComponent } from './teams/teams.component';
@@ -45,6 +46,7 @@ import { ScopeNewPermittedClientComponent } from './scopes/scope-management-moda
     VerifyClientResetModalComponent,
     VerifyClientDeleteModalComponent,
     ClientHostUrisModalComponent,
+    ClientActiveTokensModalComponent,
     TeamsComponent,
     NewTeamModalComponent,
     TeamManagementModalComponent,
@@ -67,7 +69,7 @@ import { ScopeNewPermittedClientComponent } from './scopes/scope-management-moda
     AvatarModule,
   ],
   entryComponents: [RegisterClientModalComponent, VerifyClientDeleteModalComponent,
-                    VerifyClientResetModalComponent, ClientHostUrisModalComponent,
+                    VerifyClientResetModalComponent, ClientHostUrisModalComponent, ClientActiveTokensModalComponent,
                     TeamManagementModalComponent, NewTeamModalComponent, TeamAddPersonModalComponent,
                     TeamJoinInfoModalComponent],
   providers: [FormBuilder, AuthService, ClientsService, SidenavComponent, TeamsService],

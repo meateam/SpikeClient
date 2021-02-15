@@ -8,7 +8,8 @@ import { catchError } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class ScopesService {
-  private scopesUrl = `${window.location.origin}/api/scope`;
+   private scopesUrl = `${window.location.origin}/api/scope`;
+   // private scopesUrl = `https://localhost:3000/api/scope`;
 
   /**
    * Injection of the http service.
