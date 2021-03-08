@@ -8,28 +8,18 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./toolbar.component.css']
 })
 export class ToolbarComponent implements OnInit {
-  @Output() sidenavOpened = new EventEmitter();
-  @Input() sidenav;
-  @Input() user;
-  isLogged = false;
-  isOpened = true;
+  @Input() title: string;
+  @Input() icon: string;
+  @Input() displayLogo;
+  @Input() helpButton;
+  @Output() iconClick = new EventEmitter();
 
-  /**
-   * Constructor.
-   */
   constructor() { }
 
-  /**
-   * When the component initializes, check if the team account logged in.
-   */
   ngOnInit() {
   }
 
-  /**
-   * Opens or closes sidenav.
-   */
-  toggleSidenav() {
-    this.isOpened = !this.isOpened;
-    this.sidenavOpened.emit(this.isOpened);
+  onIconClick() {
+    this.iconClick.emit(true);
   }
 }

@@ -84,7 +84,7 @@ export class TeamsComponent implements OnInit {
   async openTeamManagement(team) {
     const dialogRef = this.teamManagementDialog.open(TeamManagementModalComponent, {
       width: '700px',
-      height: '800px',
+      height: '730px',
       data: {
         team,
         user: this.user,

@@ -1,6 +1,95 @@
+@media all and (max-width: 1100px) {
+    .redirect-main-div {
+        text-align:center;
+        display: flex;
+        align-items: center;
+        position:relative;
+        flex-direction: column;
+        margin: 17px 0px;
+        border: 1px solid #EAEAEA;
+        background-color: #FAFAFA;
+        padding: 7px 5px 22px 5px;
+    }
+
+    .chip-list {
+        position:relative;
+        top: 10px;
+    }
+
+    .divider-stl {
+        display: none;
+    }
+
+    .client-main-div {
+        text-align:center;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        margin: 17px 0px;
+        border: 1px solid #EAEAEA;
+        background-color: #FAFAFA;
+        padding: 5px;
+    }
+
+    .hosturi-main-div {
+        text-align:center;
+        display: flex;
+        align-items: center;
+        position:relative;
+        flex-direction: column;
+        margin: 17px 0px;
+        border: 1px solid #EAEAEA;
+        background-color: #FAFAFA;
+        padding: 5px;
+    }
+}
+
+@media all and (min-width: 1100px) {
+    .hosturi-main-div {
+        text-align:center;
+        display: flex;
+        align-items: center;
+        position:relative;
+        height:70px;
+    }
+
+    .redirect-main-div {
+        text-align:center;
+        display: flex;
+        align-items: center;
+        position:relative;
+        height:70px;
+    }
+
+    .chip-list {
+        position:relative;
+        left: 10px;
+    }
+
+    .divider-margin {
+        display: none;
+    }
+
+    .client-main-div {
+        text-align:center;
+        display: flex;
+        align-items: center;
+    }
+}
+
+.clientid-div {
+    width:100%;
+    position:relative;
+    flex:15%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
 mat-expansion-panel {
     margin:5px;
-    min-width: 767px;
+    min-width: 380px;
 }
 
 .icon-empty {
@@ -42,12 +131,11 @@ input {
 }
 
 .div-main {
-    margin-top: 60px;
+    margin-top: 30px;
     width: 70%;
 }
 
 .panel-expan {
-    width: 100%;
     position: relative;
 }
 
@@ -108,130 +196,100 @@ input {
 }
 
 .clientid-span {
-    position: relative;
-    top: 10px;
-    right: 39px;
     text-align:center;
     font-weight: 560;
     font-size:13px;
 }
 
 .hosturi-span {
-    position: relative;
-    top: 11px;
-    right: 30px;
     text-align: center;
     font-weight: 560;
     font-size:13px;
 }
 
 .clientid-icon {
-    position:relative;
+    /*position:relative;
     right:0px;
     top: 0px;
-    text-align: center;
-}
-
-.clientid-div {
-    width:50px;
-    position:relative;
-    flex:15%;
-    text-align:center;
-    left:15px;
-    top:2px;
-}
-
-.client-main-div {
-    text-align:center;
-    display: flex;
-    align-items: center;
+    text-align: center;*/
 }
 
 .lock-icon {
     position:relative;
-    left:12px;
     top: 0px;
     text-align: center;
 }
 
 .aud-icon {
     position:relative;
-    left:10px;
     top: 0px;
     text-align: center;
 }
 
 .div-inner {
     flex:85%;
+    width: 100%;
     position:relative;
-    right: 31px;
+    height: 53px;
+    display: flex;
 }
 
 .div-inner-redirect {
     flex:85%;
+    width: 100%;
     position:relative;
-    right: 25px;
-    bottom: 12px;
     text-align: left;
 }
 
 .div-inner-hosturi {
     flex:85%;
-    position:relative;
-    right: 15px;
-    bottom: 12px;
+    width: 100%;
     text-align: left;
 }
 
 .textarea-stl {
     background-color:#EAEAEA;
-    width: 92%;
+    flex: 90%;
+    width: 100%;
     position:relative;
-    top:14px;
+    top:8px;
     resize: none;
+    height: 34px;
+}
+
+.copy-btn {
+    position: relative;
+    flex: 10%;
+}
+
+.in-copy-btn {
+    position: relative;
+    top: 7px;
 }
 
 .divider-stl {
     position:relative;
-    top:25px;
-}
-
-.redirect-main-div {
-    text-align:center;
-    display: flex;
-    align-items: center;
-    position:relative;
-    top:30px;
-    margin: 15px 0 15px 0;
-    height:70px;
-}
-
-.hosturi-main-div {
-    text-align:center;
-    display: flex;
-    align-items: center;
-    position:relative;
-    top:30px;
-    margin: 15px 0 15px 0;
-    height:70px;
+    margin-top:25px;
 }
 
 .hosturi-div {
-    width:50px;
     flex:15%;
-    position:relative;
+    width: 100%;
     text-align: center;
-    left:3px;
-    bottom:15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .redirect-div {
-    width:50px;
-    position:relative;
     flex:15%;
+    width: 100%;
     text-align:center;
-    left:15px;
-    bottom: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
 
 .client-name {
@@ -254,11 +312,6 @@ input {
 .expand-btn {
     position: relative;
     bottom: 0px;
-}
-
-.chip-list {
-    position:relative;
-    left: 10px;
 }
 
 .form-stl {

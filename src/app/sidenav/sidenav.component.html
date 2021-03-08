@@ -11,6 +11,12 @@
                 </mat-list-item>
                 <mat-divider></mat-divider>
                 <mat-list-item>
+                    <button mat-button class="btn-list" routerLink="/dashboard" routerLinkActive="active">
+                        <h4 mat-line class="btn-text"><mat-icon class="btn-icon" style="font-weight: bold;">search</mat-icon> Explore Clients</h4>
+                    </button>
+                </mat-list-item>
+                <mat-divider></mat-divider>
+                <mat-list-item>
                     <button mat-button class="btn-list" routerLink="/teams" routerLinkActive="active">   
                         <h4 mat-line class="btn-text"><mat-icon class="btn-icon">assignment</mat-icon> Manage Teams</h4>
                     </button>
@@ -24,7 +30,8 @@
             </div>
         </mat-list>
     </div>
-    <div style="flex:85%; overflow-y: auto; max-height: calc(100vh - 64px);">
-        <router-outlet></router-outlet>
+    <div style="flex:100%; overflow-y: auto; max-height: calc(100vh - 64px);">
+        <router-outlet>
+        </router-outlet>
     </div>
 </div>

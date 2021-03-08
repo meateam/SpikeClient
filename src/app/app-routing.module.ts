@@ -7,11 +7,13 @@ import { RegisterTeamComponent } from './teams/register-team/register-team.compo
 import { ClientsComponent } from './clients/clients.component';
 import { TeamsComponent } from './teams/teams.component';
 import { ScopesComponent } from './scopes/scopes.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 const appRoutes: Routes = [
     { path: 'clients', component: ClientsComponent },
     { path: 'teams', component: TeamsComponent },
     { path: 'scopes', component: ScopesComponent },
+    { path: 'dashboard', component: DashboardComponent },
     { path: '',
       redirectTo: '/register',
       pathMatch: 'full'

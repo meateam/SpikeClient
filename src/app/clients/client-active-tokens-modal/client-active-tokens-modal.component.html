@@ -1,10 +1,4 @@
-<mat-toolbar>
-    <mat-toolbar-row>
-      <span>"{{client.name}}" Used Tokens</span>
-      <span class="example-spacer"></span>
-      <button mat-icon-button (click)="close()"><mat-icon>close</mat-icon></button>
-    </mat-toolbar-row>
-</mat-toolbar>
+<app-toolbar [title]="client.name + ' Used Tokens'" icon="close" (iconClick)="close()"></app-toolbar>
 
 <!--<mat-spinner style="position: absolute; left: 44%;top: 40%;" *ngIf="!doneLoading"></mat-spinner>-->
 <mat-list class="scrollbar scrollbar-primary" style="padding-top:0;">

@@ -10,7 +10,8 @@ import { catchError, delay } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class SharedService {
-  private personUrl = `${window.location.origin}/api/person`;
+  // private personUrl = `${window.location.origin}/api/person`;
+  private personUrl = 'https://localhost:3000/api/person';
   private value: string;
   listeners = [];
 
@@ -50,6 +51,18 @@ export class SharedService {
 
     return this.http.post(`${this.personUrl}`, { personIds }, httpOptions).pipe(
         catchError(PublicFunctions.handleError)
+    );
+  }
+
+  getPerson(id: string): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+          authorization: PublicFunctions.getCookie('authorization')
+      })
+    };
+
+    return this.http.get(`${this.personUrl}/${id}`, httpOptions).pipe(
+      catchError(PublicFunctions.handleError)
     );
   }
 }

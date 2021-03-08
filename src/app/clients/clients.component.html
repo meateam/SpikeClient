@@ -1,5 +1,6 @@
-<mat-spinner class="spinner-opts" *ngIf="!clients"></mat-spinner>
+<mat-spinner class="spinner-opts" *ngIf="!clients && !error"></mat-spinner>
 <div *ngIf="user && teams" class="div-main">
+    <h1 *ngIf="clients && clients.length > 0" style="color: #6a6a6a; font-size: 30px;">Manage Clients</h1>
     <form class="filter-form" *ngIf="clients && clients.length > 0">
       <mat-form-field style="width:250px;">
         <input matInput autocomplete="off" placeholder="Search Client/Team" [(ngModel)]="clientsForSearch" (ngModelchange)="filterClients($event)" style="width:220px;" name="clientsFilter">
@@ -13,7 +14,7 @@
         </div>
         
         <mat-expansion-panel class="panel-expan" #currClient *ngFor="let client of filterClients(clientsForSearch)" [expanded]="client.isNew" (click)="client.isNew = false; getClientData(client, currClient); client.start = true;">
-          <mat-expansion-panel-header style="width: 95%;">
+          <mat-expansion-panel-header style="">
             <mat-panel-title class="panel-title">
               <mat-progress-bar class="progress-bar-main" *ngIf="client.start && !(client.secret && client.redirectUris)" mode="indeterminate"></mat-progress-bar>
               <!--<img class="avatar-img" src="/assets/png/avatar.png" width="30" height="30"/>-->
@@ -35,7 +36,9 @@
             </div>
             <div class="div-inner">
               <textarea readonly class="textarea-stl" #clientId>{{ client.clientId }}</textarea>
-              <button mat-icon-button color="primary" (click)="copyClipboard(clientId)" matTooltip="Copy" matTooltipPosition="above"><mat-icon>content_copy</mat-icon></button>
+              <div class="copy-btn">
+                <button class="in-copy-btn" mat-icon-button color="primary" (click)="copyClipboard(clientId)" matTooltip="Copy" matTooltipPosition="above"><mat-icon>content_copy</mat-icon></button>
+              </div>
             </div>
           </div>
           <div class="client-main-div">
@@ -45,7 +48,9 @@
               </div>
               <div class="div-inner">
                 <textarea readonly class="textarea-stl" #clientSecret>{{ client.secret }}</textarea>
-                <button mat-icon-button color="primary" (click)="copyClipboard(clientSecret)" matTooltip="Copy" matTooltipPosition="above"><mat-icon>content_copy</mat-icon></button>
+                <div class="copy-btn">
+                  <button class="in-copy-btn" mat-icon-button color="primary" (click)="copyClipboard(clientSecret)" matTooltip="Copy" matTooltipPosition="above"><mat-icon>content_copy</mat-icon></button>
+                </div>
               </div>
           </div>
           <div class="client-main-div">
@@ -55,7 +60,9 @@
             </div>
             <div class="div-inner">
               <textarea readonly class="textarea-stl" #audience>{{ client.audienceId }}</textarea>
-              <button mat-icon-button color="primary" (click)="copyClipboard(audience)" matTooltip="Copy" matTooltipPosition="above"><mat-icon>content_copy</mat-icon></button>
+              <div class="copy-btn">
+                <button class="in-copy-btn" mat-icon-button color="primary" (click)="copyClipboard(audience)" matTooltip="Copy" matTooltipPosition="above"><mat-icon>content_copy</mat-icon></button>
+              </div>
             </div>
         </div>
           <mat-divider class="divider-stl"></mat-divider>

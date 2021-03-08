@@ -1,0 +1,105 @@
+<mat-progress-bar mode="indeterminate" style="position: relative;" *ngIf="loadingChange"></mat-progress-bar>
+<mat-spinner class="spinner-opts" *ngIf="(!teams || !clients) && !error "></mat-spinner>
+<cdk-virtual-scroll-viewport #scroller itemSize="8 * 360" style="height: 99%; width: 100%;">
+<div [ngStyle]="{ 'display': clients && teams && !error ? 'flex' : 'none'}" style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center; position: sticky; top: 0px; margin-top:20px; z-index:2; width: 86%;">
+    <form class="filter-form">
+        <mat-form-field style="width:250px; margin: 10px;">
+            <input loaded style="width:220px;" #inputSelected="matInput" [(ngModel)]="clientsForSearch" type="text"
+                placeholder="Search Client" matInput autocomplete="off" id="search-client-input" name="clientsFilter">
+            <mat-icon class="prefix-icon-special">search</mat-icon>
+        </mat-form-field>
+        <div>
+            <mat-form-field style="margin: 10px;">
+                <mat-label>Sort Type</mat-label>
+                <mat-select [(value)]="selectedSort" (selectionChange)="changeSortType()">
+                    <mat-option [value]="sort.value" *ngFor="let sort of sortTypes">{{ sort.viewValue }}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <button style="margin: 5px;" mat-icon-button color="primary" [matTooltip]="sortOrder.viewValue" matTooltipPosition="above" (click)="changeSortOrder()">
+                <mat-icon
+                    [ngClass]="{'sort-order-up': sortOrder.selectedIndex === 1, 'sort-order-down': sortOrder.selectedIndex !== 1}">
+                    arrow_downward
+                </mat-icon>
+            </button>
+        </div>
+    </form>
+</div>
+<!--<cdk-virtual-scroll-viewport #scroller itemSize="8 * 360" style="height: 100%; width: 100%;">-->
+<div *ngIf="user && teams && clients" class="div-main">
+    <div style="display: flex; flex-wrap:wrap;">
+        
+        <mat-card *cdkVirtualFor="let currClient of clients" style="margin: 14px; width: 260px; flex-shrink: 0; transition: 1s">
+            <mat-card-header style="position:relative; right: 15px;">
+                <ngx-avatar class="avatar-image" mat-card-avatar
+                    [name]="currClient.name + ' ' + currClient.name[currClient.name.length - 1]" size="65"></ngx-avatar>
+                <mat-card-title style="text-align: left;">
+                    <div [matTooltip]="currClient.name" matTooltipPosition="above"
+                        style="max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; cursor: default;">
+                        {{ currClient.name }}</div>
+                </mat-card-title>
+                <mat-card-subtitle style="text-align: left;">
+                    <div [matTooltip]="currClient.team.teamname" matTooltipPosition="above"
+                        style="max-width: 130px; text-overflow: ellipsis; overflow: hidden; white-space: nowrap; cursor: default;">
+                        {{ currClient.team.teamname }}
+                    </div> <br>
+                    <div
+                        style="color: black; font-size:14px; height: 22px; text-overflow: ellipsis; white-space: nowrap; width: 230px; overflow: hidden;">
+                        {{ currClient.description }}</div>
+                </mat-card-subtitle>
+            </mat-card-header>
+            <div>
+                <mat-divider style="position: relative; bottom:10px;"></mat-divider>
+            </div>
+            <mat-card-content>
+                <div style="text-align: left; margin-bottom: 5px;">AudienceId:</div>
+                <div
+                    style="height: 23px; width:100%; background-color: #EAEAEA; border: 1px solid #CACACA; text-align: left; display: flex; align-items: center; position: relative;">
+                    <div
+                        style="font-size:11px; padding: 0 6px; max-width: 225px; overflow: hidden; text-overflow: ellipsis; color: #9a9a9a">
+                        {{ currClient.audienceId }}</div>
+                    <button (click)="copyClipboard(currClient.audienceId)" mat-icon-button
+                        matTooltip="Copy Full AudienceId" matTooltipPosition="above" color="primary"
+                        style="position: absolute; right: 0px; width: 24px; height: 24px;">
+                        <mat-icon
+                            style="width: 20px; height: 20px; font-size: 20px; position: absolute; right:0; top:0;">
+                            content_copy</mat-icon>
+                    </button>
+                </div>
+                <div style="text-align: left; margin: 15px 0;">Scopes:</div>
+                <div style="height: 70px;">
+                    <div *ngIf="currClient.scopes && currClient.scopes.length === 0"
+                        style="position:relative; top:10px;">
+                        <mat-icon style="font-size: 30px; width: 32px; height: 32px; color: #9a9a9a; cursor: default;">
+                            sentiment_neutral</mat-icon>
+                        <div style="font-size: 17px; color: #9a9a9a; cursor: default;">
+                            This client has no scopes
+                        </div>
+                    </div>
+                    <mat-chip-list aria-label="Scopes" *ngIf="currClient.scopes && currClient.scopes.length > 0">
+                        <mat-chip color="primary" [matTooltip]="currScope.value" matTooltipPosition="above"
+                            [selected]="currScope.permittedClients.length > 0"
+                            *ngFor="let currScope of currClient.scopes"
+                            style="font-size:11px; min-height: 25px; padding: 9px;">
+                            <div style="max-width: 52px; text-overflow: ellipsis; overflow: hidden">
+                                {{ currScope.value }}
+                            </div>
+                        </mat-chip>
+                        <button (click)="openScopesDetails(currClient)" mat-icon-button color="primary"
+                            matTooltip="View Scopes Details" matTooltipPosition="above">
+                            <mat-icon>more_horiz</mat-icon>
+                        </button>
+                    </mat-chip-list>
+                </div>
+            </mat-card-content>
+            <mat-card-actions style="height: 30px;">
+                <button style="position: absolute; right: 10px; bottom: 4px;" mat-icon-button color="primary"
+                    [matTooltip]="'Contact ' + currClient.name" matTooltipPosition="above"
+                    (click)="openBottomSheet(currClient.team.ownerId)">
+                    <mat-icon>phone</mat-icon>
+                </button>
+            </mat-card-actions>
+        </mat-card>
+    </div>
+</div>
+</cdk-virtual-scroll-viewport>
+<!--</cdk-virtual-scroll-viewport>-->

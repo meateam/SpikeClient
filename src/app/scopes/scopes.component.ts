@@ -215,7 +215,7 @@ export class ScopesComponent implements OnInit {
   async openManageScope(scope) {
     const dialogRef = this.scopeManagementDialog.open(ScopeManagementModalComponent, {
       width: '700px',
-      height: '800px',
+      height: '730px',
       data: {
         scope,
         isEmptyClients: scope.permittedClients.length === 0 ? true : false

@@ -8,7 +8,8 @@ import { catchError } from 'rxjs/operators';
 
 @Injectable()
 export class TeamsService {
-  private teamUrl = `${window.location.origin}/api/team`;
+  // private teamUrl = `${window.location.origin}/api/team`;
+  private teamUrl = 'https://localhost:3000/api/team'
 
   /**
    * Injection of the http service.

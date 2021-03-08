@@ -1,10 +1,7 @@
-<mat-toolbar color="primary">
-    <mat-toolbar-row>
-      <span>Register</span>
-      <span class="example-spacer"></span>
-      <button mat-icon-button (click)="close()"><mat-icon>close</mat-icon></button>
-    </mat-toolbar-row>
-</mat-toolbar>
+<app-toolbar title="Register" icon="close" (iconClick)="close()"></app-toolbar>
+
+<mat-progress-bar mode="indeterminate" *ngIf="isRegisterReq"></mat-progress-bar>
+
 <div class="mat-card-content">
     <form [formGroup]="registerClientFormGroup" #ngForm autocomplete="off" class="form-reg">
     <div class="input-class">
@@ -17,6 +14,7 @@
             <mat-error *ngIf="appnameFormControl.hasError('pattern') && !appnameFormControl.hasError('required')">
                 For Team name to be valid, it must contain 4-20 letters [A-Za-z] or numbers [0-9] only.
             </mat-error>
+            <mat-icon class="help-authorize" [matTooltip]="APP_NAME_HELP" matTooltipPosition="above">help</mat-icon>
         </mat-form-field>
       </div>
       <br>
@@ -30,11 +28,12 @@
         </mat-select>
         <mat-icon class="prefix-icon">group</mat-icon>
         <mat-error *ngIf="teamnameFormControl.hasError('required')">Please Choose A Team.</mat-error>
+        <mat-icon class="help-authorize" [matTooltip]="TEAM_HELP" matTooltipPosition="above">help</mat-icon>
       </mat-form-field>
       </div>
-      <br><br>
-      <section class="example-section">
-        <mat-slide-toggle
+      <br>
+      <section class="input-class">
+        <!-- <mat-slide-toggle
             class="example-margin"
             color="primary"
             [checked]="isMultipleHosts"
@@ -42,9 +41,14 @@
             (change)="isMultipleHosts = !isMultipleHosts">
             &nbsp; &nbsp; Multiple Hosts | Load Balancer
             <mat-icon class="prefix-icon">settings</mat-icon>
-        </mat-slide-toggle>
+        </mat-slide-toggle> -->
+        <mat-form-field class="full-width">
+          <mat-icon class="prefix-icon">description</mat-icon>
+          <input matInput placeholder="Description (Optional)" type="text" formControlName="description" autocomplete="off" maxlength="200" [(ngModel)]="description">
+          <mat-icon class="help-authorize" [matTooltip]="DESCRIPTION_HELP" matTooltipPosition="above">help</mat-icon>
+        </mat-form-field>
       </section>
-      <br><br>
+      <br>
       <div class="input-class" *ngIf="!isMultipleHosts">
         <mat-form-field class="full-width">
           <mat-icon class="prefix-icon-special">public</mat-icon>
@@ -63,10 +67,11 @@
       <div class="input-class" *ngIf="!isMultipleHosts">
         <mat-form-field class="full-width">
           <mat-icon class="prefix-icon">memory</mat-icon>
-          <input matInput placeholder="port (optional)" type="text" formControlName="port" autocomplete="off" maxlength="5" [(ngModel)]="currPort" (input)="isPortForm()">
+          <input matInput placeholder="Port (Optional)" type="text" formControlName="port" autocomplete="off" maxlength="5" [(ngModel)]="currPort" (input)="isPortForm()">
           <mat-error *ngIf="portFormControl.hasError('pattern')">
             Port Invalid. Must be 0 - 65535
           </mat-error>
+          <mat-icon class="help-authorize" [matTooltip]="PORT_HELP" matTooltipPosition="above">help</mat-icon>
         </mat-form-field>
       </div>
       <div class="input-class" *ngIf="isMultipleHosts">
@@ -121,5 +126,5 @@
       <mat-spinner *ngIf="!isDone" diameter="50" style="position:absolute; bottom:10px;"></mat-spinner>
       <button mat-raised-button class="login-button" type="submit" disabled="disabled" [disabled]="!isDetailsValid()" (click)="register($event)">Register</button>
     </form>
-    <span *ngIf="errorMsg" class="error-msg">{{errorMsg}}</span>
+    <span *ngIf="errorMsg" [matTooltip]="errorMsg" matTooltipPosition="above" class="error-msg">{{ errorMsg }}</span>
 </div>

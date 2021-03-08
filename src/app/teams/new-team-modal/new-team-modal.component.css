@@ -6,7 +6,7 @@
 }
 
 mat-toolbar {
-    background-color:black !important;
+    background-color: var(--toolbar-primary-color);
     color:white;
 }
 

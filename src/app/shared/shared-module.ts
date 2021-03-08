@@ -26,6 +26,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatRippleModule } from '@angular/material/core';
+import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 
 @NgModule({
   imports: [
@@ -54,6 +56,8 @@ import { MatRippleModule } from '@angular/material/core';
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
+    MatBottomSheetModule,
+    ScrollingModule,
   ],
   exports: [
     MatButtonModule,
@@ -81,6 +85,8 @@ import { MatRippleModule } from '@angular/material/core';
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
+    MatBottomSheetModule,
+    ScrollingModule,
   ]
 })
 export class SharedModule {}

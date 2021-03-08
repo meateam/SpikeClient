@@ -32,6 +32,7 @@ const redirectUrisRegex = /^(\/[a-zA-Z0-9]{1,20}){1,10}$/m;
 })
 export class ClientsComponent implements OnInit {
   clientsForSearch;
+  error = false;
   selectable;
   teams;
   public get getTeam() { return this.teams; }
@@ -187,33 +188,32 @@ export class ClientsComponent implements OnInit {
    */
   async getClientData(client, currClient) {
     if (!client.secret || !client.redirectUris) {
-      const clientData = await this.clientsService.getClientData(client.clientId).toPromise();
-      if (clientData) {
+      try {
+        const clientData = await this.clientsService.getClientData(client.clientId).toPromise();
+        if (clientData) {
+          for (const [clientIndex, clientCurrent] of this.clients.entries()) {
+            if (clientCurrent.clientId === clientData.clientId) {
+              this.clients[clientIndex].teamId = clientData.teamId;
+              this.clients[clientIndex].secret = clientData.secret;
+              this.clients[clientIndex].redirectUris = clientData.redirectUris;
+              this.clients[clientIndex].audienceId = clientData.audienceId;
+              this.clients[clientIndex].isDeletable = clientData.isDeletable;
+              currClient.open();
+              this.clients[clientIndex].start = false;
+              break;
+            }
+          }
+        }
+      } catch (e) {
         for (const [clientIndex, clientCurrent] of this.clients.entries()) {
-          if (clientCurrent.clientId === clientData.clientId) {
-            this.clients[clientIndex].teamId = clientData.teamId;
-            this.clients[clientIndex].secret = clientData.secret;
-            this.clients[clientIndex].redirectUris = clientData.redirectUris;
-            this.clients[clientIndex].audienceId = clientData.audienceId;
-            this.clients[clientIndex].isDeletable = clientData.isDeletable;
-            currClient.open();
+          if (client.clientId === this.clients[clientIndex].clientId) {
             this.clients[clientIndex].start = false;
-            break;
           }
         }
 
-        // // tslint:disable-next-line:prefer-for-of
-        // for (let currIndex = 0; currIndex < this.clients.length; currIndex++) {
-        //   if (this.clients[currIndex].clientId === clientData.clientId) {
-        //     this.clients[currIndex].teamId = clientData.teamId;
-        //     this.clients[currIndex].secret = clientData.secret;
-        //     this.clients[currIndex].redirectUris = clientData.redirectUris;
-        //     this.clients[currIndex].audienceId = clientData.audienceId;
-        //     currClient.open();
-        //     this.clients[currIndex].start = false;
-        //     break;
-        //   }
-        // }
+        this.snackBar.open('Error Getting Data, Internal Server Error.', 'Close', {
+          duration: 4000
+        });
       }
     }
   }

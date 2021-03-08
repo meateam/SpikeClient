@@ -8,9 +8,12 @@ import { PublicFunctions } from '../shared/shared';
 
 @Injectable()
 export class AuthService {
-  private authUrl = `${window.location.origin}/api/auth`;
-  private teamUrl = `${window.location.origin}/api/team`;
-  private clientUrl = `${window.location.origin}/api/client`;
+  // private authUrl = `${window.location.origin}/api/auth`;
+  // private teamUrl = `${window.location.origin}/api/team`;
+  // private clientUrl = `${window.location.origin}/api/client`;
+  private authUrl = 'https://localhost:3000/api/auth';
+  private teamUrl = 'https://localhost:3000/api/team';
+  private clientUrl = 'https://localhost:3000/api/client';
 
   /**
    * Injection of the http service.

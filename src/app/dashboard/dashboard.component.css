@@ -1,0 +1,44 @@
+.avatar-image {
+    position: absolute;
+    right: -5px;
+    top: -35px;
+    width: 55px;
+    height: 55px;
+}
+
+.spinner-opts {
+    position:relative;
+    top:180px;
+}
+
+.div-main {
+    margin-top: 30px;
+    width: 87%;
+}
+
+.mat-card-header-text {
+    margin: 0 !important;
+}
+
+.prefix-icon-special {
+    font-size: 25px;
+    color: #757575;
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+}
+
+.sort-order-up {
+    transform: rotate(180deg);
+    transition: 0.4s;
+}
+
+.sort-order-down {
+    transition: 0.4s;
+}
+
+.filter-form {
+    background-color: rgba(255, 255, 255, 0.8);
+    box-shadow: 0px 1px 5px -2px;
+    display: flex;
+}

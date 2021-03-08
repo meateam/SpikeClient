@@ -8,7 +8,8 @@ import { catchError } from 'rxjs/operators';
 
 @Injectable()
 export class ClientsService {
-  private clientUrl = `${window.location.origin}/api/client`;
+  private clientUrl = 'https://localhost:3000/api/client';
+  // private clientUrl = `${window.location.origin}/api/client`;
 
   /**
    * Injection of the http service.
@@ -42,6 +43,22 @@ export class ClientsService {
     };
 
     return this.http.get(`${this.clientUrl}/search?name=${filter}`, httpOptions).pipe(
+        catchError(PublicFunctions.handleError)
+    );
+  }
+
+  /**
+   * Find clients by client name to be returned in dashboard component
+   * (With more information than regular find clients)
+   */
+  searchClientsView(filter): Observable<any> {
+    const httpOptions = {
+        headers: new HttpHeaders({
+            authorization: PublicFunctions.getCookie('authorization')
+        })
+    };
+
+    return this.http.get(`${this.clientUrl}/search?name=${filter}&view=true`, httpOptions).pipe(
         catchError(PublicFunctions.handleError)
     );
   }
@@ -122,7 +139,19 @@ export class ClientsService {
         })
     };
 
-    return this.http.patch(this.clientUrl + '/' + clientId, {}, httpOptions).pipe(
+    return this.http.patch(`${this.clientUrl}/${clientId}`, {}, httpOptions).pipe(
+        catchError(PublicFunctions.handleError)
+    );
+  }
+
+  getAllClients(sortType: string = 'date', sortOrder: number = 1, skip: number = 0, limit: number = 24): Observable<any> {
+    const httpOptions = {
+        headers: new HttpHeaders({
+            authorization: PublicFunctions.getCookie('authorization')
+        })
+    };
+
+    return this.http.get(`${this.clientUrl}/dashboard?sort=${sortType}&desc=${sortOrder}}&skip=${skip}&limit=${limit}`, httpOptions).pipe(
         catchError(PublicFunctions.handleError)
     );
   }

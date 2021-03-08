@@ -1,10 +1,4 @@
-<mat-toolbar>
-    <mat-toolbar-row>
-      <span>Add New Team</span>
-      <span class="example-spacer"></span>
-      <button mat-icon-button (click)="close()"><mat-icon>close</mat-icon></button>
-    </mat-toolbar-row>
-</mat-toolbar>
+<app-toolbar title="Add New Team" icon="close" (iconClick)="close()"></app-toolbar>
 
 <div class="main-team">
   <form style="margin: 0 100px;" [formGroup]="loginFormGroup" #ngForm autocomplete="off">

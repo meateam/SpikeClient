@@ -1,5 +1,6 @@
 mat-toolbar {
-    background-color: black !important;
+    /*background-color: black !important;*/
+    background-color: var(--toolbar-primary-color) !important;
 }
 
 mat-toolbar-row {
@@ -32,6 +33,11 @@ background-color: rgba(255,255,255,0.2);
     position:relative;
     left:15px;
     bottom: 17px;
+}
+
+.title {
+    position: relative;
+    left: 15px;
 }
 
 .logo-img {

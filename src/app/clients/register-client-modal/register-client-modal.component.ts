@@ -27,6 +27,7 @@ export class RegisterClientModalComponent implements OnInit {
   currFile: string;
   isLogged: boolean;
   appName: string;
+  description: string;
   port: string;
   redirectUris = [];
   hostUri = '';
@@ -35,6 +36,7 @@ export class RegisterClientModalComponent implements OnInit {
   isDone = true;
   fileError = '';
   isMultipleHosts = false;
+  isRegisterReq = false;
 
   // tslint:disable-next-line
   hostUriRegex = /^(([A-Za-z0-9\._\-]+)([A-Za-z0-9]+))(:[1-9][0-9]{0,3}|:[1-5][0-9]{4}|:6[0-4][0-9]{3}|:65[0-4][0-9]{2}|:655[0-2][0-9]|:6553[0-5])?$/m;
@@ -44,14 +46,16 @@ export class RegisterClientModalComponent implements OnInit {
              /*{ id: 1, value: 'F5 LTM' },
                { id: 2, value: 'Nginx'},
                { id: 3, value: 'Apache2' }*/ ];
-  AUTHORIZE_HELP = `For use with requests from a web server. This is the path
-                   'in your application that users are redirected to after they
-                   'have authenticated with OSpike. The path will be appended with the
-                   'authorization code for access. Must have a protocol.
-                   'Cannot contain URL fragments or relative paths. Cannot be a public IP address.`;
-  ORIGIN_HELP = `For use with requests from a browser. This is the origin URI of the client
-                'application. It can\'t contain a wildcard (https://*.example.com) or a path
-                '(https://example.com/subdir). If you\'re using a nonstandard port, you must include it in the origin URI.`;
+  APP_NAME_HELP = `The name of your application.`;
+  TEAM_HELP = `The team which the application will be stored in.`;
+  AUTHORIZE_HELP = `This is the path in your application API that users are redirected to after they
+                   have authenticated with OSpike.\n
+                   If you use 'Client Credentials' Flow, just type '/callback'`;
+  ORIGIN_HELP = `This is the origin URI (domain) of the client application.\n
+                If you\'re using a nonstandard port, you must include it in 'Port input' below.\n
+                If you use 'Client Credentials' Flow, just type some address`;
+  PORT_HELP = `The port which your application will be listen to.`;
+  DESCRIPTION_HELP = `Short description of the application.`;
 
   appnameFormControl = new FormControl('', [
     Validators.required,
@@ -62,6 +66,8 @@ export class RegisterClientModalComponent implements OnInit {
     Validators.required,
     Validators.pattern(this.hostUriRegex),
   ]);
+
+  descriptionFormControl = new FormControl('');
 
   fileFormControl = new FormControl('', [
     Validators.required,
@@ -98,6 +104,7 @@ export class RegisterClientModalComponent implements OnInit {
       appname: this.appnameFormControl,
       teamname: this.teamnameFormControl,
       hostUri: this.hostUriFormControl,
+      description: this.descriptionFormControl,
       file: this.fileFormControl,
       redirectUris: this.redirectUrisFormControl,
       port: this.portFormControl,
@@ -120,7 +127,10 @@ export class RegisterClientModalComponent implements OnInit {
    */
   async register(event) {
     event.stopPropagation();
+
+    this.isRegisterReq = true;
     this.appName = this.registerClientFormGroup.value.appname;
+    this.description = this.registerClientFormGroup.value.description;
     this.port = this.registerClientFormGroup.value.port;
     this.hostUri = this.registerClientFormGroup.value.hostUri;
 
@@ -129,21 +139,32 @@ export class RegisterClientModalComponent implements OnInit {
       this.hostUris.push(this.hostUri);
     }
 
-    const data = await this.authService.registerClient({
-                    name: this.appName,
-                    teamId: this.registerClientFormGroup.value.teamname,
-                    teamName: this.teams.map((currTeam) => {
-                      if (currTeam._id === this.registerClientFormGroup.value.teamname) {
-                        return currTeam.teamname;
-                      }
-                    }),
-                    redirectUris: this.redirectUris,
-                    hostUris: this.hostUris.map(hostUri => 'https://' + hostUri.trim())}).toPromise();
-    if (data) {
-      this.errorMsg = undefined;
-      this.dialogRef.close(data);
-    } else {
-      this.errorMsg = data.message;
+    try {
+      const data = await this.authService.registerClient({
+                      name: this.appName,
+                      description: this.description,
+                      teamId: this.registerClientFormGroup.value.teamname,
+                      teamName: this.teams.map((currTeam) => {
+                        if (currTeam._id === this.registerClientFormGroup.value.teamname) {
+                          return currTeam.teamname;
+                        }
+                      }),
+                      redirectUris: this.redirectUris,
+                      hostUris: this.hostUris.map(hostUri => 'https://' + hostUri.trim())
+                    }).toPromise();
+      if (data) {
+        this.isRegisterReq = false;
+        this.errorMsg = undefined;
+        this.dialogRef.close(data);
+      } else {
+        this.errorMsg = data.message;
+        this.isRegisterReq = false;
+      }
+    } catch (err) {
+      if (err) {
+        this.isRegisterReq = false;
+        this.errorMsg = err.message;
+      }
     }
   }
 

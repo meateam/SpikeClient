@@ -33,6 +33,8 @@ import { NewScopeModalComponent } from './scopes/new-scope-modal/new-scope-modal
 import { ScopeManagementModalComponent } from './scopes/scope-management-modal/scope-management-modal.component';
 import { ScopeVerifyDeleteModalComponent } from './scopes/scope-verify-delete-modal/scope-verify-delete-modal.component';
 import { ScopeNewPermittedClientComponent } from './scopes/scope-management-modal/scope-new-permitted-client/scope-new-permitted-client.component';
+import { DashboardComponent, BottomSheetContact } from './dashboard/dashboard.component';
+import { ViewScopesModalComponent } from './dashboard/view-scopes-modal/view-scopes-modal.component';
 
 @NgModule({
   declarations: [
@@ -57,6 +59,9 @@ import { ScopeNewPermittedClientComponent } from './scopes/scope-management-moda
     ScopeManagementModalComponent,
     ScopeVerifyDeleteModalComponent,
     ScopeNewPermittedClientComponent,
+    DashboardComponent,
+    ViewScopesModalComponent,
+    BottomSheetContact,
   ],
   imports: [
     BrowserAnimationsModule,

@@ -1,10 +1,4 @@
-<mat-toolbar>
-  <mat-toolbar-row>
-    <span>{{client.name}} Host Uris Management</span>
-    <span class="example-spacer"></span>
-    <button mat-icon-button (click)="close()"><mat-icon>close</mat-icon></button>
-  </mat-toolbar-row>
-</mat-toolbar>
+<app-toolbar [title]="client.name + ' Host Uris Management'" icon="close" (iconClick)="close()"></app-toolbar>
 
 <mat-form-field style="margin:20px; width:40%;">
     <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter Hosts">
