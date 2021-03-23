@@ -15,10 +15,11 @@
             <mat-error *ngIf="scopeNameFormControl.hasError('required')">
               Scope Name is required.
             </mat-error>
-            <mat-error *ngIf="scopeNameFormControl.hasError('pattern') && !scopeNameFormControl.hasError('required')">
-              Scope Name must contain 3-30 letters or numbers.
+            <mat-error *ngIf="(scopeNameFormControl.hasError('pattern') || scopeNameFormControl.value.length > 30) &&
+                              !scopeNameFormControl.hasError('required')">
+              Scope Name must contain 2-30 Letters, numbers and may contain '_', '-' between them
             </mat-error>
-
+            <mat-icon class="help-authorize" [matTooltip]="SCOPE_NAME_HELP" matTooltipPosition="above">help</mat-icon>
           </mat-form-field>
         </div>
         <br>
@@ -29,6 +30,7 @@
             <mat-error *ngIf="descFormControl.hasError('pattern') && !descFormControl.hasError('required')">
               Description must contain 2-40 characters.
             </mat-error>
+            <mat-icon class="help-authorize" [matTooltip]="SCOPE_DESCRIPTION_HELP" matTooltipPosition="above">help</mat-icon>
           </mat-form-field>
         </div>
         <br>
@@ -41,12 +43,16 @@
               {{ client.name }}
             </mat-option>
           </mat-select>
+          <mat-icon class="help-authorize" [matTooltip]="SCOPE_CLIENT_HELP" matTooltipPosition="above">help</mat-icon>
         </mat-form-field>
         </div>
-        <mat-slide-toggle (change)="changeActive()" color="primary" style="position: relative; left: 42px; top: 30px;">
-          <span [class]="publicActive">Public Scope</span>
-          <span [class]="privateActive" style="position: absolute; left: -97px;">Private Scope</span>
-        </mat-slide-toggle>
+        <div style="display: flex;">
+          <mat-slide-toggle (change)="changeActive()" color="primary" style="position: relative; left: 94px; top: 30px;">
+            <span [class]="publicActive">Public Scope</span>
+            <span [class]="privateActive" style="position: absolute; left: -97px;">Private Scope</span>
+          </mat-slide-toggle>
+          <mat-icon style="position: relative; left: 131px; bottom: -30px; font-size: 20px;" [matTooltip]="SCOPE_TYPE_HELP" matTooltipPosition="above">help</mat-icon>
+        </div>
         <button mat-raised-button class="login-button" (click)="addScope()" disabled="disabled" [disabled]="!isDetailsValid()">Create Scope</button>
     </form>
     <span *ngIf="errorMsg" class="error-msg">*{{errorMsg}}</span>

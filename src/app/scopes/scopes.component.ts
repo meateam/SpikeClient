@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 import { NewScopeModalComponent } from './new-scope-modal/new-scope-modal.component';
 import { ScopeManagementModalComponent } from './scope-management-modal/scope-management-modal.component';
 import { ScopeVerifyDeleteModalComponent } from './scope-verify-delete-modal/scope-verify-delete-modal.component';
+import { ScopeEditModalComponent } from './scope-edit-modal/scope-edit-modal.component';
 import { ScopesService } from './scopes.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ClientsService } from '../clients/clients.service';
@@ -68,6 +69,7 @@ export class ScopesComponent implements OnInit {
               private router: Router,
               private newScopeDialog: MatDialog,
               private scopeManagementDialog: MatDialog,
+              private scopeEditDialog: MatDialog, 
               private verifyDeleteDialog: MatDialog,
               private snackBar: MatSnackBar) { }
 
@@ -223,5 +225,25 @@ export class ScopesComponent implements OnInit {
     });
     
     await dialogRef.afterClosed().toPromise();
+  }
+
+  async openEditScope(scope) {
+    const dialogRef = this.scopeEditDialog.open(ScopeEditModalComponent, {
+      width: '400px',
+      data: {
+        scope,
+      }
+    });
+    
+    const updatedScope = await dialogRef.afterClosed().toPromise();
+
+    // Find scope in the scope array and update description
+    for (let index = 0; index < this.dataSource.data.length; index++) {
+      if ((this.dataSource.data[index] as any)._id === updatedScope._id) {
+        (this.dataSource.data[index] as any).description = updatedScope.description;
+        break;
+      }
+    }
+
   }
 }

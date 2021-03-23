@@ -2,3 +2,8 @@
     position:relative;
     top:180px;
 }
+
+mat-card-subtitle {
+    color: var(--sidenav-color);
+    transition: 0.5s;
+}

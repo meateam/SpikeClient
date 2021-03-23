@@ -37,7 +37,15 @@ export class ScopesService {
     };
 
     // tslint:disable-next-line: max-line-length
-    return this.http.put(this.scopesUrl, { scopeInformation: { scopeId: scope.id, permittedClients: scope.permittedClients.map(((client: { clientId: any; }) => client.clientId)) } }, httpOptions).pipe(
+    return this.http.put(
+      this.scopesUrl,
+      { 
+        scopeInformation: {
+          scopeId: scope.id,
+          permittedClients: scope.permittedClients.map(((client: { clientId: any; }) => client.clientId)),
+          description: scope.description,
+        }
+      }, httpOptions).pipe(
         catchError(PublicFunctions.handleError)
     );
   }

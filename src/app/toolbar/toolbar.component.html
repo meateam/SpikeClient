@@ -6,8 +6,25 @@
       </div>
       <span *ngIf="!displayLogo" class="title">{{ title }}</span>
       <span class="example-spacer"></span>
-      <a *ngIf="helpButton" href="/help" class="btn-stl"><button class="btn-help" mat-button>Help</button></a>
-      <button (click)="onIconClick()" *ngIf="!helpButton && icon" mat-icon-button class="btn-stl"><mat-icon>{{ icon }}</mat-icon></button>
+      
+      <button (click)="onIconClick()" *ngIf="!helpButton && icon" mat-icon-button class="btn-stl" style="position: absolute; right: 10px;"><mat-icon>{{ icon }}</mat-icon></button>
       <span class="example-spacer-right"></span>
+      <div class="toggleWrapper" *ngIf="darkTheme">
+        <input type="checkbox" class="dn" id="dn" (change)="toggleTheme()"/>
+        <label for="dn" class="toggle">
+          <span class="toggle__handler">
+            <span class="crater crater--1"></span>
+            <span class="crater crater--2"></span>
+            <span class="crater crater--3"></span>
+          </span>
+          <span class="star star--1"></span>
+          <span class="star star--2"></span>
+          <span class="star star--3"></span>
+          <span class="star star--4"></span>
+          <span class="star star--5"></span>
+          <span class="star star--6"></span>
+        </label>
+      </div>
+      <a *ngIf="helpButton" href="/help" class="btn-stl" style="margin-right:20px;"><button class="btn-help" mat-button>Docs</button></a>
   </mat-toolbar-row>
 </mat-toolbar>

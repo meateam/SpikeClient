@@ -12,6 +12,11 @@ import { MatInput } from '@angular/material/input';
 })
 export class NewScopeModalComponent implements OnInit {
   @ViewChild('inputSelected') input: MatInput;
+
+  SCOPE_NAME_HELP = 'The name of the scope. The best practice is lowercase letters with underline as separator between words.';
+  SCOPE_DESCRIPTION_HELP = 'Short description of the scope functionality. This value will be seen for end-users in user consent, so make sure it is clear and easy to understand.';
+  SCOPE_CLIENT_HELP = 'The client which owns the scope (provide the scope permission for other clients)';
+  SCOPE_TYPE_HELP = 'Public = everyone can use this scope without permission, Private = only permitted clients can use this scope.';
   
   /**
    * Constructor of the component.
@@ -28,7 +33,7 @@ export class NewScopeModalComponent implements OnInit {
 
   scopeNameFormControl = new FormControl('', [
     Validators.required,
-    Validators.pattern('^[a-zA-Z0-9]{3,30}$'),
+    Validators.pattern('^([a-zA-Z0-9]+[\-\_]?)+[a-zA-Z0-9]$'),
   ]);
 
   descFormControl = new FormControl('', [

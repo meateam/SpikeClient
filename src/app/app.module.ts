@@ -35,6 +35,10 @@ import { ScopeVerifyDeleteModalComponent } from './scopes/scope-verify-delete-mo
 import { ScopeNewPermittedClientComponent } from './scopes/scope-management-modal/scope-new-permitted-client/scope-new-permitted-client.component';
 import { DashboardComponent, BottomSheetContact } from './dashboard/dashboard.component';
 import { ViewScopesModalComponent } from './dashboard/view-scopes-modal/view-scopes-modal.component';
+import { ClipboardModule } from '@angular/cdk/clipboard';
+import { ScopeEditModalComponent } from './scopes/scope-edit-modal/scope-edit-modal.component';
+import { TextFieldModule } from '@angular/cdk/text-field';
+import { ClientUsedScopesModalComponent } from './clients/client-used-scopes-modal/client-used-scopes-modal.component';
 
 @NgModule({
   declarations: [
@@ -62,6 +66,8 @@ import { ViewScopesModalComponent } from './dashboard/view-scopes-modal/view-sco
     DashboardComponent,
     ViewScopesModalComponent,
     BottomSheetContact,
+    ScopeEditModalComponent,
+    ClientUsedScopesModalComponent,
   ],
   imports: [
     BrowserAnimationsModule,
@@ -72,6 +78,8 @@ import { ViewScopesModalComponent } from './dashboard/view-scopes-modal/view-sco
     FormsModule,
     AppRoutingModule,
     AvatarModule,
+    ClipboardModule,
+    TextFieldModule
   ],
   entryComponents: [RegisterClientModalComponent, VerifyClientDeleteModalComponent,
                     VerifyClientResetModalComponent, ClientHostUrisModalComponent, ClientActiveTokensModalComponent,

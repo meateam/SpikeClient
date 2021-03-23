@@ -1,10 +1,11 @@
 // sidenav.component
 
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { AuthService } from '../auth/auth.service';
 import { PublicFunctions } from '../shared/shared';
 import { SharedService } from '../shared.service';
+import { MatSidenav } from '@angular/material/sidenav';
 
 @Component({
   selector: 'app-sidenav',
@@ -21,7 +22,7 @@ export class SidenavComponent implements OnInit {
 
   @Input() sidenavToggle;
   @Input() user;
-  sidenav;
+  @ViewChild('sidenav') sidenav: MatSidenav;
   isLogged = false;
   options: FormGroup;
 
@@ -59,5 +60,9 @@ export class SidenavComponent implements OnInit {
     } else {
       PublicFunctions.logout();
     }
+  }
+
+  toggleSidenav() {
+    this.sidenav.toggle();
   }
 }

@@ -12,8 +12,9 @@
 }
 
 .div-main {
-    margin-top: 30px;
-    width: 87%;
+    padding-top: 30px;
+    width: 90%;
+    margin: auto;
 }
 
 .mat-card-header-text {

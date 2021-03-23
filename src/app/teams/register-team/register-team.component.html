@@ -1,4 +1,6 @@
-<mat-spinner style="position:relative; top:180px;" *ngIf="team && team.length === 0"></mat-spinner>
+<div *ngIf="team && team.length === 0" style="display: flex; justify-content: center; height: calc(100vh - 100px); align-items: center;">
+  <mat-spinner></mat-spinner>
+</div>
 <div *ngIf="!team" class="main-team">
     <mat-card class="registerCard">
         <b><mat-card-subtitle>Create Team</mat-card-subtitle></b>

@@ -1,6 +1,17 @@
+mat-drawer {
+    background-color: var(--sidenav-background-color) !important;
+    color: var(--sidenav-color) !important;
+    overflow-x: hidden !important;
+}
+
+::ng-deep mat-drawer-content {
+    transition: 0.5s;
+    background-color: var(--body-background-color) !important;
+}
+
 .sidenav {
     flex:15%;
-    background-color: #DADADA;
+    background-color: #EFEFEF;
     height:100%;
 }
 
@@ -11,16 +22,13 @@
   .btn-list {
       height: 50px;
       position:relative;
-      right:10px;
       width:100%;
-      text-align:left;
-
+      text-align:center;
   }
 
   .btns-list {
-      position:relative;
-      top: 30px;
-      width: 220px;
+    position:relative;
+    top: 30px;
   }
 
   .btn-icon {
@@ -41,7 +49,7 @@
   }
 
 .active {
-    background-color: rgba(0,0,0,0.1);
+    background-color: var(--sidenav-btn-active);
 }
 
 .mat-subheader {
@@ -64,10 +72,59 @@
 .btn-menu {
     position: fixed;
     left: 5px;
-    bottom: 10px;
+    top: 10px;
+    z-index:9;
 }
 
 .h3-text {
     font-weight: bold;
     text-align:center;
+}
+
+.btns-list > mat-list-item {
+    margin: 10px 0;
+}
+
+mat-drawer:not(.mat-drawer-opened) {
+    transition: 0.5s;
+    transform: translate3d(0, 0, 0) !important;
+    visibility: visible !important;
+    width: 60px !important;
+    overflow: hidden;
+}
+
+mat-drawer:not(.mat-drawer-opened) .text-disp {
+    display: none;
+}
+
+mat-drawer:not(.mat-drawer-opened) #avatar-disp {
+    display: none;
+}
+
+mat-drawer:not(.mat-drawer-opened) #logo-disp {
+    transition: 0.5s;
+    left: 4px !important;
+    transform: translate(0, -20px);
+    /*display: none !important;*/
+}
+
+mat-drawer:not(.mat-drawer-opened) .logo-text-disp {
+    /* display: none !important; */
+    transition: 0.5s;
+    transform: translate(-59px, 43px);
+}
+
+mat-drawer:not(.mat-drawer-opened) .btn-disp{
+    transition: 0.5s;
+    min-width: 50px;
+    margin: 0 !important;
+    padding: 0 !important;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+mat-drawer:not(.mat-drawer-opened) .icon-disp {
+    right: 0 !important;
 }

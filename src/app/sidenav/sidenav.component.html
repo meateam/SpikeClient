@@ -1,37 +1,37 @@
-<div class="example-sidenav-container">
-    <button mat-icon-button class="btn-menu" (click)="sidenav.toggle();"><mat-icon style="color: white;">menu</mat-icon></button>
-    <div *ngIf="(team && team.length > 0)|| (team && (team.teams && team.teams.length > 0)) " #sidenav mode="side" opened class="sidenav">
-        <mat-list>
-            <h3 mat-subheader class="h3-text">Hello {{ user.fullName || user.name.firstName + ' ' + user.name.lastName }}</h3>
-            <div class="btns-list">
-                <mat-list-item>
-                    <button mat-button class="btn-list" routerLink="/clients" routerLinkActive="active">
-                        <h4 mat-line class="btn-text"><mat-icon class="btn-icon">vpn_key</mat-icon> Manage Clients</h4>
-                    </button>
-                </mat-list-item>
-                <mat-divider></mat-divider>
-                <mat-list-item>
-                    <button mat-button class="btn-list" routerLink="/dashboard" routerLinkActive="active">
-                        <h4 mat-line class="btn-text"><mat-icon class="btn-icon" style="font-weight: bold;">search</mat-icon> Explore Clients</h4>
-                    </button>
-                </mat-list-item>
-                <mat-divider></mat-divider>
-                <mat-list-item>
-                    <button mat-button class="btn-list" routerLink="/teams" routerLinkActive="active">   
-                        <h4 mat-line class="btn-text"><mat-icon class="btn-icon">assignment</mat-icon> Manage Teams</h4>
-                    </button>
-                </mat-list-item>
-                <mat-divider></mat-divider>
-                <mat-list-item>
-                    <button mat-button class="btn-list" routerLink="/scopes" routerLinkActive="active">   
-                        <h4 mat-line class="btn-text"><mat-icon class="btn-icon">lock</mat-icon> Manage Scopes</h4>
-                    </button>
-                </mat-list-item>
+<button *ngIf="team" mat-icon-button class="btn-menu" (click)="toggleSidenav()"><mat-icon style="color: white;">menu</mat-icon></button>
+<mat-drawer-container style="height: calc(100vh - 64px)" autosize>
+    <mat-drawer *ngIf="(team && team.length > 0)|| (team && (team.teams && team.teams.length > 0)) " #sidenav mode="side" opened class="sidenav" style="width: 260px;">
+        <div style="display: flex; justify-content: center; flex-direction: column;">
+            <div id="avatar-disp">
+                <div style="margin-top:20px; text-align: center;">
+                    <img src="/assets/png/avatar.png" width="80" height="80" style="border-radius: 100%;" /><br>
+                    <div style="text-align: center; font-size:15px; font-weight: bold;">{{ user.fullName || user.name.firstName + ' ' + user.name.lastName }}</div>
+                </div>
             </div>
-        </mat-list>
-    </div>
-    <div style="flex:100%; overflow-y: auto; max-height: calc(100vh - 64px);">
+            <button class="btn-disp" style="transition: 0.5s; margin-left: 30px; margin-right:30px; margin-top: 50px; height:50px; display: flex; align-items: center; justify-content: center;" mat-button routerLink="/dashboard" routerLinkActive="active">
+                <mat-icon class="icon-disp" style="position: relative; right: 5px; font-weight: bold;">search</mat-icon>
+                <span class="text-disp" style="font-size:16px; font-weight: 550;">Explore Clients</span>
+            </button>
+            <button class="btn-disp" style="transition: 0.5s; margin-left: 30px; margin-right:30px; margin-top: 10px; height:50px; display: flex; align-items: center; justify-content: center;" mat-button routerLink="/teams" routerLinkActive="active">
+                <mat-icon class="icon-disp" style="position: relative; right: 7px; font-weight: bold;">group</mat-icon>
+                <span class="text-disp" style="font-size:16px; font-weight: 550;">Manage Teams</span>
+            </button>
+            <button class="btn-disp" style="transition: 0.5s; margin-left: 30px; margin-right:30px; margin-top: 10px; height:50px; display: flex; align-items: center; justify-content: center;" mat-button routerLink="/clients" routerLinkActive="active">
+                <mat-icon class="icon-disp" style="position: relative; right: 7px; font-weight: bold;">vpn_key</mat-icon>
+                <span class="text-disp" style="font-size:16px; font-weight: 550;">Manage Clients</span>
+            </button>
+            <button class="btn-disp" style="transition: 0.5s; margin-left: 30px; margin-right:30px; margin-top: 10px; height:50px; display: flex; align-items: center; justify-content: center;" mat-button routerLink="/scopes" routerLinkActive="active">
+                <mat-icon class="icon-disp" style="position: relative; right: 5px; bottom: 1px; font-weight: bold;">lock</mat-icon>
+                <span class="text-disp" style="font-size:16px; font-weight: 550;">Manage Scopes</span>
+            </button>
+        </div>
+        <div id="logo-disp" style="position: absolute; bottom:20px; left: calc(50% - 58px); display: flex; justify-content: center; text-align: center; align-items: center;">
+            <img src="/assets/png/spike-logo.png" width="50">
+            <span class="logo-text-disp" style="font-weight: bold; font-size:20px; color: #7a7a7a; margin-left: 10px;">Spike</span>
+        </div>
+    </mat-drawer>
+    <div style="max-height: calc(100vh - 64px); background-color: transparent; transition: 0.5s;">
         <router-outlet>
         </router-outlet>
     </div>
-</div>
+</mat-drawer-container>
