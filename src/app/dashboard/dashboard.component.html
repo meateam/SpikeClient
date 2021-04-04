@@ -1,7 +1,9 @@
-<mat-progress-bar mode="indeterminate" style="position: relative;" *ngIf="loadingChange"></mat-progress-bar>
-<mat-spinner class="spinner-opts" *ngIf="(!teams || !clients) && !error "></mat-spinner>
-<cdk-virtual-scroll-viewport #scroller itemSize="8 * 360" style="height: 99%; width: 100%;">
-<div [ngStyle]="{ 'display': clients && teams && !error ? 'flex' : 'none'}" style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center; position: sticky; top: 0px; margin-top:20px; z-index:2; width: 86%;">
+<mat-progress-bar mode="indeterminate" style="position: absolute; z-index:99" *ngIf="loadingChange"></mat-progress-bar>
+<div *ngIf="(!teams || !clients) && !error" style="display: flex; justify-content: center; height: calc(100vh - 100px); align-items: center;">
+    <mat-spinner></mat-spinner>
+</div>
+<cdk-virtual-scroll-viewport #scroller itemSize="8 * 360" style="height: calc(100vh - 64px); width: 100%;" [ngStyle]="{ 'display': clients && teams && !error ? 'flex' : 'none'}">
+<div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center; position: sticky; top: 0px; margin-top:20px; z-index:2; width: 100%;">
     <form class="filter-form">
         <mat-form-field style="width:250px; margin: 10px;">
             <input loaded style="width:220px;" #inputSelected="matInput" [(ngModel)]="clientsForSearch" type="text"
@@ -24,13 +26,12 @@
         </div>
     </form>
 </div>
-<!--<cdk-virtual-scroll-viewport #scroller itemSize="8 * 360" style="height: 100%; width: 100%;">-->
 <div *ngIf="user && teams && clients" class="div-main">
-    <div style="display: flex; flex-wrap:wrap;">
-        
+    <div style="display: flex; flex-wrap:wrap; justify-content: center;">
         <mat-card *cdkVirtualFor="let currClient of clients" style="margin: 14px; width: 260px; flex-shrink: 0; transition: 1s">
+            <img width="35" height="35" *ngIf="currClient.prizeImage" [src]="currClient.prizeImage" style="position: absolute; right: 17px; top: 23px; opacity: 1; z-index:9;">
             <mat-card-header style="position:relative; right: 15px;">
-                <ngx-avatar class="avatar-image" mat-card-avatar
+                <ngx-avatar *ngIf="true || !currClient.prizeImage" class="avatar-image" mat-card-avatar
                     [name]="currClient.name + ' ' + currClient.name[currClient.name.length - 1]" size="65"></ngx-avatar>
                 <mat-card-title style="text-align: left;">
                     <div [matTooltip]="currClient.name" matTooltipPosition="above"
@@ -38,13 +39,16 @@
                         {{ currClient.name }}</div>
                 </mat-card-title>
                 <mat-card-subtitle style="text-align: left;">
-                    <div [matTooltip]="currClient.team.teamname" matTooltipPosition="above"
-                        style="max-width: 130px; text-overflow: ellipsis; overflow: hidden; white-space: nowrap; cursor: default;">
-                        {{ currClient.team.teamname }}
-                    </div> <br>
-                    <div
-                        style="color: black; font-size:14px; height: 22px; text-overflow: ellipsis; white-space: nowrap; width: 230px; overflow: hidden;">
-                        {{ currClient.description }}</div>
+                    <div style="max-width: 130px; text-overflow: ellipsis; overflow: hidden; white-space: nowrap; cursor: default;">
+                        <span [matTooltip]="currClient.team.teamname" matTooltipPosition="above" style="color: var(--card-sub-color)">
+                            {{ currClient.team.teamname }}
+                        </span>
+                    </div><br>
+                    <div style="color: var(--card-color); font-size:14px; height: 22px; text-overflow: ellipsis; white-space: nowrap; width: 230px; overflow: hidden;">
+                        <span [matTooltip]="currClient.description" matTooltipPosition="above">
+                            {{ currClient.description }}
+                        </span>
+                    </div>
                 </mat-card-subtitle>
             </mat-card-header>
             <div>
@@ -68,7 +72,7 @@
                 <div style="text-align: left; margin: 15px 0;">Scopes:</div>
                 <div style="height: 70px;">
                     <div *ngIf="currClient.scopes && currClient.scopes.length === 0"
-                        style="position:relative; top:10px;">
+                        style="position:relative; top:10px; text-align: center;">
                         <mat-icon style="font-size: 30px; width: 32px; height: 32px; color: #9a9a9a; cursor: default;">
                             sentiment_neutral</mat-icon>
                         <div style="font-size: 17px; color: #9a9a9a; cursor: default;">
@@ -79,13 +83,13 @@
                         <mat-chip color="primary" [matTooltip]="currScope.value" matTooltipPosition="above"
                             [selected]="currScope.permittedClients.length > 0"
                             *ngFor="let currScope of currClient.scopes"
-                            style="font-size:11px; min-height: 25px; padding: 9px;">
-                            <div style="max-width: 52px; text-overflow: ellipsis; overflow: hidden">
+                            style="font-size:13px; min-height: 25px; padding: 9px;">
+                            <div style="max-width: 60px; text-overflow: ellipsis; overflow: hidden">
                                 {{ currScope.value }}
                             </div>
                         </mat-chip>
                         <button (click)="openScopesDetails(currClient)" mat-icon-button color="primary"
-                            matTooltip="View Scopes Details" matTooltipPosition="above">
+                                matTooltip="View Scopes Details" matTooltipPosition="above">
                             <mat-icon>more_horiz</mat-icon>
                         </button>
                     </mat-chip-list>
@@ -97,6 +101,14 @@
                     (click)="openBottomSheet(currClient.team.ownerId)">
                     <mat-icon>phone</mat-icon>
                 </button>
+                <div matTooltip="Clients using this client" matTooltipPosition="above" *ngIf="currClient.popularity" style="width: 40px; height: 40px; position: absolute; left: 10px; bottom: 10px; cursor:default; display: flex; justify-content: center; align-items: center;">
+                    <div style="color: white; margin: auto;font-size:12px; z-index: 1;">
+                        {{ currClient.popularity }}
+                    </div>
+                    <mat-icon color="warn" style="font-size:40px; height: 40px; width: 40px; position: absolute;">
+                        favorite
+                    </mat-icon>
+                </div>
             </mat-card-actions>
         </mat-card>
     </div>

@@ -1,0 +1,18 @@
+<app-toolbar [title]="'Edit scope \'' + scopeCopy.value + '\' description'" icon="close" (iconClick)="close()">
+</app-toolbar>
+<mat-progress-bar mode="indeterminate" style="position: relative;" *ngIf="loadingChange"></mat-progress-bar>
+<div mat-dialog-content class="form-container">
+    <form autocomplete="off">
+        <mat-form-field>
+            <mat-label>Description:</mat-label>
+            <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1"
+                cdkAutosizeMaxRows="5" [(ngModel)]='scopeCopy.description'
+                [ngModelOptions]="{standalone: true}"></textarea>
+        </mat-form-field>
+
+    </form>
+    <div mat-dialog-actions class="form-actions">
+        <button class="form-action-button" mat-button color="warn" (click)="close()">Cancel</button>
+        <button class="form-action-button" mat-button color="primary" (click)="save()">Save</button>
+    </div>
+</div>

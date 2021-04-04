@@ -1,0 +1,33 @@
+.form-container {
+    overflow: unset;
+    width: 100%;
+    text-align: center;
+    position: relative;
+    margin-top: 27px;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 10px;
+}
+
+.form-action-button {
+    font-weight:bold;
+}
+
+mat-form-field {
+    width: 100%;
+}
+
+.example-spacer {
+    flex:1 1 auto;
+}
+
+form {
+    margin: 0px 40px;
+}
+
+textarea {
+    resize: none;
+}

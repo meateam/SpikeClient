@@ -62,7 +62,7 @@ export class RegisterTeamComponent implements OnInit {
       if (data.auth) { // If the server returned that the token is authorized.
         this.errorMsg = undefined;
         this.sharedService.setData = data;
-        this.router.navigateByUrl('/clients');
+        this.router.navigateByUrl('/dashboard');
       } else {
         this.errorMsg = data.message;
       }

@@ -1,4 +1,8 @@
 @media all and (max-width: 1100px) {
+    #action-buttons {
+        flex-direction: column;
+    }
+
     .redirect-main-div {
         text-align:center;
         display: flex;
@@ -45,6 +49,10 @@
 }
 
 @media all and (min-width: 1100px) {
+    #action-buttons {
+        flex-direction: row;
+    }
+
     .hosturi-main-div {
         text-align:center;
         display: flex;
@@ -131,8 +139,10 @@ input {
 }
 
 .div-main {
-    margin-top: 30px;
-    width: 70%;
+    padding-top: 30px;
+    width: 80%;
+    margin: auto;
+    padding-bottom: 5px;
 }
 
 .panel-expan {
@@ -175,10 +185,10 @@ input {
 }
 
 .myinput {
-    border-radius: 12px;
-    height: 27px;
+    background-color: #EAEAEA;
+    height: 35px;
+    border-bottom: 1px solid #DADADA;
     text-align: center;
-    background-color: white;
     font-weight: bold;
     color: black;
 }
@@ -217,12 +227,14 @@ input {
 .lock-icon {
     position:relative;
     top: 0px;
+    color: var(--card-color);
     text-align: center;
 }
 
 .aud-icon {
     position:relative;
     top: 0px;
+    color: var(--card-color);
     text-align: center;
 }
 
@@ -248,7 +260,8 @@ input {
 }
 
 .textarea-stl {
-    background-color:#EAEAEA;
+    background-color: var(--textarea-background-color);
+    color: var(--textarea-color);
     flex: 90%;
     width: 100%;
     position:relative;
@@ -293,6 +306,7 @@ input {
 }
 
 .client-name {
+    color: var(--card-color);
     position:relative;
     bottom: 10px;
     font-weight:bold;
@@ -334,7 +348,8 @@ input {
 
 .hosturi-display {
     font-weight: bold;
-    background-color: #E0E0E0;
+    background-color: var(--textarea-background-color);
+    color: var(--textarea-color);
     margin: 0px 10px 0 0px;
     padding: 5px 0px 5px 11px;
 }
@@ -348,7 +363,7 @@ input {
 
 .prefix-icon {
     font-size:30px;
-    color: #757575;
+    color: var(--card-color);
     position:absolute;
     left: -40px;
     bottom:5px;
@@ -393,7 +408,7 @@ input {
 
   .prefix-icon-special {
     font-size:25px;
-    color: #757575;
+    color: var(--card-color);
     position:absolute;
     bottom:5px;
     right: 5px;
@@ -434,7 +449,7 @@ input {
     position: absolute;
     left: -72px;
     top: 2px;
-    color:rgba(0,0,0,.87);
+    color: var(--card-color);
 }
 
 .spinner-opts {

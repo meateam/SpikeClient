@@ -12,6 +12,7 @@ import { VerifyClientDeleteModalComponent } from './verify-client-delete-modal/v
 import { VerifyClientResetModalComponent } from './verify-client-reset-modal/verify-client-reset-modal.component';
 import { ClientHostUrisModalComponent } from './client-host-uris-modal/client-host-uris-modal.component';
 import { ClientActiveTokensModalComponent } from './client-active-tokens-modal/client-active-tokens-modal.component';
+import { ClientUsedScopesModalComponent } from './client-used-scopes-modal/client-used-scopes-modal.component';
 import { ENTER, COMMA } from '@angular/cdk/keycodes';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -67,6 +68,7 @@ export class ClientsComponent implements OnInit {
               private verifyClientResetDialog: MatDialog,
               private clientHostUrisDialog: MatDialog,
               private clientActiveTokensDialog: MatDialog,
+              private clientUsedScopesDialog: MatDialog,
               private clientsService: ClientsService,
               private formBuilder: FormBuilder,
               private router: Router,
@@ -131,7 +133,7 @@ export class ClientsComponent implements OnInit {
       PublicFunctions.logout();
     }
   }
-
+  
   /**
    * Copies to textarea to clipboard.
    * @param inputElement - The input value.
@@ -232,7 +234,11 @@ export class ClientsComponent implements OnInit {
    */
   add(client, event: MatChipInputEvent): void {
     const input = event.input;
-    const value = event.value;
+    let value = event.value;
+
+    if (value && value[0] !== '/') {
+      value = '/' + value;
+    }
 
     // Add the chip to the chips list.
     if ((value || '').trim() &&
@@ -291,6 +297,7 @@ export class ClientsComponent implements OnInit {
     const data = await this.clientsService.updateClient(client.clientId,
                             {
                               redirectUris: client.redirectUris,
+                              description: client.description,
                               hostUris: client.hostUris.map(hostUri => {
                                 if (hostUri.indexOf('https://') === -1) {
                                   hostUri = `https://${hostUri}`;
@@ -313,6 +320,7 @@ export class ClientsComponent implements OnInit {
    */
   setEditable(client): void {
     client.isEditable = true;
+    client.copyDescription = client.description;
     client.copyRedirectUris = client.redirectUris.slice();
     client.hostUrisCopy = client.hostUris.map(hostUri => hostUri.substr(8));
   }
@@ -410,8 +418,32 @@ export class ClientsComponent implements OnInit {
       }
     });
 
-    const result = await dialogRef.afterClosed().toPromise();
+    // const result = await dialogRef.afterClosed().toPromise();
   }
+
+
+  /**
+   * Opens dialog containing the scopes which is the client is using.
+   * @param client - The client object
+   */
+  async openUsedScopesDialog(event, client) {
+    event.stopPropagation();
+
+    const clientsUsedScopesList = await this.clientsService.getUsedScopes(client.clientId).toPromise();
+    console.log(clientsUsedScopesList);
+
+    const dialogRef = this.clientUsedScopesDialog.open(ClientUsedScopesModalComponent, {
+      width: '620px',
+      height: '770px',
+      data: {
+        clients: clientsUsedScopesList,
+        clientName: client.name,
+      },
+    });
+
+    // const result = await dialogRef.afterClosed().toPromise();
+  }
+  
 
   /**
    * A check if client has changed.
@@ -419,8 +451,9 @@ export class ClientsComponent implements OnInit {
    */
   isClientChanged(client): boolean {
     if (client.redirectUris.toString() === client.copyRedirectUris.toString() &&
-      client.newRedirectUris && client.newRedirectUris.length === 0 &&
-      (arraysEqual(client.hostUris, client.fileHostUris) || !(client.correctFile))) {
+        client.newRedirectUris && client.newRedirectUris.length === 0 &&
+        (arraysEqual(client.hostUris, client.fileHostUris) || !(client.correctFile)) &&
+        client.description === client.copyDescription) {
       return false;
     } else {
       return true;

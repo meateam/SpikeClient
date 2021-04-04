@@ -1,6 +1,7 @@
-<mat-spinner class="spinner-opts" *ngIf="!clients && !error"></mat-spinner>
+<div *ngIf="(!clients || !teams || !user) && !error" style="display: flex; justify-content: center; height: calc(100vh - 100px); align-items: center;">
+  <mat-spinner></mat-spinner>
+</div>
 <div *ngIf="user && teams" class="div-main">
-    <h1 *ngIf="clients && clients.length > 0" style="color: #6a6a6a; font-size: 30px;">Manage Clients</h1>
     <form class="filter-form" *ngIf="clients && clients.length > 0">
       <mat-form-field style="width:250px;">
         <input matInput autocomplete="off" placeholder="Search Client/Team" [(ngModel)]="clientsForSearch" (ngModelchange)="filterClients($event)" style="width:220px;" name="clientsFilter">
@@ -14,7 +15,7 @@
         </div>
         
         <mat-expansion-panel class="panel-expan" #currClient *ngFor="let client of filterClients(clientsForSearch)" [expanded]="client.isNew" (click)="client.isNew = false; getClientData(client, currClient); client.start = true;">
-          <mat-expansion-panel-header style="">
+          <mat-expansion-panel-header>
             <mat-panel-title class="panel-title">
               <mat-progress-bar class="progress-bar-main" *ngIf="client.start && !(client.secret && client.redirectUris)" mode="indeterminate"></mat-progress-bar>
               <!--<img class="avatar-img" src="/assets/png/avatar.png" width="30" height="30"/>-->
@@ -29,6 +30,22 @@
             
             </mat-panel-description>
           </mat-expansion-panel-header>
+          <div class="client-main-div">
+            <div class="clientid-div">
+              <mat-icon class="clientid-icon" style="position: relative; top: 2px;">description</mat-icon>
+              <span class="clientid-span" style="position: relative; top: 3px;">Description</span>
+            </div>
+            <div class="div-inner">
+              <div readonly *ngIf="!client.isEditable" style="display: flex; align-items: center;" #clientId>{{ client.description }}</div>
+              <mat-form-field *ngIf="client.isEditable" style="width: 50%;">
+                <mat-label>Client Description</mat-label>
+                <input matInput [(ngModel)]="client.description">
+              </mat-form-field>
+            </div>
+          </div>
+          <br>
+          <mat-divider></mat-divider>
+          <br>
           <div class="client-main-div">
             <div class="clientid-div">
               <mat-icon class="clientid-icon">vpn_key</mat-icon>
@@ -100,7 +117,7 @@
                   </mat-chip-list>
                   </form>
                   <button class="btn-save" mat-icon-button matTooltip="Save URI" matTooltipPosition="above" *ngIf="client.isEditable && client.isInputTriggered" [disabled]="client.uri && client.uri.length === 0"><mat-icon>check</mat-icon></button>
-                  <button class="btn-add" mat-icon-button matTooltip="Add New URI" matTooltipPosition="above" (click)="client.isInputTriggered = true;" *ngIf="client.isEditable && !client.isInputTriggered"><mat-icon>add</mat-icon></button>
+                  <button class="btn-add" mat-icon-button matTooltip="Add New URI" matTooltipPosition="above" (click)="client.isInputTriggered = true;" *ngIf="client.isEditable && !client.isInputTriggered"><mat-icon>add_circle</mat-icon></button>
               </mat-chip-list>
             </div>
         </div>
@@ -128,7 +145,30 @@
             </button>
           </div>
         </div>
-        <div class="input-class" *ngIf="client.isEditable">
+        <br>
+        <mat-divider></mat-divider>
+        <br>
+        <div class="client-main-div">
+          <div class="clientid-div">
+            <mat-icon class="clientid-icon" style="position: relative; top: 2px;">settings</mat-icon>
+            <span class="clientid-span" style="position: relative; top: 3px;">Actions</span>
+          </div>
+          <div id="action-buttons" class="div-inner" style="display: flex; justify-content: space-evenly;">
+            <button mat-button color="primary" style="font-weight: bold;" (click)="openActiveTokensDialog($event, client)">
+              View Active Tokens
+            </button>
+            <button mat-button color="primary" style="font-weight: bold;" (click)="openUsedScopesDialog($event, client)">
+              View Used Scopes
+            </button>
+            <button mat-button color="warn" style="font-weight: bold;" matTooltipPosition="above"
+                    matTooltip="Reset Access Tokens & Get New Client Secret" (click)="resetCredentials(client)">
+              Renew Credentials
+            </button>
+          </div>
+        </div>
+
+        
+        <!-- <div class="input-class" *ngIf="client.isEditable">
             <mat-form-field class="full-width">
               <span class="help-csv" color="primary" (click)="$event.stopPropagation()">
                 <mat-icon class="icon-help">help</mat-icon>
@@ -144,21 +184,13 @@
                 <mat-icon>attach_file</mat-icon>
               </button>
             <span class="span-err-msg" *ngIf="saveErrMsg">{{saveErrMsg}}</span>
-        </div>
+        </div> -->
+
         <mat-action-row class="flexable">
           <span [matTooltipDisabled]="client.isDeletable" matTooltip="First delete scopes belong to this client" matTooltipPosition="above">
             <button mat-button color="warn" class="btn-act" *ngIf="!client.isEditable" [disabled]="!client.isDeletable" (click)="removeClient(client);">Remove</button>
           </span>
             <button mat-button color="warn" class="btn-act" *ngIf="client.isEditable" (click)="cancelChanges(client);">Cancel</button>
-            <div style="width:100%; text-align: center;">
-              <button mat-button color="warn" class="btn-act" matTooltipPosition="above"
-                      matTooltip="Reset Access Tokens & Get New Client Secret" (click)="resetCredentials(client)">
-                      Renew Credentials
-              </button>
-              <button mat-icon-button matTooltip="View active tokens" matTooltipPosition="above" color="primary" (click)="openActiveTokensDialog($event, client)">
-                <mat-icon>av_timer</mat-icon>
-              </button>
-            </div>
             <span class="span-flexable"></span>
             <button mat-button color="primary" class="btn-bold" *ngIf="!client.isEditable" (click)="setEditable(client)">Edit</button>
             <button mat-button color="primary" class="btn-bold" *ngIf="client.isEditable" [disabled]="!isClientChanged(client)" (click)="saveChanges(client)">Save</button>

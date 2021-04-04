@@ -4,7 +4,41 @@
 
 
 :root {
-    --toolbar-primary-color: black;
+    /* Dark Theme */
+    --sidenav-dark-background-color: black;
+    --sidenav-dark-color: #EAEAEA;
+    --sidenav-dark-btn-active: #5d5d5d;
+    --body-dark-background-color: #21262d;
+    --toolbar-dark-color: #37474f;
+    --card-dark-background-color: black;
+    --card-dark-color: #EAEAEA;
+    --card-sub-dark-color: #EAEAEA;
+    --textarea-dark-background-color: #5a5a5a;
+    --textarea-dark-color: #9a9a9a;
+
+    /* Light Theme */
+    --sidenav-light-background-color: #EAEAEA;
+    --sidenav-light-color: black;
+    --sidenav-light-btn-active: rgba(0,0,0,0.1);
+    --body-light-background-color: #FAFAFA;
+    --toolbar-light-color: black;
+    --card-light-background-color: white;
+    --card-light-color: black;
+    --card-sub-light-color: #9a9a9a;
+    --textarea-light-background-color: #EAEAEA;
+    --textarea-light-color: black;
+
+    /* Initial vairables */
+    --toolbar-color: var(--toolbar-light-color);
+    --sidenav-background-color: var(--sidenav-light-background-color);
+    --sidenav-color: var(--sidenav-light-color);
+    --sidenav-btn-active: var(--sidenav-light-btn-active);
+    --body-background-color: var(--body-light-background-color);
+    --card-background-color: var(--card-light-background-color);
+    --card-color: var(--card-light-color);
+    --card-sub-color: var(--card-sub-light-color);
+    --textarea-background-color: var(--textarea-light-background-color);
+    --textarea-color: var(--textarea-light-color);
 }
 
 body {
@@ -35,7 +69,9 @@ html, body {
 }
 
 .mat-badge-content {
-    background-color: black;
+    transition: 0.5s;
+    background-color: var(--sidenav-color);
+    color: var(--sidenav-background-color);
 }
 
 body { margin: 0; font-family: 'Roboto', sans-serif; }
@@ -50,4 +86,15 @@ body { margin: 0; font-family: 'Roboto', sans-serif; }
 
 mat-bottom-sheet-container {
     padding: 0 !important;
+}
+
+mat-card {
+    transition: 0.5s !important;
+    background-color: var(--card-background-color) !important;
+    color: var(--card-color) !important;
+}
+
+mat-expansion-panel {
+    background-color: var(--card-background-color) !important;
+    color: var(--card-color) !important;
 }

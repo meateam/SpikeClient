@@ -1,0 +1,25 @@
+<app-toolbar [title]="clientName + ' Used Scopes Per Client'" icon="close" (iconClick)="close()"></app-toolbar>
+
+<mat-list class="scrollbar scrollbar-primary" style="padding-top:0;">
+    <mat-list-item style="background-color: #EAEAEA;font-weight: bold; text-align: center;">
+      <div style="flex:30%">Client Name</div>
+      <div style="flex:70%">
+        <span>Permitted Scopes</span>
+      </div>
+      <mat-divider></mat-divider>
+    </mat-list-item>
+  </mat-list>
+  <mat-list class="scrollbar scrollbar-primary" style="padding-top:0; max-height:688px; overflow-y:auto; overflow-x:hidden">
+    <mat-list-item *ngFor="let currClient of clients" style="text-align: center;">
+      <div [matTooltip]="currClient.name" matTooltipPosition="above" style="flex: 30%; text-align: center; max-width: 240px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; cursor: default;">
+        <span>{{ currClient.name }}</span>
+      </div>
+      <div class="scrollbar scrollbar-primary" style="flex:70%; overflow-y: auto; height: 36px; overflow-x: hidden; display: flex; justify-content: center; align-items: center;">
+        <mat-chip-list style="height: 36px;">
+            <mat-chip *ngFor="let currScope of currClient.scopes">{{ currScope.value }}</mat-chip>
+        </mat-chip-list>
+      </div>
+      <mat-divider></mat-divider>
+    </mat-list-item>
+</mat-list>
+  

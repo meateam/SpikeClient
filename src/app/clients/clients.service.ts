@@ -96,6 +96,22 @@ export class ClientsService {
   }
 
   /**
+   * Gets clients list which containing scopes for each client which is the specified client using.
+   * @param clientId - Client id of the client
+   */
+  getUsedScopes(clientId: string): Observable<any> {
+    const httpOptions = {
+        headers: new HttpHeaders({
+            authorization: PublicFunctions.getCookie('authorization')
+        })
+    };
+
+    return this.http.get(this.clientUrl + '/' + clientId + '/scopes', httpOptions).pipe(
+        catchError(PublicFunctions.handleError)
+    );
+  }
+
+  /**
    * Updates a client
    * @param clientId - Client id for the url
    * @param client - Client to update

@@ -12,6 +12,7 @@ import { MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
 import { MatInput } from '@angular/material/input';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { map, pairwise, filter, throttleTime } from 'rxjs/operators';
+import { Clipboard } from '@angular/cdk/clipboard'
 
 @Component({
   selector: 'app-dashboard',
@@ -46,16 +47,16 @@ export class DashboardComponent implements OnInit {
   };
   sortTypes = [
     {
+      viewValue: 'Popularity',
+      value: 'popularity',
+    },
+    {
       viewValue: 'Date',
       value: 'date',
     },
     {
       viewValue: 'Name',
       value: 'name',
-    },
-    {
-      viewValue: 'Popularity',
-      value: 'popularity',
     },
     {
       viewValue: 'Usage',
@@ -81,27 +82,17 @@ export class DashboardComponent implements OnInit {
 
 
   constructor(private router: Router, private sharedService: SharedService,
-    private authService: AuthService, private clientsService: ClientsService,
-    private snackBar: MatSnackBar,
-    private dialogRef: MatDialog,
-    private bottomSheet: MatBottomSheet,
-    private ngZone: NgZone) { }
+              private authService: AuthService, private clientsService: ClientsService,
+              private snackBar: MatSnackBar,
+              private dialogRef: MatDialog,
+              private bottomSheet: MatBottomSheet,
+              private ngZone: NgZone,
+              private clipBoard: Clipboard,) { }
 
-  /**
-   * Copies to textarea to clipboard.
-   * @param inputElement - The input value.
-   */
+
   copyClipboard(text) {
-    const textArea = document.createElement("textarea");
-    textArea.textContent = text;
-    textArea.style.position = 'fixed';
-    textArea.style.opacity = '0';
-    document.body.appendChild(textArea);
-    textArea.select();
-    document.execCommand('copy');
-    textArea.setSelectionRange(0, 0);
-    textArea.blur();
-    document.body.removeChild(textArea);
+    this.clipBoard.copy(text);
+
     this.snackBar.open('Copied To Clipboard', 'Close', {
       duration: 2000
     });
@@ -161,6 +152,14 @@ export class DashboardComponent implements OnInit {
         }
 
         this.clients = await this.clientsService.getAllClients(this.selectedSort, this.sortOrder.value).toPromise();
+
+        if (this.selectedSort === this.sortTypes[0].value &&
+          this.sortOrder.value === 1 &&
+          this.clients.length >= 3) {   
+          this.clients[0].prizeImage = '/assets/png/medal-gold2.png';
+          this.clients[1].prizeImage = '/assets/png/medal-silver2.png';
+          this.clients[2].prizeImage = '/assets/png/medal-bronze2.png';
+        }
       } else {
         this.router.navigateByUrl('/register');
       }
@@ -270,7 +269,15 @@ export class DashboardComponent implements OnInit {
 
     try {
       this.clients = await this.clientsService.getAllClients(this.selectedSort, this.sortOrder.value, this.skip, this.limit).toPromise();
-      console.log(this.clients);
+      
+      if (this.selectedSort === this.sortTypes[0].value &&
+          this.sortOrder.value === 1 &&
+          this.clients.length >= 3) {   
+        this.clients[0].prizeImage = '/assets/png/medal-gold2.png';
+        this.clients[1].prizeImage = '/assets/png/medal-silver2.png';
+        this.clients[2].prizeImage = '/assets/png/medal-bronze2.png';
+      }
+
       this.loadingChange = false;
     } catch (err) {
       this.loadingChange = false;

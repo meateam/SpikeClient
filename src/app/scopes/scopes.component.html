@@ -1,4 +1,6 @@
-<mat-spinner class="spinner-opts" *ngIf="!isDone"></mat-spinner>
+<div *ngIf="!isDone" style="display: flex; justify-content: center; height: calc(100vh - 100px); align-items: center;">
+    <mat-spinner></mat-spinner>
+</div>
 <div *ngIf="(isDone) && (!scopes || scopes.length === 0)">
     <div class="div-empty">
         <mat-icon *ngIf="clients && clients.length > 0" class="icon-empty">lock</mat-icon>
@@ -35,14 +37,18 @@
             
             <!-- Created By Column -->
             <ng-container matColumnDef="creator">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header class="tb-header"> Created By </th>
-                <td mat-cell *matCellDef="let element"> {{ element.creator }} </td>
+                <th id="created-by-title" mat-header-cell *matHeaderCellDef mat-sort-header class="tb-header"> Created By </th>
+                <td id="created-by-content" mat-cell *matCellDef="let element"> {{ element.creator }} </td>
             </ng-container>
             
             <!-- Description Column -->
             <ng-container matColumnDef="description">
-                <th mat-header-cell *matHeaderCellDef class="tb-header"> Description </th>
-                <td mat-cell *matCellDef="let element"> {{ element.description }} </td>
+                <th id="description-title" mat-header-cell *matHeaderCellDef class="tb-header"> Description </th>
+                <td id="description-content" mat-cell *matCellDef="let element"> 
+                    <div style="width: 400px; overflow:hidden; white-space: nowrap; text-overflow: ellipsis;">
+                         <span [matTooltip]="element.description" matTooltipPosition="above">{{ element.description }}</span>
+                    </div>
+                </td>
             </ng-container>
 
             <!-- Permitted Clients Column -->
@@ -65,8 +71,14 @@
 
             <!-- Actions Column -->
             <ng-container matColumnDef="actions">
-                <th mat-header-cell *matHeaderCellDef> </th>
+                <th mat-header-cell *matHeaderCellDef class="tb-header">Actions</th>
                 <td mat-cell *matCellDef="let element" style="text-align: right;">
+                    <button color="primary" mat-icon-button matTooltip="Edit Description" matTooltipPosition="above" (click)="openEditScope(element)">
+                        <mat-icon>
+                            edit
+                        </mat-icon>
+                    </button>
+                    
                     <button color="warn" mat-icon-button matTooltip="Remove Scope" matTooltipPosition="above" (click)="removeScope(element)">
                         <mat-icon>delete</mat-icon>
                     </button>

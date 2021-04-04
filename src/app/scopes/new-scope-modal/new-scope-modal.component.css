@@ -105,3 +105,12 @@ textarea {
     color: #9A9A9A;
     transition: 100ms;
 }
+
+::ng-deep .help-authorize {
+    position: absolute;
+    bottom: 3px;
+    right: -32px;
+    cursor: default;
+    font-size: 20px;
+    white-space: pre-line;
+}

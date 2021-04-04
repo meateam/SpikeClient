@@ -2,6 +2,7 @@
     width: 450px;
     position:relative;
     top:160px;
+    margin: auto;
 }
 
 mat-card {
@@ -61,12 +62,12 @@ mat-card-content {
 
 .error-msg {
     position: absolute;
-    bottom: 80px;
+    bottom: 52px;
     font-size: 11px;
     color: #ef5350;
     font-weight: bold;
     width: 96%;
-    left: 0px;
+    left: 23px;
 }
 
 .register-btn {
