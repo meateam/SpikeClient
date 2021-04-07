@@ -98,6 +98,10 @@ export class DashboardComponent implements OnInit {
     });
   }
 
+  sortBy(arr) {
+    return arr.sort((a, b) => b.permittedClients.length - a.permittedClients.length).slice(0, 5);
+  }
+
   async ngOnInit() {
     const input: any = document.getElementById('search-client-input');
 
