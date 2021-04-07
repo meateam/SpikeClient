@@ -82,9 +82,9 @@
                     <mat-chip-list aria-label="Scopes" *ngIf="currClient.scopes && currClient.scopes.length > 0">
                         <mat-chip color="primary" [matTooltip]="currScope.value" matTooltipPosition="above"
                             [selected]="currScope.permittedClients.length > 0"
-                            *ngFor="let currScope of currClient.scopes"
+                            *ngFor="let currScope of sortBy(currClient.scopes)"
                             style="font-size:13px; min-height: 25px; padding: 9px;">
-                            <div style="max-width: 60px; text-overflow: ellipsis; overflow: hidden">
+                            <div style="max-width: 60px; text-overflow: ellipsis; overflow: hidden; max-height: 21px;">
                                 {{ currScope.value }}
                             </div>
                         </mat-chip>
