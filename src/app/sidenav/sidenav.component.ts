@@ -6,6 +6,8 @@ import { AuthService } from '../auth/auth.service';
 import { PublicFunctions } from '../shared/shared';
 import { SharedService } from '../shared.service';
 import { MatSidenav } from '@angular/material/sidenav';
+import { environment } from '../../environments/environment';
+
 
 @Component({
   selector: 'app-sidenav',
@@ -13,6 +15,7 @@ import { MatSidenav } from '@angular/material/sidenav';
   styleUrls: ['./sidenav.component.css']
 })
 export class SidenavComponent implements OnInit {
+  showTeamTab = environment.production;  
   team;
   public get getTeam() { return this.team; }
   public set setTeam(newValue) {
