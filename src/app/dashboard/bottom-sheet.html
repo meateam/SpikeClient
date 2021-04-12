@@ -7,7 +7,9 @@
                     <img src="/assets/png/hi-logo.png" height="60" width="60" style="position: relative; top:15px;"/>
                 </div>
                 <span class="mat-line" mat-line="" style="position: relative; top:25px;">Start Hi Chat With</span><br>
-                <span class="mat-line" mat-line style="font-weight: bold; position: relative; top:25px;">אחמד אדידס</span>
+                <span class="mat-line" mat-line style="font-weight: bold; position: relative; top:25px;">
+                    {{ contactPerson.fullName || contactPerson.firstName + ' ' + contactPerson.lastName }}
+                </span>
             </div>
         </div>
     </a>
@@ -19,7 +21,7 @@
                     <img src="/assets/png/outlook-logo.png" height="60" width="60" style="position: relative;top:15px;"/>
                 </div>
                 <span mat-line="" class="mat-line" style="position:relative; top:25px;">Send Mail To Owner</span><br>
-                <span mat-line="" class="mat-line" style="font-weight: bold; position: relative; top:25px;">אחמד אדידס</span>
+                <span mat-line="" class="mat-line" style="font-weight: bold; position: relative; top:25px;">{{ contactPerson.fullName || contactPerson.firstName + ' ' + contactPerson.lastName }}</span>
             </div>
         </div>
     </a>
