@@ -1,11 +1,13 @@
 version: '2.0'
 services:
   spike-client:
-    container_name: spike-client
-    image: spikeproj/spike-client:latest
+    container_name: spike-clientt
+    image: nameeeeem
     ports:
       - '4200:4200' # Change it if you want
     build: .
     volumes:
       - ./logs:/usr/src/app/logs
     restart: always
+    env_file: 
+      - ./.env.copy

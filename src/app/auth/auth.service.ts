@@ -8,12 +8,9 @@ import { PublicFunctions } from '../shared/shared';
 
 @Injectable()
 export class AuthService {
-  // private authUrl = `${window.location.origin}/api/auth`;
-  // private teamUrl = `${window.location.origin}/api/team`;
-  // private clientUrl = `${window.location.origin}/api/client`;
-  private authUrl = 'https://localhost:3000/api/auth';
-  private teamUrl = 'https://localhost:3000/api/team';
-  private clientUrl = 'https://localhost:3000/api/client';
+  private authUrl = PublicFunctions.local ? 'https://localhost:3000/api/auth' : `${window.location.origin}/api/auth`;
+  private teamUrl = PublicFunctions.local ? 'https://localhost:3000/api/team' : `${window.location.origin}/api/team`;
+  private clientUrl = PublicFunctions.local ? 'https://localhost:3000/api/client' : `${window.location.origin}/api/client`;
 
   /**
    * Injection of the http service.
@@ -31,7 +28,7 @@ export class AuthService {
         })
     };
 
-    return this.http.get('https://localhost/whoami').pipe(
+    return this.http.get(`${window.location.origin}/whoami`).pipe(
         catchError(PublicFunctions.handleError)
     );
   }

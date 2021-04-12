@@ -7,7 +7,7 @@
     "serve": "node -r dotenv/config ./dist/src/server.js",
     "generate-certs": "node scripts/generate_certs.js",
     "build": "ng build",
-    "build:prod": "npx ng build --prod",
+    "build:prod": "npx ng build --prod --output-hashing none",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"

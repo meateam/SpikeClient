@@ -10,8 +10,8 @@ import { catchError, delay } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class SharedService {
-  // private personUrl = `${window.location.origin}/api/person`;
-  private personUrl = 'https://localhost:3000/api/person';
+  private personUrl = PublicFunctions.local ? `https://localhost:3000/api/person` :
+                                              `${window.location.origin}/api/person`;
   private value: string;
   listeners = [];
 

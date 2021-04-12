@@ -8,8 +8,8 @@ import { catchError } from 'rxjs/operators';
 
 @Injectable()
 export class ClientsService {
-  private clientUrl = 'https://localhost:3000/api/client';
-  // private clientUrl = `${window.location.origin}/api/client`;
+  private clientUrl = PublicFunctions.local ? 'https://localhost:3000/api/client' :
+                                              `${window.location.origin}/api/client`;
 
   /**
    * Injection of the http service.
