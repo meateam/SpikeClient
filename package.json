@@ -8,6 +8,7 @@
     "generate-certs": "node scripts/generate_certs.js",
     "build": "ng build",
     "build:prod": "npx ng build --prod --output-hashing none",
+    "build:dev": "npx ng build --output-hashing none",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
