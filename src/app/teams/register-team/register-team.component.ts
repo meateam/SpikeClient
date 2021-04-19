@@ -84,7 +84,7 @@ export class RegisterTeamComponent implements OnInit {
         if (data && data.teams && data.teams.length > 0) { // If the server returned that the teams were given back.
           this.team = data.teams;
           this.sharedService.setData = this.team;
-          this.router.navigateByUrl('/teams');
+          this.router.navigateByUrl('/dashboard');
         } else {
           this.team = null;
           // console.log('no data');

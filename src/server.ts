@@ -108,7 +108,6 @@ class Server {
 
         // Redirect to docs site
         this.app.get('/help', (req, res) => {
-
             res.redirect(`${process.env.DOCS_LTM}:${process.env.DOCS_PORT}`);
         });
 
