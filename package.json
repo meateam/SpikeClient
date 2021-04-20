@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "npx tsc && npx ng build --prod && node scripts/copy_files.js && node -r dotenv/config ./dist/src/server.js",
+    "start": "npx tsc && npx ng build && node scripts/copy_files.js && node -r dotenv/config ./dist/src/server.js",
     "serve": "node -r dotenv/config ./dist/src/server.js",
     "generate-certs": "node scripts/generate_certs.js",
     "build": "ng build",

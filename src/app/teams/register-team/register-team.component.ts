@@ -8,6 +8,8 @@ import { FormControl, Validators, FormBuilder, FormGroup } from '@angular/forms'
 import { SharedService } from 'src/app/shared.service';
 import { MatDialog } from '@angular/material/dialog';
 import { TeamJoinInfoModalComponent } from 'src/app/teams/team-join-info-modal/team-join-info-modal.component';
+import { environment } from '../../../environments/environment';
+import { CoreEnvironment } from '@angular/compiler/src/compiler_facade_interface';
 
 @Component({
   selector: 'app-register-team',
@@ -25,7 +27,9 @@ export class RegisterTeamComponent implements OnInit {
    */
   constructor(private authService: AuthService, private formBuilder: FormBuilder,
               private router: Router, private sharedService: SharedService,
-              private teamJoinInfoDialog: MatDialog) { }
+              private teamJoinInfoDialog: MatDialog) {
+                this.env = environment.production;
+              }
 
   teamnameFormControl = new FormControl('', [
     Validators.required,
@@ -36,6 +40,7 @@ export class RegisterTeamComponent implements OnInit {
   ]);
 
   user;
+  env;
   team: any = [];
   registerTeamFormGroup: FormGroup;
   isLogged: boolean;
