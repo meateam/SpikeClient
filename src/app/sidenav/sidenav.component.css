@@ -5,7 +5,6 @@ mat-drawer {
 }
 
 ::ng-deep mat-drawer-content {
-    transition: 0.5s;
     background-color: var(--body-background-color) !important;
 }
 
@@ -103,15 +102,19 @@ mat-drawer:not(.mat-drawer-opened) #avatar-disp {
 
 mat-drawer:not(.mat-drawer-opened) #logo-disp {
     transition: 0.5s;
-    left: 4px !important;
-    transform: translate(0, -20px);
+    left: -25px !important;
+    transform: scale(0.6);
     /*display: none !important;*/
 }
 
 mat-drawer:not(.mat-drawer-opened) .logo-text-disp {
     /* display: none !important; */
+    font-size:25px !important;
     transition: 0.5s;
-    transform: translate(-59px, 43px);
+    margin-right:33px !important;
+    margin-bottom:-25px !important; 
+    padding-top:10px !important;
+    padding-left:17px !important;
 }
 
 mat-drawer:not(.mat-drawer-opened) .btn-disp{

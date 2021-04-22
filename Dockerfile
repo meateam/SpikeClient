@@ -5,7 +5,7 @@ COPY package*.json ./
 COPY tsconfig.json ./
 RUN npm install
 COPY . .
-RUN npm run build:prod
+RUN npm run build:dev
 
 ###--- STAGE 2 - Production ---###
 FROM node:12-alpine as PROD
