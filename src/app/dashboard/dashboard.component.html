@@ -96,7 +96,7 @@
                 </div>
             </mat-card-content>
             <mat-card-actions style="height: 30px;">
-                <button style="position: absolute; right: 10px; bottom: 4px;" mat-icon-button color="primary"
+                <button *ngIf="showContactClient" style="position: absolute; right: 10px; bottom: 4px;" mat-icon-button color="primary"
                     [matTooltip]="'Contact ' + currClient.name" matTooltipPosition="above"
                     (click)="openBottomSheet(currClient.team.ownerId)">
                     <mat-icon>phone</mat-icon>
