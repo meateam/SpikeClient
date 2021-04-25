@@ -4,7 +4,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { throwError } from 'rxjs';
 
 export class PublicFunctions {
-    public static local = false;
+    public static local = true;
 
     /**
      * Gets a cookie value by name.

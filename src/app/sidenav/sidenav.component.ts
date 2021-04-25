@@ -15,7 +15,7 @@ import { environment } from '../../environments/environment';
   styleUrls: ['./sidenav.component.css']
 })
 export class SidenavComponent implements OnInit {
-  showTeamTab = environment.production;  
+  showTeamTab = environment.outside;  
   team;
   public get getTeam() { return this.team; }
   public set setTeam(newValue) {
