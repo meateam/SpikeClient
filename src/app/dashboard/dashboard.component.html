@@ -3,7 +3,7 @@
     <mat-spinner></mat-spinner>
 </div>
 <cdk-virtual-scroll-viewport #scroller itemSize="8 * 360" style="height: calc(100vh - 64px); width: 100%;" [ngStyle]="{ 'display': clients && teams && !error ? 'flex' : 'none'}">
-<div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center; position: sticky; top: 0px; margin-top:20px; z-index:2; width: 100%;">
+<div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center; position: sticky; top: 0px; margin-top:20px; z-index:10; width: 100%;">
     <form class="filter-form">
         <mat-form-field style="width:250px; margin: 10px;">
             <input loaded style="width:220px;" #inputSelected="matInput" [(ngModel)]="clientsForSearch" type="text"
@@ -57,9 +57,9 @@
             <mat-card-content>
                 <div style="text-align: left; margin-bottom: 5px;">AudienceId:</div>
                 <div
-                    style="height: 23px; width:100%; background-color: #EAEAEA; border: 1px solid #CACACA; text-align: left; display: flex; align-items: center; position: relative;">
+                    style="height: 23px; width:100%; background-color: var(--textarea-background-color); border: 1px solid #9A9A9A; text-align: left; display: flex; align-items: center; position: relative;">
                     <div
-                        style="font-size:11px; padding: 0 6px; max-width: 225px; overflow: hidden; text-overflow: ellipsis; color: #9a9a9a">
+                        style="font-size:11px; padding: 0 6px; max-width: 225px; overflow: hidden; text-overflow: ellipsis; color: var(--textarea-color);">
                         {{ currClient.audienceId }}</div>
                     <button (click)="copyClipboard(currClient.audienceId)" mat-icon-button
                         matTooltip="Copy Full AudienceId" matTooltipPosition="above" color="primary"
@@ -96,7 +96,7 @@
                 </div>
             </mat-card-content>
             <mat-card-actions style="height: 30px;">
-                <button style="position: absolute; right: 10px; bottom: 4px;" mat-icon-button color="primary"
+                <button *ngIf="showContactClient" style="position: absolute; right: 10px; bottom: 4px;" mat-icon-button color="primary"
                     [matTooltip]="'Contact ' + currClient.name" matTooltipPosition="above"
                     (click)="openBottomSheet(currClient.team.ownerId)">
                     <mat-icon>phone</mat-icon>

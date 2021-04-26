@@ -15,6 +15,16 @@
     --card-sub-dark-color: #EAEAEA;
     --textarea-dark-background-color: #5a5a5a;
     --textarea-dark-color: #9a9a9a;
+    --sort-dark-background-color: rgba(30, 30, 30, 0.8);
+    --input-dark-underline-color: rgba(255,255,255,.42);
+    --select-dark-background-color: #1a1a1a;
+    --select-dark-color: #EAEAEA;
+    --select-active-dark-background-color: rgba(0,0,0,.75);
+    --select-active-dark-color: rgb(93, 111, 211);
+    --mat-divider-dark-color: rgba(255, 255, 255, .2);
+    --list-header-dark-background-color: rgb(53, 58, 65);
+    --disabled-dark-color: rgba(255,255,255,.26);
+    --hover-dark-background-color: rgba(0,0,0, 0.26);
 
     /* Light Theme */
     --sidenav-light-background-color: #EAEAEA;
@@ -27,6 +37,16 @@
     --card-sub-light-color: #9a9a9a;
     --textarea-light-background-color: #EAEAEA;
     --textarea-light-color: black;
+    --sort-light-background-color: rgba(255, 255, 255, 0.8);
+    --input-light-underline-color: rgba(0,0,0,.42);
+    --select-light-background-color: initial;
+    --select-light-color: initial;
+    --select-active-light-background-color: rgba(0,0,0,.12);
+    --select-active-light-color: #3f51b5;
+    --mat-divider-light-color: rgba(0, 0, 0, .2);
+    --list-header-light-background-color: #EAEAEA;
+    --disabled-light-color: rgba(0,0,0,.26);
+    --hover-light-background-color: rgba(0,0,0, 0.12);
 
     /* Initial vairables */
     --toolbar-color: var(--toolbar-light-color);
@@ -39,6 +59,16 @@
     --card-sub-color: var(--card-sub-light-color);
     --textarea-background-color: var(--textarea-light-background-color);
     --textarea-color: var(--textarea-light-color);
+    --sort-background-color: var(--sort-light-background-color);
+    --input-underline-color: var(--input-light-underline-color);
+    --select-background-color: var(--select-light-background-color);
+    --select-color: var(--select-light-color);
+    --select-active-background-color: var(--select-active-light-background-color);
+    --select-active-color: var(--select-active-light-color);
+    --mat-divider-color: var(--mat-divider-light-color);
+    --list-header-background-color: var(--list-header-light-background-color);
+    --disabled-color: var(--disabled-light-color);
+    --hover-background-color: var(--hover-light-background-color);
 }
 
 body {
@@ -66,6 +96,22 @@ mat-expansion-panel-header {
 html, body { 
     height: 100%;
     overflow-y: hidden;
+}
+
+.mat-form-field-underline {
+    background-color: var(--input-underline-color) !important;
+}
+
+input {
+    color: var(--sidenav-color) !important;
+}
+
+.mat-form-field-label  {
+    color: var(--input-underline-color) !important;
+}
+
+.mat-select-value-text, .mat-select-arrow {
+    color: var(--sidenav-color) !important;
 }
 
 .mat-badge-content {
@@ -97,4 +143,67 @@ mat-card {
 mat-expansion-panel {
     background-color: var(--card-background-color) !important;
     color: var(--card-color) !important;
+}
+
+mat-option {
+    background-color: var(--select-background-color) !important;
+    color: var(--select-color) !important;
+}
+
+.mat-option.mat-selected {
+    color: var(--select-active-color) !important;
+    background-color: var(--select-active-background-color) !important;
+    font-weight: bold;
+}
+
+mat-option:hover {
+    background-color: var(--select-active-background-color) !important;
+}
+
+.mat-icon-button.mat-primary {
+    color: var(--select-active-color) !important;
+}
+
+.mat-list-item-content {
+    color: var(--card-color) !important;
+}
+
+mat-divider {
+    border-top-color: var(--mat-divider-color) !important;
+}
+
+mat-dialog-container {
+    background-color: var(--body-background-color) !important;
+    color: var(--sidenav-color) !important;
+}
+
+.mat-button.mat-warn[disabled] {
+    color: var(--disabled-color) !important;
+}
+
+.mat-raised-button[disabled][disabled], .mat-fab[disabled] {
+    color: var(--disabled-color) !important;
+    background-color: var(--list-header-background-color) !important;
+}
+
+.mat-button.mat-primary[disabled] {
+    color: var(--disabled-color) !important;
+}
+
+mat-action-row {
+    border-top-color: var(--mat-divider-color) !important;
+}
+
+table thead tr th {
+    color: var(--sidenav-color) !important;
+    border-color: var(--mat-divider-color) !important;
+}
+
+table tbody tr td {
+    color:var(--sidenav-color) !important;
+    border-color: var(--mat-divider-color) !important;
+}
+
+table {
+    background-color: var(--card-background-color) !important;
 }

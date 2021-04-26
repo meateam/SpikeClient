@@ -11,7 +11,7 @@ import { environment } from '../environments/environment';
 
 const appRoutes: Routes = [
     { path: 'clients', component: ClientsComponent },
-    environment.production ? { path: 'teams', component: TeamsComponent } : { path: 'teams', redirectTo: '/dashboard' },
+    !environment.outside ? { path: 'teams', component: TeamsComponent } : { path: 'teams', redirectTo: '/dashboard' },
     { path: 'scopes', component: ScopesComponent },
     { path: 'dashboard', component: DashboardComponent },
     { path: '',

@@ -28,7 +28,7 @@ export class RegisterTeamComponent implements OnInit {
   constructor(private authService: AuthService, private formBuilder: FormBuilder,
               private router: Router, private sharedService: SharedService,
               private teamJoinInfoDialog: MatDialog) {
-                this.env = environment.production;
+                this.env = environment.outside;
               }
 
   teamnameFormControl = new FormControl('', [

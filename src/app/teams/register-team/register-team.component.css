@@ -12,6 +12,7 @@ mat-card {
 
 mat-card-subtitle {
     text-align:center;
+    color: var(--card-sub-color) !important;
 }
 
 mat-card-content {
@@ -43,7 +44,7 @@ mat-card-content {
 
 .register-button {
     color: white;
-    background-color: black;
+    background-color: var(--select-active-color);
     position:absolute;
     right: -34px;
     bottom: -84px;

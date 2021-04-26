@@ -2,12 +2,12 @@
   <mat-spinner></mat-spinner>
 </div>
 <div *ngIf="!team">
-  <div *ngIf="!env" style="height: calc(100vh - 100px); align-items: center; justify-content: center; display: flex; font-size:36px; flex-direction: column; position:relative;">
+  <div *ngIf="env" style="height: calc(100vh - 100px); align-items: center; justify-content: center; display: flex; font-size:36px; flex-direction: column; position:relative;">
     <img src="/assets/png/oops.png" style="position: relative; bottom: 50px;"/>
-    <div style="margin:20px;">Please Contact Spike's Team</div>
+    <div style="margin:20px; color: var(--sidenav-color);">Please Contact Spike's Team</div>
     <div style="margin:20px;"><a href="mailto:teamshiff@gmail.com">teamshiff@gmail.com</a></div>
   </div>
-  <div *ngIf="env" class="main-team">
+  <div *ngIf="!env" class="main-team">
       <mat-card class="registerCard">
           <b><mat-card-subtitle>Create Team</mat-card-subtitle></b>
           <mat-divider></mat-divider>

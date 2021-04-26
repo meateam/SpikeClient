@@ -12,7 +12,8 @@ import { MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
 import { MatInput } from '@angular/material/input';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { map, pairwise, filter, throttleTime } from 'rxjs/operators';
-import { Clipboard } from '@angular/cdk/clipboard'
+import { Clipboard } from '@angular/cdk/clipboard';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-dashboard',
@@ -34,6 +35,7 @@ export class DashboardComponent implements OnInit {
   loadingChange = false;
   noMoreToFetch = false;
   filterClientMode = false;
+  showContactClient = !environment.outside;
   skip = 0;
   limit = 24;
   sortOrder = {
