@@ -1,10 +1,5 @@
-<mat-toolbar>
-    <mat-toolbar-row>
-      <span>Scope Remove Verification</span>
-      <span class="example-spacer"></span>
-      <button mat-icon-button (click)="close()"><mat-icon>close</mat-icon></button>
-    </mat-toolbar-row>
-  </mat-toolbar>
+<app-toolbar title="Scope Remove Verification" icon="close" (iconClick)="close()"></app-toolbar>
+
   <div class="mat-card-content">
     <div class="dialog-content" mat-dialog-content>
       <p class="desc">Are you sure you want to remove this scope?</p>

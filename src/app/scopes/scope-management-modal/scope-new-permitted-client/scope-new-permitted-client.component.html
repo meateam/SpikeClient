@@ -1,10 +1,4 @@
-<mat-toolbar>
-    <mat-toolbar-row>
-      <span>Add New Permitted Client</span>
-      <span class="example-spacer"></span>
-      <button mat-icon-button (click)="close()"><mat-icon>close</mat-icon></button>
-    </mat-toolbar-row>
-</mat-toolbar>
+<app-toolbar title="Add New Permitted Client" icon="close" (iconClick)="close()"></app-toolbar>
 
 <form style="text-align:center; margin-top: 48px;">
   <mat-icon style="color:#5A5A5A;font-size:31px; position:relative; right:12px; top:12px;">computer</mat-icon>
@@ -26,7 +20,7 @@
 </mat-form-field>
 <button style="position: absolute;bottom: 9px;right: 12px;" (click)="addClient()"
         color="primary" matTooltip="Save Permitted Client" matTooltipPosition="above" mat-button [disabled]="!isFormValid()">Add Client</button>
-<button mat-button color="primary" style="position: absolute;bottom: 9px;left: 12px;" (click)="close()">Cancel</button>
+<button mat-button color="warn" style="position: absolute;bottom: 9px;left: 12px;" (click)="close()">Cancel</button>
 </form>
 
 <mat-progress-bar *ngIf="loadingClients" style="position: absolute;top: 64px;"
