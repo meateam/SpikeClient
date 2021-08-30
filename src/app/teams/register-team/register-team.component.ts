@@ -54,11 +54,13 @@ export class RegisterTeamComponent implements OnInit {
   async registerTeam() {
     this.teamName = this.registerTeamFormGroup.value.teamname;
     this.desc = this.registerTeamFormGroup.value.desc;
-    const data = await this.authService.registerTeam({
-                                                      teamname: this.teamName,
-                                                      desc: this.desc,
-                                                      ownerId: this.user.genesisId
-                                                    }
+    const data = await this.authService.registerTeam(
+      {
+        teamname: this.teamName,
+        desc: this.desc,
+        ownerId: this.user.genesisId,
+        contactUserId: this.user.genesisId
+      }
     ).toPromise().catch((error) => {
       this.errorMsg = error.message;
     });
