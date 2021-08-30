@@ -148,6 +148,18 @@ export class TeamManagementModalComponent implements OnInit {
     }
   }
 
+  async setContactUser(user) {
+    this.team.contactUserId = user.id;
+
+    const data = await this.teamsService.updateTeam(this.team).toPromise();
+
+    if (data) {
+      this.snackBar.open('Contact user was updated Successfully', '', {
+        duration: 2000
+      });
+    }
+  }
+
   /**
    * Sets the state to 'Add State'
    */

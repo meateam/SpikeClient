@@ -53,7 +53,8 @@ export class NewTeamModalComponent implements OnInit {
         {
           teamname: this.teamName,
           desc: this.desc,
-          ownerId: this.user.genesisId
+          ownerId: this.user.genesisId,
+          contactUserId: this.user.genesisId
         }).toPromise();
       this.errorMsg = undefined;
       this.dialogRef.close({ team: data.createdTeam });

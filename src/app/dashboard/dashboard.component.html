@@ -98,7 +98,7 @@
             <mat-card-actions style="height: 30px;">
                 <button *ngIf="showContactClient" style="position: absolute; right: 10px; bottom: 4px;" mat-icon-button color="primary"
                     [matTooltip]="'Contact ' + currClient.name" matTooltipPosition="above"
-                    (click)="openBottomSheet(currClient.team.ownerId)">
+                    (click)="openBottomSheet(currClient.team.contactUserId || currClient.team.ownerId)">
                     <mat-icon>phone</mat-icon>
                 </button>
                 <div matTooltip="Clients using this client" matTooltipPosition="above" *ngIf="currClient.popularity" style="width: 40px; height: 40px; position: absolute; left: 10px; bottom: 10px; cursor:default; display: flex; justify-content: center; align-items: center;">
