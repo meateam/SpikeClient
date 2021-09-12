@@ -27,7 +27,11 @@
       <span *ngIf="!currUser.isAdmin">User</span>
     </div>
     <div style="flex:25%">
-      <button (click)="removePerson(currUser)" *ngIf="team.isAdmin && currUser.id !== user.genesisId" mat-icon-button
+      <button disabled (click)="removePerson(currUser)" *ngIf="team.isAdmin && currUser.id !== user.genesisId && currUser.id === team.contactUserId" mat-icon-button
+        color="warn">
+        <mat-icon matTooltip="Change contact user in order to delete this user">delete</mat-icon>
+      </button>
+      <button (click)="removePerson(currUser)" *ngIf="team.isAdmin && currUser.id !== user.genesisId && currUser.id !== team.contactUserId" mat-icon-button
         color="warn" matTooltip="Remove User From Team">
         <mat-icon>delete</mat-icon>
       </button>
