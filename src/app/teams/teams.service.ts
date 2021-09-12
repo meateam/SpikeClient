@@ -35,7 +35,8 @@ export class TeamsService {
       adminIds: team.adminIds,
       _id: team._id,
       desc: team.desc,
-      ownerId: team.ownerId
+      ownerId: team.ownerId,
+      contactUserId: team.contactUserId,
     }, httpOptions).pipe(
         catchError(PublicFunctions.handleError)
     );
