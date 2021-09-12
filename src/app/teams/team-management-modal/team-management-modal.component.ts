@@ -41,12 +41,13 @@ export class TeamManagementModalComponent implements OnInit {
    */
   async ngOnInit() {
     this.team.users = [];
-    for (const userId of this.team.userIds) {
-      this.team.users.push({ id: userId, isAdmin: false });
-    }
 
     for (const userId of this.team.adminIds) {
       this.team.users.push({ id: userId, isAdmin: true });
+    }
+
+    for (const userId of this.team.userIds) {
+      this.team.users.push({ id: userId, isAdmin: false });
     }
 
     const persons = await this.sharedService.getPersonsByPersonIds(this.team.users.map(currUser => currUser.id)).toPromise();
