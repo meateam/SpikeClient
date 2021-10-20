@@ -157,7 +157,7 @@ export class TeamManagementModalComponent implements OnInit {
 
   async setContactUser(user) {
 
-    this.matomoTracker.trackEvent('TeamMenegmrnt', 'SetContactUser', 'TeamShiffIsThebest');
+    this.matomoTracker.trackEvent('TeamManagment', 'SetContactUser', 'TeamShiffIsTheBest');
     
     this.team.contactUserId = user.id;
 

@@ -23,10 +23,5 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     PublicFunctions.checkLogin();
-
-    // this.matomoTracker.setUserId('UserId');
-    // this.matomoTracker.setDocumentTitle('ngxMatomo Test');
   }
-
-
 }

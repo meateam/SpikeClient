@@ -81,6 +81,8 @@ import { MatomoModule } from 'ngx-matomo';
     FormsModule,
     AppRoutingModule,
     AvatarModule,
+    ClipboardModule,
+    TextFieldModule,
     MatomoModule
 
   ],
