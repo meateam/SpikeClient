@@ -7,6 +7,9 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { SharedService } from '../../shared.service';
 import { TeamAddPersonModalComponent } from './team-add-person-modal/team-add-person-modal.component';
 
+import { MatomoTracker } from 'ngx-matomo';
+
+
 @Component({
   selector: 'app-team-management-modal',
   templateUrl: './team-management-modal.component.html',
@@ -29,6 +32,9 @@ export class TeamManagementModalComponent implements OnInit {
               private snackBar: MatSnackBar,
               private sharedService: SharedService,
               private teamAddPersonDialog: MatDialog,
+
+              private matomoTracker: MatomoTracker,
+              
               public dialogRef: MatDialogRef<TeamManagementModalComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any) {
                 this.team = data.team;
@@ -150,6 +156,9 @@ export class TeamManagementModalComponent implements OnInit {
   }
 
   async setContactUser(user) {
+
+    this.matomoTracker.trackEvent('TeamManagment', 'SetContactUser', 'TeamShiffIsTheBest');
+    
     this.team.contactUserId = user.id;
 
     const data = await this.teamsService.updateTeam(this.team).toPromise();

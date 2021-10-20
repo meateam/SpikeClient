@@ -2,6 +2,9 @@
 
 import { Component, OnInit } from '@angular/core';
 import { PublicFunctions } from './shared/shared';
+import { MatomoInjector, MatomoTracker } from 'ngx-matomo';
+import { environment } from '../environments/environment';
+
 
 @Component({
   selector: 'app-root',
@@ -10,6 +13,13 @@ import { PublicFunctions } from './shared/shared';
 })
 export class AppComponent implements OnInit {
   title = 'SpikeClient';
+
+  constructor(
+    private matomoInjector: MatomoInjector, 
+    private matomoTracker: MatomoTracker
+  ) {
+    this.matomoInjector.init(environment.MATOMO_URL, environment.MATOMO_SITE_ID); 
+  }
 
   ngOnInit() {
     PublicFunctions.checkLogin();
