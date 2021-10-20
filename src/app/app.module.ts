@@ -40,6 +40,9 @@ import { ScopeEditModalComponent } from './scopes/scope-edit-modal/scope-edit-mo
 import { TextFieldModule } from '@angular/cdk/text-field';
 import { ClientUsedScopesModalComponent } from './clients/client-used-scopes-modal/client-used-scopes-modal.component';
 
+import { MatomoModule } from 'ngx-matomo';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -78,8 +81,8 @@ import { ClientUsedScopesModalComponent } from './clients/client-used-scopes-mod
     FormsModule,
     AppRoutingModule,
     AvatarModule,
-    ClipboardModule,
-    TextFieldModule
+    MatomoModule
+
   ],
   entryComponents: [RegisterClientModalComponent, VerifyClientDeleteModalComponent,
                     VerifyClientResetModalComponent, ClientHostUrisModalComponent, ClientActiveTokensModalComponent,
@@ -87,5 +90,6 @@ import { ClientUsedScopesModalComponent } from './clients/client-used-scopes-mod
                     TeamJoinInfoModalComponent],
   providers: [FormBuilder, AuthService, ClientsService, SidenavComponent, TeamsService],
   bootstrap: [AppComponent]
+  
 })
 export class AppModule { }
