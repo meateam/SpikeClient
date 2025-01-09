@@ -1,7 +1,7 @@
 const passport = require('passport');
 const {
     Strategy
-} = require('passport-shraga');
+} = require('@yesodot/passport-shraga');
 
 const users = [];
 

@@ -38,7 +38,7 @@
     "ngx-avatar": "^3.7.0",
     "ngx-matomo": "^0.1.4",
     "passport": "^0.4.1",
-    "passport-shraga": "^1.4.0",
+    "@yesodot/passport-shraga": "^1.5.2",
     "rxjs": "~6.5.4",
     "tsc": "^1.20150623.0",
     "tslib": "^1.10.0",
@@ -64,6 +64,6 @@
     "protractor": "~5.4.3",
     "ts-node": "~8.3.0",
     "tslint": "~5.18.0",
-    "typescript": "^3.7.5"
+    "typescript": "~3.7.5"
   }
 }
